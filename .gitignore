@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.rbc
 capybara-*.html
 .rspec
@@ -46,4 +47,21 @@ bower.json
 
 # Ignore node_modules
 node_modules/
+=======
+/log
+/tmp
+!/log/.keep
+!/tmp/.keep
+/public/system
+
+.env
+.env.dev
+
+/.bundle
+/vendor/bundle
+
+/.idea
+
+.DS_Store
+>>>>>>> template/master
 
