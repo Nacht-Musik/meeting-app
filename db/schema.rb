@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711072302) do
+ActiveRecord::Schema.define(version: 20180711075017) do
+
+  create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "title", null: false
+    t.bigint "user_id"
+    t.bigint "inspector_id"
+    t.bigint "authorither_id"
+    t.bigint "project_id"
+    t.date "date"
+    t.time "start_time"
+    t.time "finish_time"
+    t.string "place"
+    t.date "publish_date"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authorither_id"], name: "index_meetings_on_authorither_id"
+    t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
+    t.index ["project_id"], name: "index_meetings_on_project_id"
+    t.index ["user_id"], name: "index_meetings_on_user_id"
+  end
 
   create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
@@ -39,4 +59,8 @@ ActiveRecord::Schema.define(version: 20180711072302) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "meetings", "projects"
+  add_foreign_key "meetings", "users"
+  add_foreign_key "meetings", "users", column: "authorither_id"
+  add_foreign_key "meetings", "users", column: "inspector_id"
 end
