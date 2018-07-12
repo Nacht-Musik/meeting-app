@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711075017) do
+ActiveRecord::Schema.define(version: 20180712060313) do
 
   create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title", null: false
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 20180711075017) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "meeting_id"
+    t.string "name"
+    t.integer "sort_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_topics_on_meeting_id"
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -63,4 +72,5 @@ ActiveRecord::Schema.define(version: 20180711075017) do
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "authorither_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
+  add_foreign_key "topics", "meetings"
 end
