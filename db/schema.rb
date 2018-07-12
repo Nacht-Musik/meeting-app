@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180712064422) do
+ActiveRecord::Schema.define(version: 20180712070406) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20180712064422) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["topic_id"], name: "index_comments_on_topic_id"
+  end
+
+  create_table "family_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.bigint "comment_id"
+    t.bigint "child_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_family_comments_on_child_id"
+    t.index ["comment_id"], name: "index_family_comments_on_comment_id"
   end
 
   create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -78,6 +88,8 @@ ActiveRecord::Schema.define(version: 20180712064422) do
   end
 
   add_foreign_key "comments", "topics"
+  add_foreign_key "family_comments", "comments"
+  add_foreign_key "family_comments", "comments", column: "child_id"
   add_foreign_key "meetings", "projects"
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "authorither_id"
