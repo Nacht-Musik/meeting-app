@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(version: 20180712070406) do
   end
 
   create_table "family_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
     t.bigint "comment_id"
     t.bigint "child_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["child_id"], name: "index_family_comments_on_child_id"
+    t.index ["comment_id", "child_id"], name: "index_family_comments_on_comment_id_and_child_id", unique: true
     t.index ["comment_id"], name: "index_family_comments_on_comment_id"
   end
 
