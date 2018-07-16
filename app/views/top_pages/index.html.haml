@@ -5,7 +5,7 @@
     %li
       = link_to 'ログアウト', destroy_user_session_path
     %li
-      %p= current_user.name
+      = link_to current_user.name, edit_user_registration_path
   - else
     %li
       = link_to '新規ユーザー登録', new_user_registration_path
