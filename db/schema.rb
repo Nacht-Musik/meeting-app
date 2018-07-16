@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180712070406) do
+ActiveRecord::Schema.define(version: 20180716063817) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180712070406) do
     t.string "title", null: false
     t.bigint "user_id"
     t.bigint "inspector_id"
-    t.bigint "authorither_id"
+    t.bigint "approver_id"
     t.bigint "project_id"
     t.date "date"
     t.time "start_time"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20180712070406) do
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["authorither_id"], name: "index_meetings_on_authorither_id"
+    t.index ["approver_id"], name: "index_meetings_on_approver_id"
     t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
     t.index ["project_id"], name: "index_meetings_on_project_id"
     t.index ["user_id"], name: "index_meetings_on_user_id"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20180712070406) do
   add_foreign_key "family_comments", "comments", column: "child_id"
   add_foreign_key "meetings", "projects"
   add_foreign_key "meetings", "users"
-  add_foreign_key "meetings", "users", column: "authorither_id"
+  add_foreign_key "meetings", "users", column: "approver_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
   add_foreign_key "topics", "meetings"
 end
