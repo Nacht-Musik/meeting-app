@@ -1,0 +1,12 @@
+.flash {
+  // color: white;
+  text-align: center;
+  &__alert{
+    background-color: $bg-danger;
+    border: solid 3px $bd-danger;
+  }
+  &__notice {
+    background-color: $bg-success;
+    border: solid 3px $bd-success;
+  }
+}
