@@ -10,6 +10,89 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180716063817) do
 
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "topic_id"
+    t.string "name"
+    t.integer "sort_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_comments_on_topic_id"
+  end
+
+  create_table "family_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "comment_id"
+    t.bigint "child_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_family_comments_on_child_id"
+    t.index ["comment_id", "child_id"], name: "index_family_comments_on_comment_id_and_child_id", unique: true
+    t.index ["comment_id"], name: "index_family_comments_on_comment_id"
+  end
+
+  create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "title", null: false
+    t.bigint "user_id"
+    t.bigint "inspector_id"
+    t.bigint "approver_id"
+    t.bigint "project_id"
+    t.date "date"
+    t.time "start_time"
+    t.time "finish_time"
+    t.string "place"
+    t.date "publish_date"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approver_id"], name: "index_meetings_on_approver_id"
+    t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
+    t.index ["project_id"], name: "index_meetings_on_project_id"
+    t.index ["user_id"], name: "index_meetings_on_user_id"
+  end
+
+  create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "meeting_id"
+    t.string "name"
+    t.integer "sort_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_topics_on_meeting_id"
+  end
+
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "first_name", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "comments", "topics"
+  add_foreign_key "family_comments", "comments"
+  add_foreign_key "family_comments", "comments", column: "child_id"
+  add_foreign_key "meetings", "projects"
+  add_foreign_key "meetings", "users"
+  add_foreign_key "meetings", "users", column: "approver_id"
+  add_foreign_key "meetings", "users", column: "inspector_id"
+  add_foreign_key "topics", "meetings"
 end
