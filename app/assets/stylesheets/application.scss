@@ -10,6 +10,17 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+@import "template/_valiables";
+@import "template/_base";
+@import "template/_common";
+@import "template/_component";
+@import "template/_layout";
+@import "template/_utility";
+@import "pages/top_pages";
+@import "pages/users";
+@import "modules/_flash";
+
+// gem
+@import "bootstrap";
