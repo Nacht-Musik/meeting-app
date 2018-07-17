@@ -1,7 +1,9 @@
-%h1 会議録アプリ(仮)のトップページ
+%h3 トップページ
+%br
 
 %ul
   - if user_signed_in?
+    %p ログイン中
     %li
       = link_to 'ログアウト', destroy_user_session_path
     %li
