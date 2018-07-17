@@ -1,0 +1,23 @@
+%header#app--header.sticky-top
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary
+    .container
+      .navbar-brand
+        = link_to '会議録App', '/', class: "text-light"
+      %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbarNavAltMarkup',
+                              'aria-controls': 'navbarNavAltMarkup', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation'}
+        %span.navbar-toggler-icon
+      .collapse.navbar-collapse{id: 'navbarNavAltMarkup' }
+        %ul.navbar-nav.ml-auto
+          - if user_signed_in?
+            %li.nav-item
+              = link_to 'ログアウト', destroy_user_session_path,
+                class: "btn btn-secondary nav-link"
+            %li.nav-item
+              = link_to current_user.name, edit_user_registration_path,
+                class: "btn btn-secondary nav-link"
+          - else
+            %li.nav-iteme
+              = link_to '新規ユーザ登録', new_user_registration_path,
+                class: "btn btn-secondary nav-link"
+            %li.nav-iteme
+              = link_to 'ログイン', new_user_session_path, class: "btn btn-secondary nav-link"
