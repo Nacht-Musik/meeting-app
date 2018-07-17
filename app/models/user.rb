@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  #nameを必須・一意とする
+  validates_uniqueness_of :name
+  validates_presence_of :name
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,7 +13,8 @@ class User < ApplicationRecord
   has_many :inspect_meetings,     class_name: 'Meeting', foreign_key: 'inspecter_id'
   has_many :approve_meetings,     class_name: 'Meeting', foreign_key: 'authorither_id'
 
-  # user.nameでログイン
+
+  # ログイン用パラメータ(login)の設定
   attr_accessor :login
 
   def self.find_first_by_auth_conditions(warden_conditions)
