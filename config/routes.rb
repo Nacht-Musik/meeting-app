@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   # 'My'関連
   get 'my/page'
-  
+  get 'my/meeting'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
