@@ -4,40 +4,44 @@
       マイ会議
     %ul.nav.nav-tabs.card-header-tabs
       %li.nav-item
-        %a.active.nav-link{href: '#tab1', 'data-toggle': 'tab'}
+        %a.active.nav-link{href: '#tab-all', 'data-toggle': 'tab'}
           全て
       %li.nav-item
-        %a.nav-link{href: '#tab2', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-future', 'data-toggle': 'tab'}
           開催予定
       %li.nav-item
-        %a.nav-link{href: '#tab3', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-making', 'data-toggle': 'tab'}
           作成中
       %li.nav-item
-        %a.nav-link{href: '#tab4', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-inspecting', 'data-toggle': 'tab'}
           審査待ち
       %li.nav-item
-        %a.nav-link{href: '#tab5', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-approving', 'data-toggle': 'tab'}
           承認待ち
       %li.nav-item
-        %a.nav-link{href: '#tab6', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-published', 'data-toggle': 'tab'}
           配布済み
+      %li.nav-item
+        %a.nav-link{href: '#tab-new', 'data-toggle': 'tab'}
+          新規作成
 
   .card-body
     .tab-content
-      .tab-pane.active#tab1
-        -# = render 'meeting_table', meetings: @meetings
-        「全ての会議録」の本体部分
-      .tab-pane#tab2
+      .tab-pane#tab-all.active
+        = render "meeting_list_title", meetings: @meetings, users: @users, projects: @projects
+      .tab-pane#tab-future
         「開催予定」の本体部分
-      .tab-pane#tab3
+      .tab-pane#tab-making
         「作成中」の本体部分
-      .tab-pane#tab4
+      .tab-pane#tab-inspecting
         「審査待ち」の本体部分
-      .tab-pane#tab5
+      .tab-pane#tab-approving
         「承認待ち」の本体部分
-      .tab-pane#tab6
+      .tab-pane#tab-published
         「配布済み」の本体部分
-
+      .tab-pane#tab-new
+        「新規作成」の本体部分
+%br
 = link_to 'マイページに戻る', my_page_path
 %br
 %p Find me in app/views/my/meeting.html.haml
