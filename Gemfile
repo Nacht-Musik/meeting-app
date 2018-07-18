@@ -41,7 +41,7 @@ gem 'erb2haml'
 gem 'devise'
 gem 'cancancan'
 # gem 'rails_admin'
-# gem 'switch_user'
+gem 'switch_user'
 
 # 論理削除
 gem 'paranoia'
