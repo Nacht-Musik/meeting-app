@@ -12,4 +12,16 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require jquery
+//= require jquery_ujs
+//= require popper
+//= require bootstrap
 //= require_tree .
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+}) // popoverのために追加
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+}) // tooltipのために追加

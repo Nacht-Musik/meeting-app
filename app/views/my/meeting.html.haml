@@ -1,21 +1,42 @@
-%h3 マイ会議
-%br
+.card
+  .card-header
+    %h3
+      マイ会議
+    %ul.nav.nav-tabs.card-header-tabs
+      %li.nav-item
+        %a.active.nav-link{href: '#tab1', 'data-toggle': 'tab'}
+          全て
+      %li.nav-item
+        %a.nav-link{href: '#tab2', 'data-toggle': 'tab'}
+          開催予定
+      %li.nav-item
+        %a.nav-link{href: '#tab3', 'data-toggle': 'tab'}
+          作成中
+      %li.nav-item
+        %a.nav-link{href: '#tab4', 'data-toggle': 'tab'}
+          審査待ち
+      %li.nav-item
+        %a.nav-link{href: '#tab5', 'data-toggle': 'tab'}
+          承認待ち
+      %li.nav-item
+        %a.nav-link{href: '#tab6', 'data-toggle': 'tab'}
+          配布済み
 
-%ul
-  %li
-    %p 新規会議作成
-  %li
-    %p 開催予定会議
-  %li
-    %p 作成中の会議
-
-%br
-%p 以下は追加予定のメニュー
-%ul
-  %li
-    %p 審査中の会議
-  %li
-    %p 承認中の会議
+  .card-body
+    .tab-content
+      .tab-pane.active#tab1
+        -# = render 'meeting_table', meetings: @meetings
+        「全ての会議録」の本体部分
+      .tab-pane#tab2
+        「開催予定」の本体部分
+      .tab-pane#tab3
+        「作成中」の本体部分
+      .tab-pane#tab4
+        「審査待ち」の本体部分
+      .tab-pane#tab5
+        「承認待ち」の本体部分
+      .tab-pane#tab6
+        「配布済み」の本体部分
 
 = link_to 'マイページに戻る', my_page_path
 %br
