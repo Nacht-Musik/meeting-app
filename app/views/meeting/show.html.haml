@@ -1,1 +1,38 @@
-%p 会議録詳細ページ(仮)
+%ul
+  %li
+    タイトル：
+    %p= @meeting.title
+  %li
+    担当者：
+    %p= User.find(@meeting.user_id).last_name
+  %li
+    検査者：
+    %p= User.find(@meeting.inspector_id).last_name
+  %li
+    審査者：
+    %p= User.find(@meeting.approver_id).last_name
+  %li
+    プロジェクト：
+    %p= Project.find(@meeting.project_id).name
+  %li
+    開催日：
+    %p= @meeting.date
+  %li
+    開始時刻：
+    %p= @meeting.start_time
+  %li
+    終了時刻：
+    %p= @meeting.finish_time
+  %li
+    発行日：
+    %p= @meeting.publish_date
+  %li
+    場所：
+    %p= @meeting.place
+  %li
+    備考：
+    %p= @meeting.note
+  %li
+    Topic List...
+  %li
+    Comment List...
