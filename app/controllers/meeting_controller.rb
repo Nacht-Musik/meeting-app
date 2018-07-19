@@ -19,20 +19,15 @@ class MeetingController < ApplicationController
       end
     end
 
-    def sort_comments (comments)
-      comments.sort do |a, b|
-        a.sort_num <=> b.sort_num
-      end
-    end
-
     # 始祖コメントを集める
     def set_founder_comments (topics)
       founder_comments = Array.new()
 
       topics.each do |topic|
-        sort_comments(topic.comments) if topic.comments.present?
-        topic.comments.each do |comment|
-          founder_comments.push(comment) if comment.parent.blank?
+        if topic.comments.present?
+          topic.comments.each do |comment|
+            founder_comments.push(comment) if comment.parent.blank?
+          end
         end
       end
       return founder_comments

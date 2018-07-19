@@ -4,7 +4,8 @@
       .card-header
         %h5= topic.name
       %ul.list-group.list-group-flush
-        - founder_comments.each do |comment|
+        - founder_cmts = sort_comments(founder_comments)
+        - founder_cmts.each do |comment|
           - if topic.id == comment.topic_id
             %li.list-group-item
               = render 'show_comment', comment: comment, indent: "> "
