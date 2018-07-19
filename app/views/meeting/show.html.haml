@@ -11,8 +11,8 @@
     %li.list-group-item
       %a= "発行日：#{@meeting.publish_date}"
 
-    = render 'show_topic', meeting: @meeting
-    
+    = render 'show_topic', topics: @topics
+
     %li.list-group-item
       .card
         .card-header
