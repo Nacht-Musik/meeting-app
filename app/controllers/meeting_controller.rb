@@ -3,9 +3,9 @@ class MeetingController < ApplicationController
 
   def show
     # ソート番号順に並んだTopicsを取得
-    @topics = sort_topics(@meeting)
-    # トップのコメントを全て取得
-    # @fountder_comments = ""
+    @topics = sort_topics(@meeting.topics)
+    # 始祖コメントを全て取得
+    @founder_comments = set_founder_comments(@topics)
   end
 
   private
@@ -13,10 +13,29 @@ class MeetingController < ApplicationController
       @meeting = Meeting.find(params[:id])
     end
 
-    def sort_topics (meeting)
-      meeting.topics.sort do |a, b|
+    def sort_topics (topics)
+      topics.sort do |a, b|
         a.sort_num <=> b.sort_num
       end
+    end
+
+    def sort_comments (comments)
+      comments.sort do |a, b|
+        a.sort_num <=> b.sort_num
+      end
+    end
+
+    # 始祖コメントを集める
+    def set_founder_comments (topics)
+      founder_comments = Array.new()
+
+      topics.each do |topic|
+        sort_comments(topic.comments) if topic.comments.present?
+        topic.comments.each do |comment|
+          founder_comments.push(comment) if comment.parent.blank?
+        end
+      end
+      return founder_comments
     end
 
     # Strong parameters
