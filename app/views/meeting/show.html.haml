@@ -1,40 +1,19 @@
-%ul
-  %li
-    タイトル：
-    %p= @meeting.title
-  %li
-    担当者：
-    %p= User.find(@meeting.user_id).last_name
-  %li
-    検査者：
-    %p= User.find(@meeting.inspector_id).last_name
-  %li
-    審査者：
-    %p= User.find(@meeting.approver_id).last_name
-  %li
-    プロジェクト：
-    %p= Project.find(@meeting.project_id).name
-  %li
-    開催日：
-    %p= @meeting.date
-  %li
-    開始時刻：
-    %p= @meeting.start_time
-  %li
-    終了時刻：
-    %p= @meeting.finish_time
-  %li
-    発行日：
-    %p= @meeting.publish_date
-  %li
-    場所：
-    %p= @meeting.place
-  %li
-    備考：
-    %p= @meeting.note
-  %li
-    Topic List...
-    - @meeting.topics.each do |topic|
-      %p= topic.name
-      - topic.comments.each do |comment|
-        %p= comment.name
+.card
+  .card-header
+    %h4= "#{@meeting.title}"
+  %ul.list-group.list-group-flush
+    %li.list-group-item
+      %a= "開催日：#{@meeting.date} | #{@meeting.start_time.to_s(:time)} 〜 #{@meeting.finish_time.to_s(:time)} |"
+    %li.list-group-item
+      %a= "場所：#{@meeting.place} | プロジェクト：#{Project.find(@meeting.project_id).name}"
+    %li.list-group-item
+      %a= "担当者：#{User.find(@meeting.user_id).last_name},  審査者：#{User.find(@meeting.inspector_id).last_name},  承認者：#{User.find(@meeting.approver_id).last_name}"
+    %li.list-group-item
+      %a= "発行日：#{@meeting.publish_date}"
+    = render 'show_topic', meeting: @meeting
+    %li.list-group-item
+      .card
+        .card-header
+          備考
+        .card-body
+          = @meeting.note

@@ -1,0 +1,10 @@
+
+%li.list-group-item
+  - @meeting.topics.each do |topic|
+    .card
+      .card-header
+        %h5= topic.name
+      %ul.list-group.list-group-flush
+        - topic.comments.each do |comment|
+          %li.list-group-item
+            %p= comment.name
