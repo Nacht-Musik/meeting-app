@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'top_pages#index'
 
-  get '/meetings/:id', to: 'meeting#show'
+  get '/meetings/:id', to: 'meeting#show', as: 'meeting'
 
   # devise (User) 関連
   devise_scope :user do

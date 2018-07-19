@@ -10,7 +10,9 @@
       %a= "担当者：#{User.find(@meeting.user_id).last_name},  審査者：#{User.find(@meeting.inspector_id).last_name},  承認者：#{User.find(@meeting.approver_id).last_name}"
     %li.list-group-item
       %a= "発行日：#{@meeting.publish_date}"
+
     = render 'show_topic', meeting: @meeting
+    
     %li.list-group-item
       .card
         .card-header
