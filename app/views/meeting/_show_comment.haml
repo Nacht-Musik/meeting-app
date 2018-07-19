@@ -1,0 +1,6 @@
+= "#{indent}#{comment.name}"
+%br
+-if comment.children.present?
+  - cmts = sort_comments(comment.children)
+  - cmts.each do |child_cmt|
+    = render 'show_comment', comment: child_cmt, indent: "---#{indent}"

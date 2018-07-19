@@ -1,8 +1,9 @@
 - meetings.each do |meeting|
   %tr
-    -# 備忘メモ：タイトルクリックで、会議録詳細ページにジャンプさせる。
     %td= meeting.title
     -# %td= groups.find(meeting.group_id).id
     %td= users.find(meeting.user_id).last_name + ' ' + users.find(meeting.user_id).first_name
     %td= projects.find(meeting.project_id).name
     %td= meeting.date
+    %td
+      = link_to '■', meeting_path(meeting), class: 'btn btn-outline-info'

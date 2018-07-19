@@ -1,0 +1,21 @@
+.card
+  .card-header
+    %h4= "#{@meeting.title}"
+  %ul.list-group.list-group-flush
+    %li.list-group-item
+      %a= "開催日：#{@meeting.date} | #{@meeting.start_time.to_s(:time)} 〜 #{@meeting.finish_time.to_s(:time)} |"
+    %li.list-group-item
+      %a= "場所：#{@meeting.place} | プロジェクト：#{Project.find(@meeting.project_id).name}"
+    %li.list-group-item
+      %a= "担当者：#{User.find(@meeting.user_id).last_name},  審査者：#{User.find(@meeting.inspector_id).last_name},  承認者：#{User.find(@meeting.approver_id).last_name}"
+    %li.list-group-item
+      %a= "発行日：#{@meeting.publish_date}"
+
+    = render 'show_topic', topics: @topics, founder_comments: @founder_comments
+
+    %li.list-group-item
+      .card
+        .card-header
+          備考
+        .card-body
+          = @meeting.note
