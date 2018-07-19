@@ -34,5 +34,7 @@
     %p= @meeting.note
   %li
     Topic List...
+    - @meeting.topics.each do |topic|
+      %p= topic.name 
   %li
     Comment List...
