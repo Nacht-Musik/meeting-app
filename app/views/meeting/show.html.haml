@@ -35,6 +35,6 @@
   %li
     Topic List...
     - @meeting.topics.each do |topic|
-      %p= topic.name 
-  %li
-    Comment List...
+      %p= topic.name
+      - topic.comments.each do |comment|
+        %p= comment.name
