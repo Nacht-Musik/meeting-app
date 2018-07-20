@@ -30,8 +30,8 @@
       = f.text_field :note, class: 'form-control'
 
       = f.label 'Topic'
-      = render 'meetings/topic_card', f: f
-
+      = render 'meetings/topic_card', f: f, sort_num: 1
+      = render 'meetings/topic_card', f: f, sort_num: 2
 
       %br
       = f.submit class: 'btn btn-outline-primary'

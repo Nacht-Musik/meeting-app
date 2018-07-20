@@ -10,6 +10,7 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.new
+    @meeting.topics.build
     @users = User.all
     @projects = Project.all
   end

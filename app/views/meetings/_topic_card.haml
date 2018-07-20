@@ -1,9 +1,8 @@
-= form.fields_for :topics: do |fin|
-.card
-  .card-header
-    = fin.hidden_field :sort_num, 1
-    = fin.hidden_field :meeting_id, 1
-    = fin.label 'Topic name:'
-    = fin.text_field :name, class: 'form-control'
-  .card-body
-    = render 'meetings/comment'
+= f.fields_for :topics do |t|
+  = t.hidden_field :sort_num, :value => sort_num
+  .card
+    .card-header
+      = t.label 'Topic name:'
+      = t.text_field :name, class: 'form-control'
+    .card-body
+      -# = render 'meetings/comment'
