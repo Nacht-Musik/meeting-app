@@ -40,8 +40,7 @@
       .tab-pane#tab-published
         「配布済み」の本体部分
       .tab-pane#tab-new
-        -# = render 'meeting/form', meeting: @meeting
+        = render 'meetings/form', meeting: @meeting, users: @users
 %br
 = link_to 'マイページに戻る', my_page_path
 %br
-%p Find me in app/views/my/meeting.html.haml

@@ -2,8 +2,28 @@
   .card-header
     新規会議作成
   .card-body
-    = form_for meeting, url: meeting_path do |f|
+    = form_for meeting do |f|
       = f.label 'タイトル'
-      = f.text_field :title, class: 'form-control'
+      = f.text_field :title
+      %br
+      = f.label '開催日'
+      = f.date_select :date, class: 'form-control'
+      = f.label '：'
+      = f.time_select :start_time, class: 'form-control'
+      = f.label '〜'
+      = f.time_select :finish_time, class: 'form-control'
+      %br
+      = f.label '場所'
+      = f.text_field :place, class: 'form-control'
+      = f.label 'プロジェクト'
+      = f.text_field :project_id, class: 'form-control'
+      %br
+      = f.label '担当者'
+      = f.text_field :user_id, class: 'form-control'
+      = f.label '審査者'
+      = f.text_field :inspector_id, class: 'form-control'
+      = f.label '承認者'
+      = f.text_field :approver_id, class: 'form-control'
 
+      %br
       = f.submit '作成', class: 'btn btn-outline-primary'
