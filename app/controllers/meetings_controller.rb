@@ -1,4 +1,4 @@
-class MeetingController < ApplicationController
+class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show]
 
   def show
@@ -6,6 +6,15 @@ class MeetingController < ApplicationController
     @topics = sort_topics(@meeting.topics)
     # 始祖コメントを全て取得
     @founder_comments = set_founder_comments(@topics)
+  end
+
+
+  def new
+    @meeting = Meeting.new
+  end
+
+  def create
+    @meeting.save
   end
 
   private

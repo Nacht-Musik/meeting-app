@@ -40,7 +40,7 @@
       .tab-pane#tab-published
         「配布済み」の本体部分
       .tab-pane#tab-new
-        「新規作成」の本体部分
+        -# = render 'meeting/form', meeting: @meeting
 %br
 = link_to 'マイページに戻る', my_page_path
 %br

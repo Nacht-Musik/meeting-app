@@ -1,0 +1,9 @@
+.card
+  .card-header
+    新規会議作成
+  .card-body
+    = form_for meeting, url: meeting_path do |f|
+      = f.label 'タイトル'
+      = f.text_field :title, class: 'form-control'
+
+      = f.submit '作成', class: 'btn btn-outline-primary'
