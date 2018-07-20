@@ -24,6 +24,14 @@
       = f.label '審査者'
       = f.collection_select :inspector_id, users, :id, :name, {prompt: ""}, {class: 'custom-select'}
       = f.label '承認者'
+      = f.collection_select :approver_id, users, :id, :name, {prompt: ""}, {class: 'custom-select'}
+      %br
+      = f.label '備考'
+      = f.text_field :note, class: 'form-control'
+
+      = f.label 'Topic'
+      = render 'meetings/topic_card', f: f
+
 
       %br
-      = f.submit '作成', class: 'btn btn-outline-primary'
+      = f.submit class: 'btn btn-outline-primary'

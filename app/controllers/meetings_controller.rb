@@ -8,13 +8,21 @@ class MeetingsController < ApplicationController
     @founder_comments = set_founder_comments(@topics)
   end
 
-
   def new
     @meeting = Meeting.new
+    @users = User.all
+    @projects = Project.all
   end
 
   def create
-    @meeting.save
+    @meeting = Meeting.new(meeting_params)
+    if @meeting.save
+      # Meeting Save成功時の処理
+      redirect_to my_meeting_path
+    else
+      # Meeting Save失敗時の処理
+      redirect_to new_meeting_path
+    end
   end
 
   private
@@ -43,7 +51,10 @@ class MeetingsController < ApplicationController
     end
 
     # Strong parameters
-    # def meeting_params
-    #   params.require(:meeting).permit(:title, :user_id, :date)
-    # end
+    def meeting_params
+      params.require(:meeting).permit(:title, :date, :start_time, :finish_time,
+                                      :place, :project_id, :user_id, :inspector_id,
+                                      :approver_id, :note,
+                                      topics_attributes: [:meeting_id, :name, :sort_num])
+    end
 end

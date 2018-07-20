@@ -1,6 +1,8 @@
-%h3 マイメニュー
+%h3 マイページ
 
 %ul
+  %li
+    = link_to '会議 新規作成', new_meeting_path
   %li
     = link_to 'マイ会議', my_meeting_path
   %li
@@ -8,8 +10,6 @@
 %br
 %p 以下は追加予定のメニュー
 %ul
-  %li
-    %p 会議録 検索／閲覧
   %li
     %p 代表／管理ユーザーメニュー
   %li

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'top_pages#index'
 
-  resources :meetings, only: [:create, :show, :destroy]
+  resources :meetings, only: [:create, :show, :destroy, :new]
   # resources :meetings
 
   # devise (User) 関連
