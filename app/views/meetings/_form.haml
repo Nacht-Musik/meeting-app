@@ -31,7 +31,8 @@
 
       = f.label 'Topic'
       = render 'meetings/topic_card', f: f, sort_num: 1
-      = render 'meetings/topic_card', f: f, sort_num: 2
+      -# = render 'meetings/topic_card', f: f, sort_num: 2
+      %a.btn.btn-outline-info +
 
       %br
       = f.submit class: 'btn btn-outline-primary'

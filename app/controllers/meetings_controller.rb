@@ -11,6 +11,7 @@ class MeetingsController < ApplicationController
   def new
     @meeting = Meeting.new
     @meeting.topics.build
+    @meeting.topics.first.comments.build
     @users = User.all
     @projects = Project.all
   end
@@ -53,9 +54,22 @@ class MeetingsController < ApplicationController
 
     # Strong parameters
     def meeting_params
-      params.require(:meeting).permit(:title, :date, :start_time, :finish_time,
-                                      :place, :project_id, :user_id, :inspector_id,
-                                      :approver_id, :note,
-                                      topics_attributes: [:meeting_id, :name, :sort_num])
+      params.require(:meeting).permit(:title,
+                                      :date,
+                                      :start_time,
+                                      :finish_time,
+                                      :place,
+                                      :project_id,
+                                      :user_id,
+                                      :inspector_id,
+                                      :approver_id,
+                                      :note,
+                                      topics_attributes: [
+                                        :meeting_id,
+                                        :name,
+                                        :sort_num,
+                                        comments_attributes: [:id, :name, :sort_num]
+                                      ]
+                                    )
     end
 end

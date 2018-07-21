@@ -5,4 +5,6 @@
       = t.label 'Topic name:'
       = t.text_field :name, class: 'form-control'
     .card-body
-      -# = render 'meetings/comment'
+      = render 'meetings/comment', t: t, sort_num: 1
+      = render 'meetings/comment', t: t, sort_num: 2
+      %a.btn.btn-outline-info +
