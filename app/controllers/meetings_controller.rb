@@ -68,7 +68,11 @@ class MeetingsController < ApplicationController
                                         :meeting_id,
                                         :name,
                                         :sort_num,
-                                        comments_attributes: [:id, :name, :sort_num]
+                                        comments_attributes: [
+                                          :id,
+                                          :name,
+                                          :sort_num,
+                                          :indent]
                                       ]
                                     )
     end

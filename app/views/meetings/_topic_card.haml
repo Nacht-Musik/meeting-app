@@ -2,9 +2,15 @@
   = t.hidden_field :sort_num, :value => sort_num
   .card
     .card-header
-      = t.label 'Topic name:'
+      = t.label 'title:'
       = t.text_field :name, class: 'form-control'
     .card-body
-      = render 'meetings/comment', t: t, sort_num: 1
-      = render 'meetings/comment', t: t, sort_num: 2
+      = render 'meetings/comment', t: t, sort_num: 1, indent: 1
+      -# %br
+      -# = render 'meetings/comment', t: t, sort_num: 1, indent: 2
+      -# %br
+      -# = render 'meetings/comment', t: t, sort_num: 1, indent: 3
+      -# %br
+      -# = render 'meetings/comment', t: t, sort_num: 1, indent: 4
+      -# %br
       %a.btn.btn-outline-info +

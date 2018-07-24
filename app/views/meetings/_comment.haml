@@ -1,3 +1,55 @@
 = t.fields_for :comments do |c|
   = c.hidden_field :sort_num, :value => sort_num
-  = c.text_field :name, class: 'form-control'
+  = c.hidden_field :indent, :value => indent
+  .row
+    -# トップコメント
+    - if indent == 1 && sort_num == 1
+      .col-12
+        -# '<', '>'ボタンは表示するけど押せないようにする。
+        %a.btn.btn-outline-info.btn-back-indent <
+        %a.btn.btn-outline-info.btn-add-indent >
+      .col-10
+        = c.text_field :name, class: 'form-control'
+      .col-2
+        %a.add-cmt-indent1.btn.btn-outline-info +
+
+    -# Indent 1のコメント（トップ以外）
+    - if indent == 1 && sort_num != 1
+      .col-12
+        -# '<' ボタンは表示するけど押せないようにする。
+        %a.btn.btn-outline-info.btn-back-indent <
+        %a.btn.btn-outline-info.btn-add-indent >
+      .col-10
+        = c.text_field :name, class: 'form-control'
+      .col-2
+        %a.add-cmt-indent1.btn.btn-outline-info +
+
+    -# Indent 2のコメント（トップ以外）
+    - if indent == 2
+      .col-11.offset-1
+        %a.btn.btn-outline-info.btn-back-indent <
+        %a.btn.btn-outline-info.btn-add-indent >
+      .col-9.offset-1
+        = c.text_field :name, class: 'form-control'
+      .col-2
+        %a.add-cmt-indent2.btn.btn-outline-info +
+
+    -# Indent 3のコメント（トップ以外）
+    - if indent == 3
+      .col-10.offset-2
+        %a.btn.btn-outline-info.btn-back-indent <
+        %a.btn.btn-outline-info.btn-add-indent >
+      .col-8.offset-2
+        = c.text_field :name, class: 'form-control'
+      .col-2
+        %a.add-cmt-indent3.btn.btn-outline-info +
+
+    -# Indent 4のコメント（トップ以外）
+    - if indent == 4
+      .col-9.offset-3
+        %a.btn.btn-outline-info.btn-back-indent <
+        %a.btn.btn-outline-info.btn-add-indent >
+      .col-7.offset-3
+        = c.text_field :name, class: 'form-control'
+      .col-2
+        %a.add-cmt-indent4.btn.btn-outline-info +

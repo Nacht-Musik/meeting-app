@@ -2,7 +2,7 @@
   .card-header
     新規会議作成
   .card-body
-    = form_for meeting do |f|
+    = form_for meeting, remote: true do |f|
       = f.label 'タイトル'
       = f.text_field :title, class: 'form-control'
       %br
@@ -28,11 +28,21 @@
       %br
       = f.label '備考'
       = f.text_field :note, class: 'form-control'
-
+      %br
       = f.label 'Topic'
-      = render 'meetings/topic_card', f: f, sort_num: 1
-      -# = render 'meetings/topic_card', f: f, sort_num: 2
-      %a.btn.btn-outline-info +
+      #topic-area
+        -# １つ目のコメント
+        = render 'meetings/topic_card', f: f, sort_num: 1
+        %br
+        -# Topic追加ボタンを押下する毎にここにTopicカードを追加
+
+        -# Topicカードのテンプレート
+        #topic-template.d-none
+          = render 'meetings/topic_card', f: f, sort_num: 3
+          %br
+
+      %a#topic-add-btn.btn.btn-outline-info.add-btn +
 
       %br
-      = f.submit class: 'btn btn-outline-primary'
+      %br
+      = f.submit '作成', class: 'btn btn-primary'
