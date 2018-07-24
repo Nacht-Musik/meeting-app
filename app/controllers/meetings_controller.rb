@@ -17,7 +17,8 @@ class MeetingsController < ApplicationController
   end
 
   def create
-    @meeting = Meeting.new(meeting_params)
+    params = meeting_params
+    @meeting = Meeting.new(params)
     if @meeting.save
       # Meeting Save成功時の処理
       redirect_to my_meeting_path
@@ -68,11 +69,13 @@ class MeetingsController < ApplicationController
                                         :meeting_id,
                                         :name,
                                         :sort_num,
+                                        :_destroy,
                                         comments_attributes: [
                                           :id,
                                           :name,
                                           :sort_num,
-                                          :indent]
+                                          :indent,
+                                          :_destroy]
                                       ]
                                     )
     end

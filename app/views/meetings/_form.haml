@@ -30,19 +30,22 @@
       = f.text_field :note, class: 'form-control'
       %br
       = f.label 'Topic'
-      #topic-area
-        -# １つ目のコメント
-        = render 'meetings/topic_card', f: f, sort_num: 1
-        %br
-        -# Topic追加ボタンを押下する毎にここにTopicカードを追加
 
-        -# Topicカードのテンプレート
-        #topic-template.d-none
-          = render 'meetings/topic_card', f: f, sort_num: 3
+      #topic-area
+        = f.nested_fields_for :topics, wrapper_tag: :div do |t|
+          -# Topicのソート番号の設定方法未決 -> そもそもControllerに送る直前に設定すべきか？
+          -# = t.hidden_field :sort_num, :value => index, :class => "topic_sort_num"
+          .card
+            .card-header
+              = t.label 'title:'
+              = t.text_field :name, class: 'form-control'
+            .card-body
+              -# = "コメント表示箇所"
+              -# = render 'meetings/comment', t: t, sort_num: 1, indent: 1
+          -# = render 'meetings/topic_card', t: t
           %br
 
-      %a#topic-add-btn.btn.btn-outline-info.add-btn +
-
+        = f.add_nested_fields_link :topics, '+', class: 'btn btn-outline-primary', role: 'button'
       %br
       %br
       = f.submit '作成', class: 'btn btn-primary'
