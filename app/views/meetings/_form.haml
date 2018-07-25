@@ -33,16 +33,7 @@
 
       #topic-area
         = f.nested_fields_for :topics, wrapper_tag: :div do |t|
-          -# Topicのソート番号の設定方法未決 -> そもそもControllerに送る直前に設定すべきか？
-          -# = t.hidden_field :sort_num, :value => index, :class => "topic_sort_num"
-          .card
-            .card-header
-              = t.label 'title:'
-              = t.text_field :name, class: 'form-control'
-            .card-body
-              -# = "コメント表示箇所"
-              -# = render 'meetings/comment', t: t, sort_num: 1, indent: 1
-          -# = render 'meetings/topic_card', t: t
+          = render partial: 'meetings/topic_card', locals: {t: t, sort_num: 1}
           %br
 
         = f.add_nested_fields_link :topics, '+', class: 'btn btn-outline-primary', role: 'button'
