@@ -53,16 +53,20 @@ $(function(){
   );
 
   // Meeting Submitボタン
-  // $('#topic-area').on(
-  //   'click', '#meeting-submit-btn', function(){
-  //     // 1. Topic並び順を記録する
-  //     // 1-1. Topicのsort_numの設定要素を全て取得する
-  //     // 1-2. 取得順にsort_numを設定する
-  //     // 2. comment の表示をひとつ上げる。
-  //     // 2-1. Commentのsort_numの設定要素を全て取得する
-  //     // 2-2. 取得順にsort_numを設定する
-  //     console.log('submitボタンが押下されました');
-  //     alert('submitボタンが押下されました');
-  //   }
-  // );
+  $('#meeting-submit-btn').on(
+    'click', function(){
+      // Topic-cardを全て取得する。
+      var topic_cards = $("#topic-area").find('.topic-card');
+      $.each(topic_cards, function(i){
+        // Topic-cardを取得した順にソート番号を設定する
+        var topic_sort_num = i + 1;
+        $(this).find('.topic-sort-num').val(topic_sort_num);
+      });
+
+      // 2. comment の表示をひとつ上げる。
+      // 2-1. Commentのsort_numの設定要素を全て取得する
+      // 2-2. 取得順にsort_numを設定する
+
+    }
+  );
 });

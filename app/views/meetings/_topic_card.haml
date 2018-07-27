@@ -1,8 +1,8 @@
-.card
+.card.topic-card
   -# Topicのソート番号の設定方法未決 -> そもそもControllerに送る直前に設定すべきか？
   = t.hidden_field :sort_num, value: 1, class: "topic-sort-num"
   .card-header
-    = t.label 'title:'
+    -# = t.label 'title:'
     = t.text_field :name, class: 'form-control'
   .card-body
     = t.nested_fields_for :comments, wrapper_tag: :div do |c|

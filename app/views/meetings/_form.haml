@@ -36,7 +36,8 @@
           = render partial: 'meetings/topic_card', locals: {t: t}
 
         = f.add_nested_fields_link :topics, '+', class: 'btn btn-outline-primary topic-add-btn', role: 'button'
-        
+
       %br
       %br
       = f.submit '作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
+      -# %a.btn.btn-primary#meeting-submit-btn=  '作成'
