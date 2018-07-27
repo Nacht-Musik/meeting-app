@@ -1,27 +1,68 @@
+const MAX_INDENT = 4;   // インデントの最大数
+const MIN_INDENT = 1;   // インデントの最小値
+
+
 $(function(){
-  // Topic追加処理
-  // -> nested_fields_for Gemを使用する
+  // Comment インデント インクリメントボタン
+  $('#topic-area').on(
+    'click', '.cmt-indent-inc-btn', function(){
+      //対象コメントのindent設定要素を取得
+      var indent_ele = $(this).parent().find('.cmt-indent-num');
+      var indent_val = parseInt(indent_ele.val(), 10);
 
-  // Comment 追加処理
-  // -> nested_fields_for Gemを使用する
+      if (indent_val < MAX_INDENT) {
+        // 1. comment.indentの値を一つ加算
+        indent_ele.val(indent_val + 1);
 
-  // Comment インデントボタン
-  $('#cmt-indent-inc-btn').on({
-    // 1. comment.indent を1つ上げる. # indent + 1
-    // 2. comment の表示をひとつ下げる。
-    'click': function(){
-      console.log('インデント追加ボタンがクリックされました');
-      alert('インデント追加ボタンをクリックしました');
+        // 2. インデント表示を変更
+        var indent_area = $(this).parent().parent().find('.indent-area');
+        indent_area.removeClass("indent-" + indent_val.toString(10));
+        indent_area.addClass("indent-" + (indent_val + 1).toString(10));
+
+        // debug用
+        // console.log(indent_ele.val());
+      } else {
+        // debut用
+        // console.log(indent_ele.val() + ': もうインデントを追加出来ない');
+      }
     }
-  });
+  );
 
-  // Comment デクリメントボタン
-  $('#cmt-indent-dec-btn').on({
-    // 1. comment.indent を1つ下げる. # indent - 1
-    // 2. comment の表示をひとつ上げる。
-    'click': function(){
-      console.log('インデント追加ボタンがクリックされました');
-      alert('インデント追加ボタンをクリックしました');
+  // Commentインデント デクリメントボタン
+  $('#topic-area').on(
+    'click', '.cmt-indent-dec-btn', function(){
+      var indent_ele = $(this).parent().find('.cmt-indent-num');
+      var indent_val = parseInt(indent_ele.val(), 10);
+
+      if (indent_val > MIN_INDENT) {
+        // 1. comment.indentの値を一つ加算
+        indent_ele.val(indent_val - 1);
+
+        // 2. インデント表示を変更
+        var indent_area = $(this).parent().parent().find('.indent-area');
+        indent_area.removeClass("indent-" + indent_val.toString(10));
+        indent_area.addClass("indent-" + (indent_val - 1).toString(10));
+
+        // debug用
+        // console.log(indent_ele.val());
+      } else {
+        // debug用
+        // console.log(indent_ele.val() + ': もうインデントを削除出来ない');
+      }
     }
-  });
+  );
+
+  // Meeting Submitボタン
+  // $('#topic-area').on(
+  //   'click', '#meeting-submit-btn', function(){
+  //     // 1. Topic並び順を記録する
+  //     // 1-1. Topicのsort_numの設定要素を全て取得する
+  //     // 1-2. 取得順にsort_numを設定する
+  //     // 2. comment の表示をひとつ上げる。
+  //     // 2-1. Commentのsort_numの設定要素を全て取得する
+  //     // 2-2. 取得順にsort_numを設定する
+  //     console.log('submitボタンが押下されました');
+  //     alert('submitボタンが押下されました');
+  //   }
+  // );
 });
