@@ -31,7 +31,29 @@
       %br
       = f.label 'Topic'
 
+      -# 書き直す部分
       #topic-area
+        = f.fields_for :topics do |topic|
+          -# 以下はパーシャルに置き直す予定
+          .card.topic-card
+            .card-header
+              = topic.label 'title'
+              = topic.text_field :name, class: 'form-control'
+            .card-body
+              = topic.fields_for :comments do |comment|
+                %ul.cmt-block
+                  = comment.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
+                  %li.indent-area.indent-1
+                  %li.cmt-body
+                    = comment.hidden_field :indent, value: 1, class: "cmt-indent-num"
+                    %a.btn.btn-outline-info.cmt-indent-dec-btn <
+                    %a.btn.btn-outline-info.cmt-indent-inc-btn >
+                    %br
+                    = comment.text_field :name, class: 'form-control'
+
+
+      -# Gem (nested_fields_for)を使ったときの記述
+      -# #topic-area
         = f.nested_fields_for :topics, wrapper_tag: :div do |t|
           = render partial: 'meetings/topic_card', locals: {t: t}
 

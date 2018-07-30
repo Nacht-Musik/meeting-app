@@ -3,6 +3,11 @@ const MIN_INDENT = 1;   // インデントの最小値
 
 
 $(function(){
+  $('#topic-area').on(
+    'click', '#comment-add-btn', function(){
+
+    }
+  );
   // Comment インデント インクリメントボタン
   $('#topic-area').on(
     'click', '.cmt-indent-inc-btn', function(){
@@ -10,6 +15,8 @@ $(function(){
       var indent_ele = $(this).parent().find('.cmt-indent-num');
       var indent_val = parseInt(indent_ele.val(), 10);
 
+      // indentが実行可能な条件を洗い出し、
+      // 条件分岐を実装する！
       if (indent_val < MAX_INDENT) {
         // 1. comment.indentの値を一つ加算
         indent_ele.val(indent_val + 1);
