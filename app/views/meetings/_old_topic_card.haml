@@ -1,0 +1,10 @@
+.card.topic-card
+  -# Topicのソート番号の設定方法未決 -> そもそもControllerに送る直前に設定すべきか？
+  = t.hidden_field :sort_num, value: 1, class: "topic-sort-num"
+  .card-header
+    -# = t.label 'title:'
+    = t.text_field :name, class: 'form-control'
+  .card-body
+    = t.nested_fields_for :comments, wrapper_tag: :div do |c|
+      = render partial: 'meetings/comment', locals: {c: c, sort_num: 1, indent: 1}
+    = t.add_nested_fields_link :comments, '+', class: 'btn btn-secondary cmt-add-btn', role: 'button'

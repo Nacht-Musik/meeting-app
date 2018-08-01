@@ -1,13 +1,22 @@
 const MAX_INDENT = 4;   // インデントの最大数
 const MIN_INDENT = 1;   // インデントの最小値
 
+$(function() {
+  $('form').on('click', '.remove_fields', function(event) {
+      $(this).prev('input[type=hidden]').val('1');
+      $(this).closest('fieldset').hide();
+      return event.preventDefault();
+  });
+  return $('form').on('click', '.add_fields', function(event) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g');
+      $(this).before($(this).data('fields').replace(regexp, time));
+      return event.preventDefault();
+  });
+});
 
-$(function(){
-  $('#topic-area').on(
-    'click', '#comment-add-btn', function(){
-
-    }
-  );
+$(function() {
   // Comment インデント インクリメントボタン
   $('#topic-area').on(
     'click', '.cmt-indent-inc-btn', function(){
@@ -73,7 +82,6 @@ $(function(){
       // 2. comment の表示をひとつ上げる。
       // 2-1. Commentのsort_numの設定要素を全て取得する
       // 2-2. 取得順にsort_numを設定する
-
     }
   );
 });
