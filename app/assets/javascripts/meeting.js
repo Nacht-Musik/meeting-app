@@ -1,6 +1,7 @@
 const MAX_INDENT = 4;   // インデントの最大数
 const MIN_INDENT = 1;   // インデントの最小値
 
+// Topic/Comment の動的追加関連
 $(function() {
   $('form').on('click', '.remove_fields', function(event) {
       $(this).prev('input[type=hidden]').val('1');

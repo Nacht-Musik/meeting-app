@@ -1,0 +1,11 @@
+%ul.cmt-block
+  -#= f.hidden_field :sort_num, value: sort_num, class: "cmt-sort-num"
+  = f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
+  %li.indent-area.indent-1
+  %li.cmt-body
+    -#= f.hidden_field :indent, value: indent, class: "cmt-indent-num"
+    = f.hidden_field :indent, value: 1, class: "cmt-indent-num"
+    %a.btn.btn-outline-info.cmt-indent-dec-btn <
+    %a.btn.btn-outline-info.cmt-indent-inc-btn >
+    %br
+    = f.text_field :name, class: 'form-control'

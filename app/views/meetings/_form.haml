@@ -31,41 +31,15 @@
       %br
       = f.label 'Topic'
 
-      -# 書き直す部分
+      -#書き直す部分
       #topic-area
         = f.fields_for :topics do |topic|
           = render partial: 'meetings/topic_card', locals: {f: topic}
 
         = link_to_add_fields "+", f, :topics
-        -#%a.btn.btn-primary#topic-add-btn  ＋
-
-        -#以下はパーシャルに置き直す予定
-        -#.card.topic-card
-          .card-header
-            = topic.label 'title'
-            = topic.text_field :name, class: 'form-control'
-            = topic.hidden_field :sort_num, value: 1, class: 'form-control'
-
-
-      -#Gem (nested_fields_for)を使ったときの記述
-      -##topic-area
-        = f.nested_fields_for :topics, wrapper_tag: :div do |t|
-          = render partial: 'meetings/topic_card', locals: {t: t}
-
-        = f.add_nested_fields_link :topics, '+', class: 'btn btn-outline-primary topic-add-btn', role: 'button'
-
-      -###### 自動生成させる予定のモデル
-      -# #topic-area
-        .card.topic-card
-          .card-header
-            = "topic#1"
-            %input#meeting_topics_attributes_0_name.form-control{:name => "meeting[topics_attributes][0][name]", :type => "text"}
-        .card.topic-card
-          .card-header
-            = "topic#2"
-            %input#meeting_topics_attributes_1_name.form-control{:name => "meeting[topics_attributes][1][name]", :type => "text"}
 
       %br
       %br
       = f.submit '作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
+      -#JSデバッグ用
       -# %a.btn.btn-primary#meeting-submit-btn=  '作成'
