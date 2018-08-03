@@ -1,4 +1,5 @@
 module MeetingsHelper
+  # commentをsort番号順に並び替え
   def sort_comments(comments)
     comments.sort do |a, b|
       a.sort_num <=> b.sort_num
@@ -8,7 +9,6 @@ module MeetingsHelper
   # 追加ボタン
   def link_to_add_fields(name, f, association, options={})
     # association で渡されたシンボルから、対象のモデルを作る
-    # 前回コントローラーで実装したモデルの build にあたる処理
     new_object = f.object.class.reflect_on_association(association).klass.new
 
     # Javascript 側で配列のインデックス値とする
@@ -24,7 +24,8 @@ module MeetingsHelper
 
     # ボタンの設置。classを指定してJavascriptと連動、fields を渡しておいて、
     # ボタン押下時にこの要素(fields)をJavascript側で増やすようにする
-    link_to(name, '#', class: "add_fields btn btn-outline-primary", data: {id: id, fields: fields.gsub("\n","")})
+    link_to(name, '#', class: "add_fields btn btn-outline-primary",
+            data: {id: id, fields: fields.gsub("\n","")})
   end
 
   #削除ボタン
@@ -32,5 +33,4 @@ module MeetingsHelper
     # _destroy の hiddenフィールドと削除ボタンを設置
     f.hidden_field(:_destroy) + link_to(name, '#', class: "remove_field")
   end
-
 end

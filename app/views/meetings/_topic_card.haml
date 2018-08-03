@@ -4,7 +4,7 @@
     = f.label 'title'
     = f.text_field :name, class: 'form-control'
     = f.hidden_field :sort_num, value: 1, class: 'form-control'
-  .card-body
+  .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment, sort_num: 1, indent: 1}
     = link_to_add_fields "+", f, :comments

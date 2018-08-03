@@ -21,13 +21,23 @@ $(function() {
   // Comment インデント インクリメントボタン
   $('#topic-area').on(
     'click', '.cmt-indent-inc-btn', function(){
-      //対象コメントのindent設定要素を取得
+      //対象コメントのindent番号を取得
       var indent_ele = $(this).parent().find('.cmt-indent-num');
       var indent_val = parseInt(indent_ele.val(), 10);
+      //ひとつ上のコメントのindent番号を取得
+      var prev_indent_ele = $(this).parents('.cmt-block').prev('ul').find('.cmt-indent-num');
+      var prev_indent_val = parseInt(prev_indent_ele.val(), 10);
 
-      // indentが実行可能な条件を洗い出し、
-      // 条件分岐を実装する！
-      if (indent_val < MAX_INDENT) {
+      var diff_val = indent_val - prev_indent_val;
+
+      if (indent_val >= MAX_INDENT || isNaN(prev_indent_val) || diff_val > 0) {
+        /* 条件
+         1. インデント値が最大である
+         2. トップのコメントである（ひとつ上のコメントがない）
+         3. ひとつ上のコメントよりも2つ以上下げられない
+        */
+        console.log("インデント不可！");
+      } else {
         // 1. comment.indentの値を一つ加算
         indent_ele.val(indent_val + 1);
 
@@ -35,12 +45,6 @@ $(function() {
         var indent_area = $(this).parent().parent().find('.indent-area');
         indent_area.removeClass("indent-" + indent_val.toString(10));
         indent_area.addClass("indent-" + (indent_val + 1).toString(10));
-
-        // debug用
-        // console.log(indent_ele.val());
-      } else {
-        // debut用
-        // console.log(indent_ele.val() + ': もうインデントを追加出来ない');
       }
     }
   );
