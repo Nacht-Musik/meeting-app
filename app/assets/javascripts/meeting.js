@@ -1,6 +1,31 @@
 const MAX_INDENT = 4;   // インデントの最大数
 const MIN_INDENT = 1;   // インデントの最小値
 
+function isIndentIncrement(indent_val, prev_indent_val) {
+  var diff_val = indent_val - prev_indent_val;
+
+  /* 条件
+   1. インデント値が上限値である
+   2. トップのコメントである（ひとつ上のコメントがない）
+   3. ひとつ上のコメントよりも2つ以上下げられない
+  */
+
+  if (indent_val >= MAX_INDENT || isNaN(prev_indent_val) || diff_val > 0) {
+    return false;
+  }
+  return true;
+}
+
+function isIndentDecrement(indent_val) {
+  /* 条件
+   1. インデント値が下限値である
+  */
+  if (indent_val <= MIN_INDENT) {
+    return false;
+  }
+  return true;
+}
+
 // Topic/Comment の動的追加関連
 $(function() {
   $('form').on('click', '.remove_fields', function(event) {
@@ -21,30 +46,28 @@ $(function() {
   // Comment インデント インクリメントボタン
   $('#topic-area').on(
     'click', '.cmt-indent-inc-btn', function(){
+      // 対象コメントのindent-area要素を取得
+      var indent_ele = $(this).parents('.cmt-block').find('.cmt-indent-num');
       //対象コメントのindent番号を取得
-      var indent_ele = $(this).parent().find('.cmt-indent-num');
       var indent_val = parseInt(indent_ele.val(), 10);
       //ひとつ上のコメントのindent番号を取得
-      var prev_indent_ele = $(this).parents('.cmt-block').prev('ul').find('.cmt-indent-num');
-      var prev_indent_val = parseInt(prev_indent_ele.val(), 10);
+      var prev_indent_val = parseInt($(this).parents('.cmt-block').prev('ul').find('.cmt-indent-num').val(), 10);
 
-      var diff_val = indent_val - prev_indent_val;
-
-      if (indent_val >= MAX_INDENT || isNaN(prev_indent_val) || diff_val > 0) {
-        /* 条件
-         1. インデント値が最大である
-         2. トップのコメントである（ひとつ上のコメントがない）
-         3. ひとつ上のコメントよりも2つ以上下げられない
-        */
-        console.log("インデント不可！");
-      } else {
+      if (isIndentIncrement(indent_val, prev_indent_val)){
         // 1. comment.indentの値を一つ加算
         indent_ele.val(indent_val + 1);
 
         // 2. インデント表示を変更
-        var indent_area = $(this).parent().parent().find('.indent-area');
+        var indent_area = $(this).parents('.cmt-block').find('.indent-area');
         indent_area.removeClass("indent-" + indent_val.toString(10));
         indent_area.addClass("indent-" + (indent_val + 1).toString(10));
+
+        // 3. 必要に応じてインデントボタンのCSSを変更する。
+        // 3-1. ホバーを殺す
+        // 3-2. 背景色を変える
+
+      } else {
+        console.log("インデント不可！");
       }
     }
   );
@@ -55,19 +78,18 @@ $(function() {
       var indent_ele = $(this).parent().find('.cmt-indent-num');
       var indent_val = parseInt(indent_ele.val(), 10);
 
-      if (indent_val > MIN_INDENT) {
+      if (isIndentDecrement(indent_val)){
+      // if (indent_val > MIN_INDENT) {
         // 1. comment.indentの値を一つ加算
         indent_ele.val(indent_val - 1);
 
         // 2. インデント表示を変更
-        var indent_area = $(this).parent().parent().find('.indent-area');
+        var indent_area = $(this).parents('.cmt-block').find('.indent-area');
         indent_area.removeClass("indent-" + indent_val.toString(10));
         indent_area.addClass("indent-" + (indent_val - 1).toString(10));
 
-        // debug用
         // console.log(indent_ele.val());
       } else {
-        // debug用
         // console.log(indent_ele.val() + ': もうインデントを削除出来ない');
       }
     }

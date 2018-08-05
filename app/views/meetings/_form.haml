@@ -36,7 +36,7 @@
         = f.fields_for :topics do |topic|
           = render partial: 'meetings/topic_card', locals: {f: topic}
 
-        = link_to_add_fields "+", f, :topics
+        = link_to_add_fields "Topic追加", f, :topics
 
       %br
       %br
