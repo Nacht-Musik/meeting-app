@@ -57,10 +57,42 @@ function commentMoveLeft(cmt_block_ele) {
   decrementIndentVal(cmt_block_ele);
 }
 
-// 指定コメント要素の子孫コメントの要素を全て取得
+// 指定コメント要素の子孫コメント要素を全て取得
 function findProgenyComments(cmt_block_ele) {
   var progency_comments = [];
+  var actual_indent_val = getIndentVal(cmt_block_ele);
+  var next_cmt_block_ele;
+  var next_cmt_indent_val;
 
+  // 子コメントを1つ以上持っているかを確認。１つもなかったらNaNを返す.
+  if(!isHasChildComment(cmt_block_ele)){
+    return NaN;
+  } else {
+    next_cmt_block_ele = cmt_block_ele.next('ul');
+    progency_comments.push(next_cmt_block_ele);
+  }
+  // 子孫コメントがなくなるまでループ
+  while(true){
+    next_cmt_block_ele = next_cmt_block_ele.next('ul');
+    next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
+    if(isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val){
+      break;
+    }
+    progency_comments.push(next_cmt_block_ele);
+  }
+  return progency_comments;
+}
+
+// 子コメントを持っているか否かを判定
+function isHasChildComment(cmt_block_ele) {
+  var actual_indent_val = getIndentVal(cmt_block_ele);
+  var next_cmt_indent_val = getIndentVal(cmt_block_ele.next('ul'));
+  // console.log("indent:" + actual_indent_val + ", next_indent:" + next_cmt_indent_val);
+
+  if (isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val) {
+    return false;
+  }
+  return true;
 }
 
 // コメント左移動ボタン要素を取得
@@ -89,4 +121,26 @@ function incrementIndentVal(cmt_block_ele) {
 function decrementIndentVal(cmt_block_ele) {
   var actual_val = parseInt(cmt_block_ele.find('.cmt-indent-num').val(), 10);
   cmt_block_ele.find('.cmt-indent-num').val(actual_val - 1);
+}
+
+// 右移動ボタンの状態変更
+function changeStateOfMoveRightBtn(cmt_block_ele){
+  var right_btn_ele = findCmtRightMoveBtnEle(cmt_block_ele);
+
+  if (!isCommentMoveRight(cmt_block_ele)) {
+    right_btn_ele.addClass("disabled");
+  } else {
+    right_btn_ele.removeClass("disabled");
+  }
+}
+
+// 左移動ボタンの状態変更
+function changeStateOfMoveLeftBtn(cmt_block_ele) {
+  var left_btn_ele = findCmtLeftMoveBtnEle(cmt_block_ele);
+
+  if (!isCommentMoveLeft(cmt_block_ele)) {
+    left_btn_ele.addClass("disabled");
+  } else {
+    left_btn_ele.removeClass("disabled");
+  }
 }

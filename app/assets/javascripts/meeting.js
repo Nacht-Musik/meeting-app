@@ -10,39 +10,31 @@ $(function() {
       var cmt_block_ele = $(this).parents('.cmt-block');
 
         if (isCommentMoveRight(cmt_block_ele)) {
-          // 子コメントを全て取得
-          // 孫、ひ孫コメントも全て取得
-          // ⇑ が存在する場合、合わせて移動する(?)
+          // 0. 子孫コメントを全て取得
+          var progency_comments = findProgenyComments(cmt_block_ele);
 
-          // 1. コメントをひとつ右に移動
+          // 1. 対象コメントをひとつ右に移動
           commentMoveRight(cmt_block_ele);
 
-          // 2. 必要に応じて右移動ボタンを無効化
-          if (isCommentMoveRight(cmt_block_ele)) {
-            $(this).removeClass("disabled");
-          } else {
-            $(this).addClass("disabled");
-          }
+          // 2. 対象コメントの右移動ボタンの状態を必要に応じて変更(disabled or not)
+          changeStateOfMoveRightBtn(cmt_block_ele);
 
-          // 3. 左移動ボタンを有効化
-          var move_left_btn_ele = $(this).parent().find('.cmt-indent-left-btn');
-          if (move_left_btn_ele.hasClass('disabled'))
-            move_left_btn_ele.removeClass('disabled');
+          // 3. 対象コメントの左移動ボタンの状態を必要に応じて変更(disabled or not)
+          changeStateOfMoveLeftBtn(cmt_block_ele);
 
-
-          // 4. 直下コメントの右移動可否を確認 => (動けるようになってたら)右移動ボタンを有効化
+          // 4. 直下コメントの右移動ボタンの状態を変更(disabled or not)
           var next_cmt_block_ele = cmt_block_ele.next('ul');
-          var next_move_right_btn_ele = findCmtRightMoveBtnEle(next_cmt_block_ele);
-          if (isCommentMoveRight(next_cmt_block_ele) && next_move_right_btn_ele.hasClass('disabled')) {
-            next_move_right_btn_ele.removeClass("disabled");
-          }
+          changeStateOfMoveRightBtn(next_cmt_block_ele);
 
-          //////  ↓ たぶん不要  #コメント右移動後、直下コメントの左移動可否は変化しない（はず）
-          // 左移動について確認 => (動けるようになってたら)左移動ボタンを有効化
-          // var next_move_left_btn_ele = findCmtLeftMoveBtnEle(next_cmt_block_ele);
-          // if (isCommentMoveLeft(next_cmt_block_ele) && next_move_left_btn_ele.hasClass('disabled')) {
-          //   next_move_left_btn_ele.removeClass("disabled");
-          // }
+          // 5. 対象コメントの子孫コメントも合わせて右移動する
+          $.each(progency_comments, function(index, ele){
+            if (!isCommentMoveRight(ele)) {
+              return;
+            }
+            commentMoveRight(ele);
+            changeStateOfMoveRightBtn(ele);
+            changeStateOfMoveLeftBtn(ele);
+          });
 
         } else {
           console.log("右移動出来ない！");
@@ -57,27 +49,31 @@ $(function() {
       var cmt_block_ele = $(this).parents('.cmt-block');
 
       if (isCommentMoveLeft(cmt_block_ele)){
+        // 0. 子孫コメントを全て取得
+        var progency_comments = findProgenyComments(cmt_block_ele);
 
         // 1. コメントを一つ左に移動
         commentMoveLeft(cmt_block_ele);
 
-        // 2. 必要に応じて右移動ボタンを有効化する
-        var move_right_btn_ele = findCmtRightMoveBtnEle(cmt_block_ele);
+        // 2. 対象コメントの右移動ボタンの状態を必要に応じて変更(disabled or not)
+        changeStateOfMoveRightBtn(cmt_block_ele);
 
-        if(move_right_btn_ele.hasClass('disabled'))
-          move_right_btn_ele.removeClass('disabled');
+        // 3. 対象コメントの左移動ボタンの状態を必要に応じて変更(disabled or not)
+        changeStateOfMoveLeftBtn(cmt_block_ele);
 
-        // 3. 移動後のインデント値が最小出会った場合、左移動ボタンを無効化
-        if(getIndentVal(cmt_block_ele) === MIN_INDENT){
-          $(this).addClass('disabled');
-        }
-
-        // 4. 直下コメントの右移動可否を確認 => 必要に応じて無効化
+        // 4. 直下コメントの右移動ボタンの状態を必要に応じて変更
         var next_cmt_block_ele = cmt_block_ele.next('ul');
-        var next_move_right_btn_ele = findCmtRightMoveBtnEle(next_cmt_block_ele);
-        if (!isCommentMoveRight(next_cmt_block_ele) && !next_move_right_btn_ele.hasClass('disabled')) {
-          next_move_right_btn_ele.addClass("disabled");
-        }
+        changeStateOfMoveRightBtn(next_cmt_block_ele);
+
+        // 5. 対象コメントの子孫コメントも合わせて右移動する
+        $.each(progency_comments, function(index, ele){
+          if (!isCommentMoveLeft(ele)) {
+            return;
+          }
+          commentMoveLeft(ele);
+          changeStateOfMoveLeftBtn(ele);
+          changeStateOfMoveRightBtn(ele);
+        });
 
       } else {
         console.log("左移動出来ない！");
