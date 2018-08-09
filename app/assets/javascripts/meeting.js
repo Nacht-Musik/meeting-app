@@ -27,14 +27,14 @@ $(function() {
           changeStateOfMoveRightBtn(next_cmt_block_ele);
 
           // 5. 対象コメントの子孫コメントも合わせて右移動する
-          $.each(progency_comments, function(index, ele){
+          $.each(progency_comments, function (index, ele) {
             if (!isCommentMoveRight(ele)) {
               return;
             }
             commentMoveRight(ele);
             changeStateOfMoveRightBtn(ele);
             changeStateOfMoveLeftBtn(ele);
-          });
+          })
 
         } else {
           console.log("右移動出来ない！");
@@ -65,7 +65,7 @@ $(function() {
         var next_cmt_block_ele = cmt_block_ele.next('ul');
         changeStateOfMoveRightBtn(next_cmt_block_ele);
 
-        // 5. 対象コメントの子孫コメントも合わせて右移動する
+        // 5. 対象コメントの子孫コメントも合わせて左移動する
         $.each(progency_comments, function(index, ele){
           if (!isCommentMoveLeft(ele)) {
             return;

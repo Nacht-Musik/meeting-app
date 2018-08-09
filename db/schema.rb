@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180721131925) do
+ActiveRecord::Schema.define(version: 20180808061321) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20180721131925) do
     t.integer "indent", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["topic_id"], name: "index_comments_on_topic_id"
   end
 
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(version: 20180721131925) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "topics"
   add_foreign_key "family_comments", "comments"
   add_foreign_key "family_comments", "comments", column: "child_id"

@@ -75,6 +75,7 @@ class MeetingsController < ApplicationController
                                           :name,
                                           :sort_num,
                                           :indent,
+                                          :parent_id,
                                           :_destroy]
                                       ]
                                     )
