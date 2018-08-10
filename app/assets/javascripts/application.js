@@ -11,11 +11,12 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require turbolinks
 //= require jquery
 //= require jquery_ujs
 //= require popper
 //= require bootstrap
+//= require turbolinks
+//= require nested_form_fields
 //= require_tree .
 
 $(function () {

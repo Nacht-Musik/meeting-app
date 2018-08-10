@@ -7,8 +7,10 @@ class MyController < ApplicationController
   end
 
   def meeting
+    if user_signed_in?
+      @meeting = Meeting.new
+    end
   end
-
 
   private
     def set_meetings

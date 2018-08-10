@@ -1,0 +1,28 @@
+.cmt-block{
+  display: -webkit-flex;
+  display: flex;
+  .cmt-body{
+    width: 80%;
+    float: left;
+  }
+  .indent-1{
+    width: 0%;
+    float: left;
+  }
+  .indent-2{
+    width: 5%;
+    float: left;
+  }
+  .indent-3{
+    width: 10%;
+    float: left;
+  }
+  .indent-4{
+    width: 15%;
+    float: left;
+  }
+}
+
+.cmt-area::before {
+  // content: "[___]";
+}

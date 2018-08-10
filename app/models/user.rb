@@ -9,7 +9,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [:login]
 
-  has_many :responsible_meetings, class_name: 'Meeting', foreign_key: 'user_id'
+  has_many :meetings
   has_many :inspect_meetings,     class_name: 'Meeting', foreign_key: 'inspecter_id'
   has_many :approve_meetings,     class_name: 'Meeting', foreign_key: 'authorither_id'
 
