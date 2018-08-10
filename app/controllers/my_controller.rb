@@ -12,7 +12,6 @@ class MyController < ApplicationController
     end
   end
 
-
   private
     def set_meetings
       @meetings = Meeting.all
