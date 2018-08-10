@@ -20,19 +20,19 @@ class MeetingsController < ApplicationController
 
   def create
     params = meeting_params
-
-    @meeting = Meeting.new(params)
+    meeting = Meeting.new(params)
 
     # 各コメントに親コメントを設定
-    set_parent_comments(@meeting)
+    set_parent_comments(meeting)
 
-    if @meeting.save
+    if meeting.save
       # Meeting Save成功時の処理
-      redirect_to my_meeting_path
+      flash = {success: '会議録を保存しました。'}
+      redirect_to my_meeting_path, flash: flash
     else
       # Meeting Save失敗時の処理
-      # flash にエラーメッセージを格納
-      p "保存失敗"
+      # flash = {error: '保存に失敗しました'}
+      # render :new
     end
   end
 

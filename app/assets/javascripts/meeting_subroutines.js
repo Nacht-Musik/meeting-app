@@ -145,28 +145,3 @@ function changeStateOfMoveLeftBtn(cmt_block_ele) {
   }
 }
 
-// 親コメントを探すメソッド
-function findParentCommentID(cmt_block_ele){
-  var indent_val = getIndentVal(cmt_block_ele);
-  var prev_cmt_block_ele = cmt_block_ele.find('ul');
-  var prev_indent_val = getIndentVal(prev_cmt_block_ele);
-
-
-  if (indent_val === 1 || isNaN(prev_indent_val)){
-    return nil;
-  }
-
-  while(true){
-    if(isNaN(prev_indent_val)) {
-      return nil;
-    }
-    if (prev_indent_val < indent_val){
-      console.log('親コメント発見！')
-      // return  親コメントのIDにあたる情報....(どうやって設定する？)
-    }
-    // もう一個上のコメントを取得
-    prev_cmt_block_ele = prev_cmt_block_ele.find('ul');
-    prev_indent_val = getIndentVal(prev_cmt_block_ele);
-  }
-}
-

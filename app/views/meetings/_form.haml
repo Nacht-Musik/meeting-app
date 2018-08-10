@@ -31,7 +31,6 @@
       %br
       = f.label 'Topic'
 
-      -#書き直す部分
       #topic-area
         = f.fields_for :topics do |topic|
           = render partial: 'meetings/topic_card', locals: {f: topic}
