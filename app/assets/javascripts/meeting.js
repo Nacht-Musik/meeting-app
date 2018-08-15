@@ -1,8 +1,7 @@
 const MAX_INDENT = 4;   // インデントの最大数
 const MIN_INDENT = 1;   // インデントの最小値
 
-
-$(function() {
+$(document).on('turbolinks:load', function() {
   // Comment 右移動ボタン
   $('#topic-area').on(
     'click', '.cmt-indent-right-btn', function(){
@@ -102,7 +101,7 @@ $(function() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Topic/Comment の動的追加関連
-$(function() {
+$(document).on('turbolinks:load', function() {
   $('form').on('click', '.remove_fields', function(event) {
     $(this).prev('input[type=hidden]').val('1');
     $(this).closest('fieldset').hide();
