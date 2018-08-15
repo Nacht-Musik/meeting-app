@@ -1,7 +1,8 @@
 %ul.cmt-block
   = f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
-  = f.hidden_field :indent, value: 1, class: "cmt-indent-num"
-  -#= f.hidden_field :parent, value: 1, class: "cmt-parent"
+  -#- f.indent = 1 if f.indent.nil?
+  = f.hidden_field :indent, class: "cmt-indent-num"
+  -#= f.hidden_field :indent, value: indent, class: "cmt-indent-num"
   %li.indent-area.indent-1
   %li.cmt-body
     %a.btn.btn-info.btn-sm.cmt-indent-left-btn.disabled{"aria-disabled" => "true" } <

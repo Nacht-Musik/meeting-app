@@ -1,21 +1,20 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
-  before_action :set_meeting, only: [:show]
+  before_action :set_meeting, only: [:show, :edit]
+  before_action :set_users, only: [:new, :edit]
+  before_action :set_projects, only: [:new, :edit]
 
   def show
     # ソート番号順に並んだTopicsを取得
     @topics = sort_topics(@meeting.topics)
     # 始祖コメントを全て取得
     @founder_comments = set_founder_comments(@topics)
-
   end
 
   def new
     @meeting = Meeting.new
     @meeting.topics.build
     @meeting.topics.first.comments.build
-    @users = User.all
-    @projects = Project.all
   end
 
   def create
@@ -31,9 +30,15 @@ class MeetingsController < ApplicationController
       redirect_to my_meeting_path, flash: flash
     else
       # Meeting Save失敗時の処理
-      # flash = {error: '保存に失敗しました'}
-      # render :new
     end
+  end
+
+  def edit
+
+  end
+
+  def update
+
   end
 
   private
@@ -41,15 +46,18 @@ class MeetingsController < ApplicationController
       @meeting = Meeting.find(params[:id])
     end
 
-    def sort_topics (topics)
-      topics.sort do |a, b|
-        a.sort_num <=> b.sort_num
-      end
+    def set_users
+      @users = User.all
+    end
+
+    def set_projects
+      @projects = Project.all
     end
 
     # Strong parameters
     def meeting_params
-      params.require(:meeting).permit(:title,
+      params.require(:meeting).permit(:id,
+                                      :title,
                                       :date,
                                       :start_time,
                                       :finish_time,

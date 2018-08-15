@@ -1,7 +1,14 @@
 module MeetingsHelper
-  # commentをsort番号順に並び替える
+  # commentをsort番号順に並び替え
   def sort_comments(comments)
     comments.sort do |a, b|
+      a.sort_num <=> b.sort_num
+    end
+  end
+
+  # Topicをsort番号順に並び替え
+  def sort_topics (topics)
+    topics.sort do |a, b|
       a.sort_num <=> b.sort_num
     end
   end
