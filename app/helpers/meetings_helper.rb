@@ -45,6 +45,20 @@ module MeetingsHelper
     end
   end
 
+  # コメントのインデント値に応じたCSS classを返す
+  def add_indent_css (indent_val)
+    if indent_val == 1
+      return ".indent-1"
+    elsif indent_val == 2
+      return "indent-2"
+    elsif indent_val == 3
+      return "indent-3"
+    elsif indent_val == 4
+      return "indent-4"
+    else
+      return ""
+    end
+  end
 
   # 始祖コメントを集めるメソッド
   def set_founder_comments (topics)

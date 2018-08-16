@@ -34,18 +34,13 @@ class MeetingsController < ApplicationController
   end
 
   def edit
+    # p '#--- editアクション実行 ---#'
   end
 
   def update
-    p 'updateアクション実行'
+    # p 'updateアクション実行'
     params = meeting_params
-    p "--- params ---"
-    p params
-    p "--------------"
-    p "--- meeting ---"
-    p @meeting
-    p "---------------"
-    # @meeting.update(params)
+
     if @meeting.update(params)
       # Meeting Update成功時の処理
       flash = {success: '会議録を保存しました。'}
