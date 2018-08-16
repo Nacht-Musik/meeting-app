@@ -1,9 +1,17 @@
 %ul.cmt-block
   = f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
-  -#- f.indent = 1 if f.indent.nil?
   = f.hidden_field :indent, class: "cmt-indent-num"
-  -#= f.hidden_field :indent, value: indent, class: "cmt-indent-num"
-  %li.indent-area.indent-1
+
+  -# indentの値(f.object.indent)によって、空白(.indent-x)を変更
+  - if f.object.indent == 1
+    %li.indent-area.indent-1
+  - elsif f.object.indent == 2
+    %li.indent-area.indent-2
+  - elsif f.object.indent == 3
+    %li.indent-area.indent-3
+  - elsif f.object.indent == 4
+    %li.indent-area.indent-4
+
   %li.cmt-body
     %a.btn.btn-info.btn-sm.cmt-indent-left-btn.disabled{"aria-disabled" => "true" } <
     %a.btn.btn-info.btn-sm.cmt-indent-right-btn{"aria-disabled" => "true" } >

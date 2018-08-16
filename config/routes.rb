@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root to: 'top_pages#index'
 
-  resources :meetings, only: [:create, :show, :destroy, :new, :edit]
-  # resources :meetings, only: [:create, :show, :destroy, :new]
-  # resources :meetings
+  # resources :meetings, only: [:create, :show, :destroy, :new, :edit]
+  # resources :meetings, only: [:create, :show, :destroy, :new, :edit, :update]
+  resources :meetings
 
   # devise (User) 関連
   devise_scope :user do

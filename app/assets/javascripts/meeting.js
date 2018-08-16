@@ -8,37 +8,38 @@ $(document).on('turbolinks:load', function() {
       // 対象コメントブロック要素を取得
       var cmt_block_ele = $(this).parents('.cmt-block');
 
-        if (isCommentMoveRight(cmt_block_ele)) {
-          // 0. 子孫コメントを全て取得
-          var progency_comments = findProgenyComments(cmt_block_ele);
+      if (isCommentMoveRight(cmt_block_ele)) {
+        // 0. 子孫コメントを全て取得
+        var progency_comments = findProgenyComments(cmt_block_ele);
+        // console.log(progency_comments);
 
-          // 1. 対象コメントをひとつ右に移動
-          commentMoveRight(cmt_block_ele);
+        // 1. 対象コメントをひとつ右に移動
+        commentMoveRight(cmt_block_ele);
 
-          // 2. 対象コメントの右移動ボタンの状態を必要に応じて変更(disabled or not)
-          changeStateOfMoveRightBtn(cmt_block_ele);
+        // 2. 対象コメントの右移動ボタンの状態を必要に応じて変更(disabled or not)
+        changeStateOfMoveRightBtn(cmt_block_ele);
 
-          // 3. 対象コメントの左移動ボタンの状態を必要に応じて変更(disabled or not)
-          changeStateOfMoveLeftBtn(cmt_block_ele);
+        // 3. 対象コメントの左移動ボタンの状態を必要に応じて変更(disabled or not)
+        changeStateOfMoveLeftBtn(cmt_block_ele);
 
-          // 4. 直下コメントの右移動ボタンの状態を変更(disabled or not)
-          var next_cmt_block_ele = cmt_block_ele.next('ul');
-          changeStateOfMoveRightBtn(next_cmt_block_ele);
+        // 4. 直下コメントの右移動ボタンの状態を変更(disabled or not)
+        var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
+        changeStateOfMoveRightBtn(next_cmt_block_ele);
 
-          // 5. 対象コメントの子孫コメントも合わせて右移動する
-          $.each(progency_comments, function (index, ele) {
-            if (!isCommentMoveRight(ele)) {
-              return;
-            }
-            commentMoveRight(ele);
-            changeStateOfMoveRightBtn(ele);
-            changeStateOfMoveLeftBtn(ele);
-          })
+        // 5. 対象コメントの子孫コメントも合わせて右移動する
+        $.each(progency_comments, function (index, ele) {
+          if (!isCommentMoveRight(ele)) {
+            return;
+          }
+          commentMoveRight(ele);
+          changeStateOfMoveRightBtn(ele);
+          changeStateOfMoveLeftBtn(ele);
+        });
 
-        } else {
-          console.log("右移動出来ない！");
-        }
+      } else {
+        console.log("右移動出来ない！");
       }
+    }
   );
 
   // Comment 左移動ボタン
@@ -50,6 +51,7 @@ $(document).on('turbolinks:load', function() {
       if (isCommentMoveLeft(cmt_block_ele)){
         // 0. 子孫コメントを全て取得
         var progency_comments = findProgenyComments(cmt_block_ele);
+        // console.log(progency_comments);
 
         // 1. コメントを一つ左に移動
         commentMoveLeft(cmt_block_ele);
@@ -61,7 +63,7 @@ $(document).on('turbolinks:load', function() {
         changeStateOfMoveLeftBtn(cmt_block_ele);
 
         // 4. 直下コメントの右移動ボタンの状態を必要に応じて変更
-        var next_cmt_block_ele = cmt_block_ele.next('ul');
+        var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
         changeStateOfMoveRightBtn(next_cmt_block_ele);
 
         // 5. 対象コメントの子孫コメントも合わせて左移動する

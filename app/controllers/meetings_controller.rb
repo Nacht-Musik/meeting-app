@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
-  before_action :set_meeting, only: [:show, :edit]
+  before_action :set_meeting, only: [:show, :edit, :update]
   before_action :set_users, only: [:new, :edit]
   before_action :set_projects, only: [:new, :edit]
 
@@ -34,11 +34,25 @@ class MeetingsController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
-
+    p 'updateアクション実行'
+    params = meeting_params
+    p "--- params ---"
+    p params
+    p "--------------"
+    p "--- meeting ---"
+    p @meeting
+    p "---------------"
+    # @meeting.update(params)
+    if @meeting.update(params)
+      # Meeting Update成功時の処理
+      flash = {success: '会議録を保存しました。'}
+      redirect_to my_meeting_path, flash: flash
+    else
+      # Meeting Update失敗時の処理
+    end
   end
 
   private
@@ -68,6 +82,7 @@ class MeetingsController < ApplicationController
                                       :approver_id,
                                       :note,
                                       topics_attributes: [
+                                        :id,
                                         :meeting_id,
                                         :name,
                                         :sort_num,
