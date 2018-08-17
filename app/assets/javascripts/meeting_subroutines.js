@@ -6,9 +6,9 @@ function isCommentMoveRight(cmt_block_ele) {
    3. ひとつ上のコメントよりも2つ以上下げられない
   */
   var indent_val = getIndentVal(cmt_block_ele);
-  var prev_indent_val = parseInt(cmt_block_ele.prev('ul').find('.cmt-indent-num').val(), 10);
+  var prev_cmt_block_ele = findPrevCmtBlockEle(cmt_block_ele);
+  var prev_indent_val = getIndentVal(prev_cmt_block_ele);
   var diff_val = indent_val - prev_indent_val;
-
 
   if (indent_val >= MAX_INDENT || isNaN(prev_indent_val) || diff_val > 0) {
     return false;
@@ -68,12 +68,14 @@ function findProgenyComments(cmt_block_ele) {
   if(!isHasChildComment(cmt_block_ele)){
     return NaN;
   } else {
-    next_cmt_block_ele = cmt_block_ele.next('ul');
+    // next_cmt_block_ele = cmt_block_ele.next('ul');
+    next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
     progency_comments.push(next_cmt_block_ele);
   }
   // 子孫コメントがなくなるまでループ
   while(true){
-    next_cmt_block_ele = next_cmt_block_ele.next('ul');
+    // next_cmt_block_ele = next_cmt_block_ele.next('ul');
+    next_cmt_block_ele = findNextCmtBlockEle(next_cmt_block_ele);
     next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
     if(isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val){
       break;
@@ -86,13 +88,43 @@ function findProgenyComments(cmt_block_ele) {
 // 子コメントを持っているか否かを判定
 function isHasChildComment(cmt_block_ele) {
   var actual_indent_val = getIndentVal(cmt_block_ele);
-  var next_cmt_indent_val = getIndentVal(cmt_block_ele.next('ul'));
-  // console.log("indent:" + actual_indent_val + ", next_indent:" + next_cmt_indent_val);
+  var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
+  var next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
 
   if (isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val) {
     return false;
   }
   return true;
+}
+
+// 直前のコメントブロック要素を取得
+function findPrevCmtBlockEle(cmt_block_ele) {
+  var prev_cmt_block_ele = cmt_block_ele.prev();
+
+  // 前の要素がある限り探し続ける
+  while(prev_cmt_block_ele.length == 1) {
+    if(prev_cmt_block_ele.hasClass('cmt-block')){
+      break;
+    }
+
+    prev_cmt_block_ele = prev_cmt_block_ele.prev();
+  }
+  return prev_cmt_block_ele;
+}
+
+// 直後のコメントブロック要素を取得
+function findNextCmtBlockEle(cmt_block_ele) {
+  var next_cmt_block_ele = cmt_block_ele.next();
+
+  // 前の要素がある限り探し続ける
+  while(next_cmt_block_ele.length == 1) {
+    if(next_cmt_block_ele.hasClass('cmt-block')){
+      break;
+    }
+
+    next_cmt_block_ele = next_cmt_block_ele.next();
+  }
+  return next_cmt_block_ele;
 }
 
 // コメント左移動ボタン要素を取得
@@ -123,6 +155,24 @@ function decrementIndentVal(cmt_block_ele) {
   cmt_block_ele.find('.cmt-indent-num').val(actual_val - 1);
 }
 
+// 全てのコメント移動ボタンの状態を適切な状態に変更
+function changeStateAllCommentMoveBtn(){
+  // Topicカードの要素を全て取得
+  var topic_cards = findTopicCards();
+  // 全てのコメントブロックを取得
+  var comments = new Array(topic_cards.length);
+  $.each(topic_cards, function(i) {
+    comments[i] = findCommentBlocks($(this));
+  });
+
+  $.each(comments, function(){
+    $.each($(this), function(){
+      changeStateOfMoveLeftBtn($(this));
+      changeStateOfMoveRightBtn($(this));
+    });
+  });
+}
+
 // 右移動ボタンの状態変更
 function changeStateOfMoveRightBtn(cmt_block_ele){
   var right_btn_ele = findCmtRightMoveBtnEle(cmt_block_ele);
@@ -143,5 +193,32 @@ function changeStateOfMoveLeftBtn(cmt_block_ele) {
   } else {
     left_btn_ele.removeClass("disabled");
   }
+}
+
+// トピックカードを全て取得
+function findTopicCards() {
+  return $('#topic-area').find('.topic-card');
+}
+
+// コメントブロックを全て取得
+function findCommentBlocks(topic_card_ele) {
+  return topic_card_ele.find('.cmt-block');
+}
+
+// 全てのTopicにソート番号を設定
+function setSortNumForTopics() {
+  let topic_cards = findTopicCards();
+
+  $.each(topic_cards, function(i){
+    $(this).find('.topic-sort-num').val(i);
+  });
+}
+
+// 指定Topic内の全てのCommentにソート番号を設定
+function setSortNumForComments(topic_card_ele) {
+  let cmt_blocks = findCommentBlocks(topic_card_ele);
+  $.each(cmt_blocks, function(i){
+    $(this).find('.cmt-sort-num').val(i);
+  });
 }
 

@@ -2,11 +2,11 @@
   %thead.thead-light
     %tr
       %th{scope: "col"} タイトル
-      -# %th{scope: "col"} 担当グループ
       %th{scope: "col"} 担当者
       %th{scope: "col"} プロジェクト
       %th{scope: "col"} 実施日
       %th{scope: "col"} 詳細
+      %th{scope: "col"} 更新
 
   %tbody
     = render "meeting_list_body", meetings: meetings, users: users, projects: projects

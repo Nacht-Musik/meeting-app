@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180808061321) do
+ActiveRecord::Schema.define(version: 20180817072019) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
     t.string "name"
-    t.integer "sort_num"
-    t.integer "indent", null: false
+    t.integer "sort_num", default: 0
+    t.integer "indent", default: 1, null: false
+    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "parent_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["topic_id"], name: "index_comments_on_topic_id"
   end
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20180808061321) do
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "meeting_id"
     t.string "name"
-    t.integer "sort_num"
+    t.integer "sort_num", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_id"], name: "index_topics_on_meeting_id"

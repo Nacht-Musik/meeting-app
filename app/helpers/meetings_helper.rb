@@ -1,7 +1,14 @@
 module MeetingsHelper
-  # commentをsort番号順に並び替える
+  # commentをsort番号順に並び替え
   def sort_comments(comments)
     comments.sort do |a, b|
+      a.sort_num <=> b.sort_num
+    end
+  end
+
+  # Topicをsort番号順に並び替え
+  def sort_topics (topics)
+    topics.sort do |a, b|
       a.sort_num <=> b.sort_num
     end
   end
@@ -18,26 +25,24 @@ module MeetingsHelper
         comment.parent = parent_comments[comment.indent - 1] if comment.indent != 1
         # 自分と同じインデント値の親コメントを自分に置換
         parent_comments[comment.indent] = comment
-
-        # ---- 以下 デバック表示用 ---- #
-        # p "自分：#{comment.name}"
-        # p "親：#{comment.parent.name}" if comment.indent != 1
-        #
-        # p "### 親コメント確認 ###"
-        # parent_comments.each_with_index do |parent, idx|
-        #   if parent.nil?
-        #     p "#{idx}: nil"
-        #   else
-        #     p "#{idx}: #{parent.name}"
-        #   end
-        # end
-        # p "### 確認終了 ###"
-        # ---- ここまで デバッグ表示用 ---- #
-
       end
     end
   end
 
+  # コメントのインデント値に応じたCSS classを返す
+  def add_indent_css (indent_val)
+    if indent_val == 1
+      return ".indent-1"
+    elsif indent_val == 2
+      return "indent-2"
+    elsif indent_val == 3
+      return "indent-3"
+    elsif indent_val == 4
+      return "indent-4"
+    else
+      return ""
+    end
+  end
 
   # 始祖コメントを集めるメソッド
   def set_founder_comments (topics)

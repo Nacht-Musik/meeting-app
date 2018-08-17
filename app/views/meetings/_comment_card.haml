@@ -1,10 +1,16 @@
 %ul.cmt-block
-  = f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
-  = f.hidden_field :indent, value: 1, class: "cmt-indent-num"
-  -#= f.hidden_field :parent, value: 1, class: "cmt-parent"
-  %li.indent-area.indent-1
+  = f.hidden_field :sort_num, class: "cmt-sort-num"
+  = f.hidden_field :indent, class: "cmt-indent-num"
+
+  -# indentの値(f.object.indent)によって、空白(.indent-x)を変更
+  %li.indent-area{class: "#{add_indent_css f.object.indent}"}
   %li.cmt-body
-    %a.btn.btn-info.btn-sm.cmt-indent-left-btn.disabled{"aria-disabled" => "true" } <
-    %a.btn.btn-info.btn-sm.cmt-indent-right-btn{"aria-disabled" => "true" } >
+    %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
+    class: "#{}" } <
+    %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
+    class: "#{}" } >
     %br
     = f.text_field :name, class: 'form-control'
+
+:javascript
+  changeStateAllCommentMoveBtn();

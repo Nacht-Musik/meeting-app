@@ -1,9 +1,9 @@
 .card.topic-card
+  = f.hidden_field :sort_num, class: 'topic-sort-num'
   .card-header
     = f.label 'title'
     = f.text_field :name, class: 'form-control'
-    = f.hidden_field :sort_num, value: 1, class: 'form-control'
   .card-body.comment-area
     = f.fields_for :comments do |comment|
-      -#%p
+      = render partial: 'meetings/comment_card', locals: {f: comment}
     = link_to_add_fields "+", f, :comments, "btn btn-primary"
