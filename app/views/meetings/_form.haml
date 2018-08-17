@@ -2,7 +2,7 @@
   .card-header
     新規会議作成
   .card-body
-    = form_for meeting, remote: true do |f|
+    = form_for meeting, remote: true, html: {"data-persist" => "garlic"} do |f|
       = f.label 'タイトル'
       = f.text_field :title, class: 'form-control'
       %br
