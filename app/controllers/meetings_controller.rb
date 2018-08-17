@@ -41,6 +41,9 @@ class MeetingsController < ApplicationController
     # p 'updateアクション実行'
     params = meeting_params
 
+    # 各コメントに親コメントを設定
+    set_parent_comments(@meeting)
+
     if @meeting.update(params)
       # Meeting Update成功時の処理
       flash = {success: '会議録を保存しました。'}

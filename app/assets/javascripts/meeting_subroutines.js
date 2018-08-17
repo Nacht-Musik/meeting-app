@@ -216,7 +216,6 @@ function setSortNumForTopics() {
 
 // 指定Topic内の全てのCommentにソート番号を設定
 function setSortNumForComments(topic_card_ele) {
-  console.log(topic_card_ele);
   let cmt_blocks = findCommentBlocks(topic_card_ele);
   $.each(cmt_blocks, function(i){
     $(this).find('.cmt-sort-num').val(i);
