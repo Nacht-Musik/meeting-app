@@ -6,5 +6,4 @@
   .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment}
-      -# %p
     = link_to_add_fields "+", f, :comments, "btn btn-primary"

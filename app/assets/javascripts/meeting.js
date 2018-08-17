@@ -47,6 +47,7 @@ $(document).on('turbolinks:load', function() {
     'click', '.cmt-indent-left-btn', function(){
       // 対象コメントブロック要素を取得
       var cmt_block_ele = $(this).parents('.cmt-block');
+      console.log(cmt_block_ele);
 
       if (isCommentMoveLeft(cmt_block_ele)){
         // 0. 子孫コメントを全て取得
@@ -82,11 +83,20 @@ $(document).on('turbolinks:load', function() {
     }
   );
 
+  $('#test-btn').on(
+    'click', function(){
+      console.log('#--- test-btn exec! ---#');
+      changeStateAllCommentMoveBtn();
+
+    }
+  );
+
   // Meeting Submitボタン
   $('#meeting-submit-btn').on(
     'click', function(){
       // Topic-cardを全て取得する。
-      var topic_cards = $("#topic-area").find('.topic-card');
+      var topic_cards = findTopicCards();
+
       $.each(topic_cards, function(i){
         // Topic-cardを取得した順にソート番号を設定する
         var topic_sort_num = i + 1;

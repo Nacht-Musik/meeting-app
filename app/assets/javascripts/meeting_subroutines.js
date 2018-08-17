@@ -91,12 +91,12 @@ function isHasChildComment(cmt_block_ele) {
   var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
   var next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
 
-  console.log(next_cmt_indent_val);
+  // console.log(next_cmt_indent_val);
   if (isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val) {
-    console.log("子コメント持ってない");
+    // console.log("子コメント持ってない");
     return false;
   }
-  console.log("子コメントあり");
+  // console.log("子コメントあり");
   return true;
 }
 
@@ -158,6 +158,25 @@ function decrementIndentVal(cmt_block_ele) {
   cmt_block_ele.find('.cmt-indent-num').val(actual_val - 1);
 }
 
+// 全てのコメント移動ボタンの状態を適切な状態に変更
+function changeStateAllCommentMoveBtn(){
+  // Topicカードの要素を全て取得
+  var topic_cards = findTopicCards();
+  // 全てのコメントブロックを取得
+  var comments = new Array(topic_cards.length);
+  $.each(topic_cards, function(i) {
+    comments[i] = findCommentBlocks($(this));
+  });
+
+  $.each(comments, function(){
+    $.each($(this), function(){
+      console.log($(this));
+      changeStateOfMoveLeftBtn($(this));
+      changeStateOfMoveRightBtn($(this));
+    });
+  });
+}
+
 // 右移動ボタンの状態変更
 function changeStateOfMoveRightBtn(cmt_block_ele){
   var right_btn_ele = findCmtRightMoveBtnEle(cmt_block_ele);
@@ -180,3 +199,22 @@ function changeStateOfMoveLeftBtn(cmt_block_ele) {
   }
 }
 
+// トピックカードを全て取得
+function findTopicCards() {
+  return $('#topic-area').find('.topic-card');
+}
+
+// コメントブロックを全て取得
+function findCommentBlocks(topic_card) {
+  return topic_card.find('.cmt-block');
+}
+
+// 全てのTopicにソート番号を設定
+function setTopicSortNum() {
+
+}
+
+// 全てのTopicにソート番号を設定
+function setCommentSortNum() {
+
+}
