@@ -25,22 +25,6 @@ module MeetingsHelper
         comment.parent = parent_comments[comment.indent - 1] if comment.indent != 1
         # 自分と同じインデント値の親コメントを自分に置換
         parent_comments[comment.indent] = comment
-
-        # ---- 以下 デバック表示用 ---- #
-        # p "自分：#{comment.name}"
-        # p "親：#{comment.parent.name}" if comment.indent != 1
-        #
-        # p "### 親コメント確認 ###"
-        # parent_comments.each_with_index do |parent, idx|
-        #   if parent.nil?
-        #     p "#{idx}: nil"
-        #   else
-        #     p "#{idx}: #{parent.name}"
-        #   end
-        # end
-        # p "### 確認終了 ###"
-        # ---- ここまで デバッグ表示用 ---- #
-
       end
     end
   end

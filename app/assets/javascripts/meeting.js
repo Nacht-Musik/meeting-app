@@ -6,7 +6,12 @@ $(document).on('turbolinks:load', function() {
   $('#test-btn').on(
       'click', function(){
         console.log('#--- test-btn exec! ---#');
+        setSortNumForTopics();
 
+        let topic_cards = findTopicCards();
+        $.each(topic_cards, function(){
+          setSortNumForComments($(this));
+        });
       }
   );
 
@@ -92,18 +97,14 @@ $(document).on('turbolinks:load', function() {
   // Meeting Submitボタン
   $('#meeting-submit-btn').on(
     'click', function(){
-      // Topic-cardを全て取得する。
-      var topic_cards = findTopicCards();
+      // 1. Topicのソート番号を表示順に設定
+      setSortNumForTopics();
 
-      $.each(topic_cards, function(i){
-        // Topic-cardを取得した順にソート番号を設定する
-        var topic_sort_num = i + 1;
-        $(this).find('.topic-sort-num').val(topic_sort_num);
+      // 2. Topic毎にCommentのソート番号を表示順に設定
+      let topic_cards = findTopicCards();
+      $.each(topic_cards, function(){
+        setSortNumForComments($(this));
       });
-
-      // 2. commentソート番号を設定
-      // 2-1. Commentのsort_numの設定要素を全て取得する
-      // 2-2. 取得順にsort_numを設定する
     }
   );
 });

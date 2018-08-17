@@ -201,16 +201,25 @@ function findTopicCards() {
 }
 
 // コメントブロックを全て取得
-function findCommentBlocks(topic_card) {
-  return topic_card.find('.cmt-block');
+function findCommentBlocks(topic_card_ele) {
+  return topic_card_ele.find('.cmt-block');
 }
 
 // 全てのTopicにソート番号を設定
-function setTopicSortNum() {
+function setSortNumForTopics() {
+  let topic_cards = findTopicCards();
 
+  $.each(topic_cards, function(i){
+    $(this).find('.topic-sort-num').val(i);
+  });
 }
 
-// 全てのTopicにソート番号を設定
-function setCommentSortNum() {
-
+// 指定Topic内の全てのCommentにソート番号を設定
+function setSortNumForComments(topic_card_ele) {
+  console.log(topic_card_ele);
+  let cmt_blocks = findCommentBlocks(topic_card_ele);
+  $.each(cmt_blocks, function(i){
+    $(this).find('.cmt-sort-num').val(i);
+  });
 }
+
