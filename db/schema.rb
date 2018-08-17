@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180815122015) do
+ActiveRecord::Schema.define(version: 20180817030456) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
     t.string "name"
-    t.integer "sort_num"
+    t.integer "sort_num", default: 1
     t.integer "indent", default: 1, null: false
     t.bigint "parent_id"
     t.datetime "created_at", null: false
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20180815122015) do
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "meeting_id"
     t.string "name"
-    t.integer "sort_num"
+    t.integer "sort_num", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_id"], name: "index_topics_on_meeting_id"

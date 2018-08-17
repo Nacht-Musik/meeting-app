@@ -2,6 +2,14 @@ const MAX_INDENT = 4;   // インデントの最大数
 const MIN_INDENT = 1;   // インデントの最小値
 
 $(document).on('turbolinks:load', function() {
+  // JavaScriptの動作検証用
+  $('#test-btn').on(
+      'click', function(){
+        console.log('#--- test-btn exec! ---#');
+
+      }
+  );
+
   // Comment 右移動ボタン
   $('#topic-area').on(
     'click', '.cmt-indent-right-btn', function(){
@@ -11,7 +19,6 @@ $(document).on('turbolinks:load', function() {
       if (isCommentMoveRight(cmt_block_ele)) {
         // 0. 子孫コメントを全て取得
         var progency_comments = findProgenyComments(cmt_block_ele);
-        // console.log(progency_comments);
 
         // 1. 対象コメントをひとつ右に移動
         commentMoveRight(cmt_block_ele);
@@ -47,12 +54,10 @@ $(document).on('turbolinks:load', function() {
     'click', '.cmt-indent-left-btn', function(){
       // 対象コメントブロック要素を取得
       var cmt_block_ele = $(this).parents('.cmt-block');
-      console.log(cmt_block_ele);
 
       if (isCommentMoveLeft(cmt_block_ele)){
         // 0. 子孫コメントを全て取得
         var progency_comments = findProgenyComments(cmt_block_ele);
-        // console.log(progency_comments);
 
         // 1. コメントを一つ左に移動
         commentMoveLeft(cmt_block_ele);
@@ -83,13 +88,6 @@ $(document).on('turbolinks:load', function() {
     }
   );
 
-  $('#test-btn').on(
-    'click', function(){
-      console.log('#--- test-btn exec! ---#');
-      changeStateAllCommentMoveBtn();
-
-    }
-  );
 
   // Meeting Submitボタン
   $('#meeting-submit-btn').on(

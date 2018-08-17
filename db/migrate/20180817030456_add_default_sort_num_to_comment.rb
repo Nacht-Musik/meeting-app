@@ -1,0 +1,5 @@
+class AddDefaultSortNumToComment < ActiveRecord::Migration[5.1]
+  def change
+    change_column :comments, :sort_num, :integer, :default => 1
+  end
+end

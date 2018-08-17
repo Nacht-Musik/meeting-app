@@ -1,5 +1,6 @@
 %ul.cmt-block
-  = f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
+  -#= f.hidden_field :sort_num, value: 1, class: "cmt-sort-num"
+  = f.hidden_field :sort_num, class: "cmt-sort-num"
   = f.hidden_field :indent, class: "cmt-indent-num"
 
   -# indentの値(f.object.indent)によって、空白(.indent-x)を変更
@@ -11,3 +12,9 @@
     class: "#{}" } >
     %br
     = f.text_field :name, class: 'form-control'
+
+:javascript
+  changeStateAllCommentMoveBtn();
+  // 追加されたコメント要素の移動ボタンの状態を変更
+  // changeStateOfMoveLeftBtn($(this));
+  // changeStateOfMoveRightBtn($(this));

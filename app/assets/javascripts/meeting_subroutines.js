@@ -91,12 +91,9 @@ function isHasChildComment(cmt_block_ele) {
   var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
   var next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
 
-  // console.log(next_cmt_indent_val);
   if (isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val) {
-    // console.log("子コメント持ってない");
     return false;
   }
-  // console.log("子コメントあり");
   return true;
 }
 
@@ -170,7 +167,6 @@ function changeStateAllCommentMoveBtn(){
 
   $.each(comments, function(){
     $.each($(this), function(){
-      console.log($(this));
       changeStateOfMoveLeftBtn($(this));
       changeStateOfMoveRightBtn($(this));
     });
