@@ -32,7 +32,7 @@ module MeetingsHelper
   # コメントのインデント値に応じたCSS classを返す
   def add_indent_css (indent_val)
     if indent_val == 1
-      return ".indent-1"
+      return "indent-1"
     elsif indent_val == 2
       return "indent-2"
     elsif indent_val == 3

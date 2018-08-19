@@ -157,6 +157,7 @@ function decrementIndentVal(cmt_block_ele) {
 
 // 全てのコメント移動ボタンの状態を適切な状態に変更
 function changeStateAllCommentMoveBtn(){
+  console.log("コメント移動ボタンの状態変更");
   // Topicカードの要素を全て取得
   var topic_cards = findTopicCards();
   // 全てのコメントブロックを取得
