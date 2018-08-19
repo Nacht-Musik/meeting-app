@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819100319) do
+ActiveRecord::Schema.define(version: 20180819113558) do
 
   create_table "authorities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
@@ -30,11 +30,18 @@ ActiveRecord::Schema.define(version: 20180819100319) do
     t.index ["topic_id"], name: "index_comments_on_topic_id"
   end
 
+  create_table "meeting_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title", null: false
     t.bigint "user_id"
     t.bigint "inspector_id"
     t.bigint "approver_id"
+    t.bigint "status_id"
     t.bigint "project_id"
     t.date "date"
     t.time "start_time"
@@ -47,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180819100319) do
     t.index ["approver_id"], name: "index_meetings_on_approver_id"
     t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
     t.index ["project_id"], name: "index_meetings_on_project_id"
+    t.index ["status_id"], name: "index_meetings_on_status_id"
     t.index ["user_id"], name: "index_meetings_on_user_id"
   end
 
@@ -90,6 +98,7 @@ ActiveRecord::Schema.define(version: 20180819100319) do
 
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "topics"
+  add_foreign_key "meetings", "meeting_statuses", column: "status_id"
   add_foreign_key "meetings", "projects"
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "approver_id"
