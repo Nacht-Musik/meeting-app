@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819133627) do
+ActiveRecord::Schema.define(version: 20180819135049) do
 
   create_table "attendees", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -83,6 +83,23 @@ ActiveRecord::Schema.define(version: 20180819133627) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "receiver_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "receivers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "type_id"
+    t.bigint "user_id"
+    t.bigint "meeting_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_receivers_on_meeting_id"
+    t.index ["type_id"], name: "index_receivers_on_type_id"
+    t.index ["user_id"], name: "index_receivers_on_user_id"
+  end
+
   create_table "recorders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
     t.bigint "meeting_id"
@@ -143,6 +160,9 @@ ActiveRecord::Schema.define(version: 20180819133627) do
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "approver_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
+  add_foreign_key "receivers", "meetings"
+  add_foreign_key "receivers", "receiver_types", column: "type_id"
+  add_foreign_key "receivers", "users"
   add_foreign_key "recorders", "meetings"
   add_foreign_key "recorders", "users"
   add_foreign_key "topics", "meetings"
