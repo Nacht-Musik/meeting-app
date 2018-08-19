@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819135049) do
+ActiveRecord::Schema.define(version: 20180819140748) do
+
+  create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.bigint "meeting_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_attachement_files_on_meeting_id"
+  end
 
   create_table "attendees", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -149,6 +157,7 @@ ActiveRecord::Schema.define(version: 20180819135049) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attachement_files", "meetings"
   add_foreign_key "attendees", "meetings"
   add_foreign_key "attendees", "users"
   add_foreign_key "comments", "comment_statuses", column: "status_id"
