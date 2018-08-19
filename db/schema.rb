@@ -10,28 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817072019) do
+ActiveRecord::Schema.define(version: 20180819100319) do
+
+  create_table "authorities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
     t.string "name"
     t.integer "sort_num", default: 0
     t.integer "indent", default: 1, null: false
-    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["topic_id"], name: "index_comments_on_topic_id"
-  end
-
-  create_table "family_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "comment_id"
-    t.bigint "child_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["child_id"], name: "index_family_comments_on_child_id"
-    t.index ["comment_id", "child_id"], name: "index_family_comments_on_comment_id_and_child_id", unique: true
-    t.index ["comment_id"], name: "index_family_comments_on_comment_id"
   end
 
   create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -75,6 +71,7 @@ ActiveRecord::Schema.define(version: 20180817072019) do
     t.string "encrypted_password", default: "", null: false
     t.string "last_name", default: "", null: false
     t.string "first_name", default: "", null: false
+    t.bigint "authority_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -85,6 +82,7 @@ ActiveRecord::Schema.define(version: 20180817072019) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["authority_id"], name: "index_users_on_authority_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -92,11 +90,10 @@ ActiveRecord::Schema.define(version: 20180817072019) do
 
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "topics"
-  add_foreign_key "family_comments", "comments"
-  add_foreign_key "family_comments", "comments", column: "child_id"
   add_foreign_key "meetings", "projects"
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "approver_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
   add_foreign_key "topics", "meetings"
+  add_foreign_key "users", "authorities"
 end

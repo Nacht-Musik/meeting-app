@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :inspect_meetings,     class_name: 'Meeting', foreign_key: 'inspecter_id'
   has_many :approve_meetings,     class_name: 'Meeting', foreign_key: 'authorither_id'
 
+  belongs_to :authority,        class_name: 'Authority'
 
   # ログイン用パラメータ(login)の設定
   attr_accessor :login
