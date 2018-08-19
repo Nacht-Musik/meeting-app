@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819130022) do
+ActiveRecord::Schema.define(version: 20180819133627) do
+
+  create_table "attendees", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "meeting_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_attendees_on_meeting_id"
+    t.index ["user_id"], name: "index_attendees_on_user_id"
+  end
 
   create_table "authorities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
@@ -123,6 +132,8 @@ ActiveRecord::Schema.define(version: 20180819130022) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attendees", "meetings"
+  add_foreign_key "attendees", "users"
   add_foreign_key "comments", "comment_statuses", column: "status_id"
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "topics"

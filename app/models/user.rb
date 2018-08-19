@@ -12,7 +12,10 @@ class User < ApplicationRecord
   has_many :meetings
   has_many :inspect_meetings,     class_name: 'Meeting', foreign_key: 'inspecter_id'
   has_many :approve_meetings,     class_name: 'Meeting', foreign_key: 'authorither_id'
+
+  ### 必要？ (記録者、参加者)
   has_many :recorderes, class_name: 'Recorder'
+  has_many :attendees, class_name: 'Attendee'
 
   ### ユーザー権限（マストにするか悩み中）
   # belongs_to :authority,          class_name: 'Authority'
