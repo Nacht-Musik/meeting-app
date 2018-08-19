@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819113558) do
+ActiveRecord::Schema.define(version: 20180819120041) do
 
   create_table "authorities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
@@ -64,13 +64,21 @@ ActiveRecord::Schema.define(version: 20180819113558) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "topic_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "meeting_id"
+    t.bigint "status_id"
     t.string "name"
     t.integer "sort_num", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_id"], name: "index_topics_on_meeting_id"
+    t.index ["status_id"], name: "index_topics_on_status_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -104,5 +112,6 @@ ActiveRecord::Schema.define(version: 20180819113558) do
   add_foreign_key "meetings", "users", column: "approver_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
   add_foreign_key "topics", "meetings"
+  add_foreign_key "topics", "topic_statuses", column: "status_id"
   add_foreign_key "users", "authorities"
 end
