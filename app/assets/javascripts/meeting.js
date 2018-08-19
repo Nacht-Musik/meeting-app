@@ -15,6 +15,7 @@ $(document).on('turbolinks:load', function() {
       }
   );
 
+
   // Comment 右移動ボタン
   $('#topic-area').on(
     'click', '.cmt-indent-right-btn', function(){
@@ -94,6 +95,7 @@ $(document).on('turbolinks:load', function() {
   );
 
 
+
   // Meeting Submitボタン
   $('#meeting-submit-btn').on(
     'click', function(){
@@ -118,11 +120,36 @@ $(document).on('turbolinks:load', function() {
     $(this).closest('fieldset').hide();
     return event.preventDefault();
   });
-  return $('form').on('click', '.add_fields', function(event) {
+
+  // Topic追加ボタンの処理
+  $('form').on('click', '.topic-add-btn', function(event) {
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'), 'g');
-    $(this).before($(this).data('fields').replace(regexp, time));
+
+    // 追加するDOMを設定
+    var dom = $(this).data('fields').replace(regexp, time);
+    // 要素をボタンの直前に追加
+    $(this).before(dom);
+
+    return event.preventDefault();
+  });
+
+  // Comment追加ボタンの処理
+  $('form').on('click', '.cmt-add-btn', function(event) {
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+
+    // 追加するDOMを設定
+    var dom = $(this).data('fields').replace(regexp, time);
+    // 要素をボタンの直前に追加
+    $(this).before(dom);
+
+    // コメント移動ボタンの状態を再設定
+    changeStateAllCommentMoveBtn();
+
     return event.preventDefault();
   });
 });
+
