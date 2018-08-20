@@ -5,51 +5,54 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require "csv"
 
 ###
-# Authority 作成
-authorities = ["一般", "審査", "承認"]
-authorities.each do |authority|
-  Authority.create(name: authority)
-end
-
-###
-# User作成
-10.times do |i|
-  user = User.new
-  user.name = ""
-  user.last_name = ""
-  user.first_name = ""
-  user.password = "hogehoge"
-  user.email = "#{user.name}@mail.jp"
-  user.save!
+# Receiver Type作成
+CSV.foreach('db/seeds_data/receiver_types.csv') do |data|
+  next if data[0] == "0"
+  ReceiverType.create(name: data[1])
 end
 
 ###
 # Project作成
-project_names = ["A-Project", "B-Project", "C-Project", "D-Project", "E-Project"]
-project_names.each do |project_name|
-  Project.create(name: project_name)
+CSV.foreach('db/seeds_data/projects.csv') do |data|
+  next if data[0] == "0"
+  Project.create(name: data[1])
 end
 
 ###
 # Meeting Status作成
-# meeting_statuses = ["開催前", "編集中", "審査待ち", "承認待ち", "配布待ち", "配布済み"]
-# meeting_statuses.each do |meeting_status|
-  # MeetingStatus.create(name: meeting_status)
-# end
+CSV.foreach('db/seeds_data/meeting_statuses.csv') do |data|
+  next if data[0] == "0"
+  MeetingStatus.create(name: data[1])
+end
 
 ###
 # Topic Status作成
-# topic_statuses = ["質問", "意見", "宿題", "決定", "却下"]
-# topic_statuses.each do |topic_status|
-#  TopicStatus.create(name: topic_status)
-# end
+CSV.foreach('db/seeds_data/topic_statuses.csv') do |data|
+  next if data[0] == "0"
+  TopicStatus.create(name: data[1])
+end
 
 ###
 # Comment Status作成
-# comment_statuses = ["質問", "意見", "宿題", "決定", "却下"]
-# comment_statuses.each do |comment_status|
-#  CommentStatus.create(name: comment_status)
-# end
+CSV.foreach('db/seeds_data/comment_statuses.csv') do |data|
+  next if data[0] == "0"
+  CommentStatus.create(name: data[1])
+end
 
+###
+# Authority 作成
+CSV.foreach('db/seeds_data/authorities.csv') do |data|
+  next if data[0] == "0"
+  Authority.create(name: data[1])
+end
+
+###
+# User作成
+CSV.foreach('db/seeds_data/users.csv') do |data|
+  next if data[0] == "0"
+  User.create(name: data[1], email: data[2], password: data[3],
+              last_name: data[4], first_name: data[5], authority_id: data[6])
+end

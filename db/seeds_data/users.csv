@@ -1,0 +1,8 @@
+0,name,email,password,last_name,first_name,authority_id
+1,ichinose,ichinose@email.co.jp,hogehoge,一の瀬,花枝,1
+2,nikaido,nikaido@email.co.jp,hogehoge,二階堂,望,2
+3,mitaka,mitaka@email.co.jp,hogehoge,三鷹,瞬,1
+4,yotuya,yotuya@email.co.jp,hogehoge,四谷,不明,2
+5,godai,godai@email.co.jp,hogehoge,五代,裕作,1
+6,roppongi,roppongi@email.co.jp,hogehoge,六本木,朱美,2
+7,otonashi,otonashi@email.co.jp,hogehoge,音無,響子,3
