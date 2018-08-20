@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180819140748) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "topic_id"
+    t.bigint "parent_id"
     t.bigint "status_id"
     t.bigint "user_id"
     t.string "name"
@@ -50,7 +51,6 @@ ActiveRecord::Schema.define(version: 20180819140748) do
     t.integer "indent", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "parent_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["status_id"], name: "index_comments_on_status_id"
     t.index ["topic_id"], name: "index_comments_on_topic_id"
