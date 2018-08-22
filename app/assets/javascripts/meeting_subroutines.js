@@ -1,6 +1,6 @@
 // コメントの右移動可否を確認
 function isCommentMoveRight(cmt_block_ele) {
-  /* 移動可能条件
+  /* 移動不可能条件
    1. インデント値が上限値である
    2. トップのコメントである（ひとつ上のコメントがない）
    3. ひとつ上のコメントよりも2つ以上下げられない
@@ -32,7 +32,7 @@ function isCommentMoveLeft(cmt_block_ele) {
 // 指定コメントを右に移動させる
 function commentMoveRight(cmt_block_ele) {
   // 1. 現在のインデント値を取得
-  var actual_val = parseInt(cmt_block_ele.find('.cmt-indent-num').val(), 10);
+  var actual_val = parseInt(cmt_block_ele.find('.cmt-form-indent').val(), 10);
 
   // 2.View(見かけ)のインデントを変更
   var indent_area = cmt_block_ele.find('.indent-area');
@@ -46,7 +46,7 @@ function commentMoveRight(cmt_block_ele) {
 // 指定コメントを左に移動させる
 function commentMoveLeft(cmt_block_ele) {
   // 1. 現在のインデント値を取得
-  var actual_val = parseInt(cmt_block_ele.find('.cmt-indent-num').val(), 10);
+  var actual_val = parseInt(cmt_block_ele.find('.cmt-form-indent').val(), 10);
 
   // 2.View(見かけ)のインデントを変更
   var indent_area = cmt_block_ele.find('.indent-area');
@@ -65,7 +65,7 @@ function findProgenyComments(cmt_block_ele) {
   var next_cmt_indent_val;
 
   // 子コメントを1つ以上持っているかを確認。１つもなかったらNaNを返す.
-  if(!isHasChildComment(cmt_block_ele)){
+  if(!hasChildComment(cmt_block_ele)){
     return NaN;
   } else {
     // next_cmt_block_ele = cmt_block_ele.next('ul');
@@ -86,7 +86,7 @@ function findProgenyComments(cmt_block_ele) {
 }
 
 // 子コメントを持っているか否かを判定
-function isHasChildComment(cmt_block_ele) {
+function hasChildComment(cmt_block_ele) {
   var actual_indent_val = getIndentVal(cmt_block_ele);
   var next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
   var next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
@@ -116,7 +116,7 @@ function findPrevCmtBlockEle(cmt_block_ele) {
 function findNextCmtBlockEle(cmt_block_ele) {
   var next_cmt_block_ele = cmt_block_ele.next();
 
-  // 前の要素がある限り探し続ける
+  // 次の要素がある限り探し続ける
   while(next_cmt_block_ele.length == 1) {
     if(next_cmt_block_ele.hasClass('cmt-block')){
       break;
@@ -139,25 +139,24 @@ function findCmtRightMoveBtnEle(cmt_block_ele) {
 
 // コメントのインデント値を取得
 function getIndentVal(cmt_block_ele) {
-  var indent_val_ele = cmt_block_ele.find('.cmt-indent-num');
+  var indent_val_ele = cmt_block_ele.find('.cmt-form-indent');
   return parseInt(indent_val_ele.val(), 10);
 }
 
 // インデント値を一つ増やす
 function incrementIndentVal(cmt_block_ele) {
-  var actual_val = parseInt(cmt_block_ele.find('.cmt-indent-num').val(), 10);
-  cmt_block_ele.find('.cmt-indent-num').val(actual_val + 1);
+  var actual_val = parseInt(cmt_block_ele.find('.cmt-form-indent').val(), 10);
+  cmt_block_ele.find('.cmt-form-indent').val(actual_val + 1);
 }
 
 // インデント値を一つ下げる
 function decrementIndentVal(cmt_block_ele) {
-  var actual_val = parseInt(cmt_block_ele.find('.cmt-indent-num').val(), 10);
-  cmt_block_ele.find('.cmt-indent-num').val(actual_val - 1);
+  var actual_val = parseInt(cmt_block_ele.find('.cmt-form-indent').val(), 10);
+  cmt_block_ele.find('.cmt-form-indent').val(actual_val - 1);
 }
 
 // 全てのコメント移動ボタンの状態を適切な状態に変更
 function changeStateAllCommentMoveBtn(){
-  console.log("コメント移動ボタンの状態変更");
   // Topicカードの要素を全て取得
   var topic_cards = findTopicCards();
   // 全てのコメントブロックを取得
@@ -219,7 +218,112 @@ function setSortNumForTopics() {
 function setSortNumForComments(topic_card_ele) {
   let cmt_blocks = findCommentBlocks(topic_card_ele);
   $.each(cmt_blocks, function(i){
-    $(this).find('.cmt-sort-num').val(i);
+    $(this).find('.cmt-form-sort-num').val(i);
   });
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//// 子コメント追加ボタン関連
+
+// 子コメントのID/Nameを設定する
+function makeChildCmtEle(cmt_block_ele){
+  // コメントブロックのコピーを作成
+  var child_cmt_ele = cmt_block_ele.clone();
+
+  var id_components = getChildCmtIdComponents(cmt_block_ele);
+  var child_id_com = makeChildCmtId(id_components);
+  var child_name_com = makeChildCmtName(id_components);
+  var cmt_items = findCmtFormItemNames(cmt_block_ele);
+
+
+  $.each(cmt_items, function(i, item_name){
+    let child_id = child_id_com + "_" + item_name;
+    let child_name = child_name_com + "[" + item_name + "]";
+
+    child_cmt_ele.find("[id$=" + item_name + "]").attr('id', child_id);
+    child_cmt_ele.find("[id$=" + item_name + "]").attr('name', child_name);
+
+    // コメント内容をクリアする
+    if(item_name === "name"){
+      child_cmt_ele.find("[id$=" + item_name + "]").val('');
+    }
+
+    // indentをひとつ変更
+    if(item_name === "indent"){
+      let current_val = Number(child_cmt_ele.find("[id$=" + item_name + "]").attr('value'));
+      if(current_val < MAX_INDENT){
+        commentMoveRight(child_cmt_ele);
+      }
+    }
+  });
+
+  return child_cmt_ele
+}
+
+// 対象コメントのIDを取得
+function getChildCmtIdComponents(cmt_block_ele){
+  var ele = cmt_block_ele.find("[class^=cmt-form]");
+  var name = ele.attr('name');
+  name = name.replace(/]/g, "")
+
+  var components = name.split('[');
+  // 最後の要素は項目名なので不要
+  components.pop();
+
+  // 新規Commentの識別子を設定
+  var time = new Date().getTime();
+  components[components.length - 1] = time.toString(10);
+
+  return components;
+}
+
+// コメントForm用のidを作成
+function makeChildCmtId(id_components){
+  var child_id = "";
+
+  for(let i = 0; i < id_components.length; i++){
+    if( i !== id_components.length - 1){
+      child_id += id_components[i] + "_";
+    }else{
+      child_id += id_components[i];
+    }
+  }
+  return child_id;
+}
+
+// コメントForm用のnameを作成
+function makeChildCmtName(id_components){
+  var name = "";
+  for(let i = 0; i < id_components.length; i++){
+    if( i === 0){
+      name += id_components[i];
+    }else{
+      name += "[" + id_components[i] + "]";
+    }
+  }
+  return name;
+}
+
+// コメントフォーム内のItem名を全て取得
+function findCmtFormItemNames(cmt_block_ele){
+  var cmt_forms = cmt_block_ele.find("[class^=cmt-form]");
+  var item_names = [];
+
+  cmt_forms.each(function(i, ele){
+    let name = getCmtFormItemName(ele);
+    item_names.push(name);
+  });
+
+  return item_names;
+}
+
+// 指定フォームのItem名を取得
+function getCmtFormItemName(item_ele){
+  var ele_name = item_ele.name;
+
+  ele_name = ele_name.replace(/]/g, "");
+  var name_components = ele_name.split('[');
+
+  //取得したname値の最後の要素のみを返す
+  return name_components.pop();
+}

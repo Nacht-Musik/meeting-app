@@ -1,13 +1,14 @@
 %ul.cmt-block
-  = f.hidden_field :sort_num, class: "cmt-sort-num"
-  = f.hidden_field :indent, class: "cmt-indent-num"
+  = f.hidden_field :sort_num, class: "cmt-form-sort-num"
+  = f.hidden_field :indent, class: "cmt-form-indent"
 
-  -# indentの値(f.object.indent)によって、空白(.indent-x)を変更
   %li.indent-area{class: "#{add_indent_css f.object.indent}"}
   %li.cmt-body
-    %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
-    class: "#{}" } <
-    %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
-    class: "#{}" } >
+    %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"} <
+    %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"} >
+
+    -# 子コメント追加ボタン
+    %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm +
+
     %br
-    = f.text_field :name, class: 'form-control'
+    = f.text_field :name, class: 'cmt-form-name form-control'

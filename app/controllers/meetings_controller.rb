@@ -14,7 +14,7 @@ class MeetingsController < ApplicationController
   def new
     @meeting = Meeting.new
     @meeting.topics.build
-    @meeting.topics.first.comments.build
+    # @meeting.topics.first.comments.build
   end
 
   def create
