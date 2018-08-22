@@ -166,3 +166,41 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// Topic / Comment 削除ボタン
+$(document).on('turbolinks:load', function() {
+  var destroy_topic_ids = [];
+  var destroy_ccmt_ids = [];
+
+  // Topic削除ボタン
+  $('#topic-area').on('click', '.topic-del-btn', function(){
+    // 対象Topicの要素を取得
+    var topic_card_ele = $(this).parents('.topic-card');
+    // 対象Topicの削除フラグ要素を取得
+    var topic_destroy_flag = topic_card_ele.prev('.topic-destroy-flag');
+
+    // 対象トピックの削除フラグを立てて、要素を削除する。
+    topic_destroy_flag.val('true');
+    topic_card_ele.remove();
+  });
+
+  // Comment削除ボタン
+  $('#topic-area').on('click', '.cmt-del-btn', function(){
+    // 対象コメント要素を取得
+    var cmt_block_ele = $(this).parents('.cmt-block');
+    // 対象Commentの削除フラグ要素を取得
+    var cmt_destroy_flag = cmt_block_ele.prev('.cmt-destroy-flag');
+
+    // 子孫コメントを全て 1 段階昇格（左に1つ移動)
+    var children_cmt_ele = findChildComments(cmt_block_ele);
+    $.each(children_cmt_ele, function(i, child){
+      console.log({i: i, child: child});
+      commentMoveLeft(child);
+    });
+
+    // コメント削除フラグを立てて、要素を削除する
+    cmt_destroy_flag.val('true');
+    cmt_block_ele.remove();
+  });
+});
+

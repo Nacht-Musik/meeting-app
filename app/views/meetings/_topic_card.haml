@@ -1,8 +1,14 @@
+= f.hidden_field :_destroy, class: 'topic-destroy-flag'
 .card.topic-card
   = f.hidden_field :sort_num, class: 'topic-sort-num'
   .card-header
-    = f.label 'title'
-    = f.text_field :name, class: 'form-control'
+    -#= f.label 'title'
+    %ul.topic-form
+      %li.topic-form-name-area
+        = f.text_field :name, class: 'form-control'
+      %li.topic-form-btn-area
+        %a.topic-del-btn.btn.btn-danger.btn-sm X
+
   .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment}

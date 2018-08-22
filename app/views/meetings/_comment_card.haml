@@ -1,3 +1,4 @@
+= f.hidden_field :_destroy, class: 'cmt-destroy-flag'
 %ul.cmt-block
   = f.hidden_field :sort_num, class: "cmt-form-sort-num"
   = f.hidden_field :indent, class: "cmt-form-indent"
@@ -9,6 +10,9 @@
 
     -# 子コメント追加ボタン
     %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm +
+
+    -# コメント削除ボタン
+    %a.cmt-del-btn.btn.btn-danger.btn-sm X
 
     %br
     = f.text_field :name, class: 'cmt-form-name form-control'

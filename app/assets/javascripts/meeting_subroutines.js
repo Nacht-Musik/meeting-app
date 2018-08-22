@@ -57,6 +57,34 @@ function commentMoveLeft(cmt_block_ele) {
   decrementIndentVal(cmt_block_ele);
 }
 
+// 指定コメント要素の子供コメント要素を全て取得
+function findChildComments(cmt_block_ele){
+  var child_cmts = [];
+  var actual_indent_val = getIndentVal(cmt_block_ele);
+  var next_cmt_block_ele;
+  var next_cmt_indent_val;
+
+  // 子コメントを1つ以上持っているかを確認。１つもなかったらNaNを返す.
+  if(!hasChildComment(cmt_block_ele)){
+    return NaN;
+  } else {
+    next_cmt_block_ele = findNextCmtBlockEle(cmt_block_ele);
+    child_cmts.push(next_cmt_block_ele);
+  }
+  // 子孫コメントがなくなるまでループ
+  while(true){
+    next_cmt_block_ele = findNextCmtBlockEle(next_cmt_block_ele);
+    next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
+    if(isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val){
+      break;
+    }
+    if(actual_indent_val + 1 ===  next_cmt_indent_val){
+      child_cmts.push(next_cmt_block_ele);
+    }
+  }
+  return child_cmts;
+}
+
 // 指定コメント要素の子孫コメント要素を全て取得
 function findProgenyComments(cmt_block_ele) {
   var progency_comments = [];
@@ -74,7 +102,6 @@ function findProgenyComments(cmt_block_ele) {
   }
   // 子孫コメントがなくなるまでループ
   while(true){
-    // next_cmt_block_ele = next_cmt_block_ele.next('ul');
     next_cmt_block_ele = findNextCmtBlockEle(next_cmt_block_ele);
     next_cmt_indent_val = getIndentVal(next_cmt_block_ele);
     if(isNaN(next_cmt_indent_val) || actual_indent_val >= next_cmt_indent_val){
@@ -260,7 +287,7 @@ function makeChildCmtEle(cmt_block_ele){
   return child_cmt_ele
 }
 
-// 対象コメントのIDを取得
+// 対象コメントのIDの構成要素を取得
 function getChildCmtIdComponents(cmt_block_ele){
   var ele = cmt_block_ele.find("[class^=cmt-form]");
   var name = ele.attr('name');
@@ -327,3 +354,4 @@ function getCmtFormItemName(item_ele){
   //取得したname値の最後の要素のみを返す
   return name_components.pop();
 }
+
