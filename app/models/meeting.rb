@@ -10,6 +10,9 @@ class Meeting < ApplicationRecord
   has_many :receiveres, class_name: 'Receiver'
   has_many :files, class_name: 'AttachementFile'
 
-  has_many :topics, class_name: 'Topic', dependent: :destroy
-  accepts_nested_attributes_for :topics, allow_destroy: true, reject_if: :all_blank
+  #### 子要素(Topic)は一緒に削除しない
+  # has_many :topics, class_name: 'Topic', dependent: :destroy
+  # accepts_nested_attributes_for :topics, allow_destroy: true, reject_if: :all_blank
+  has_many :topics, class_name: 'Topic'
+  accepts_nested_attributes_for :topics
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180819140748) do
+ActiveRecord::Schema.define(version: 20180822111324) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -78,7 +78,9 @@ ActiveRecord::Schema.define(version: 20180819140748) do
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["approver_id"], name: "index_meetings_on_approver_id"
+    t.index ["deleted_at"], name: "index_meetings_on_deleted_at"
     t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
     t.index ["project_id"], name: "index_meetings_on_project_id"
     t.index ["status_id"], name: "index_meetings_on_status_id"
