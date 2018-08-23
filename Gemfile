@@ -55,6 +55,7 @@ gem 'jquery-rails'
 
 # nested_form <- 関連モデルを一つのform内で同時に更新が楽に出来るGem  (不要のはず)
 gem 'nested_form_fields'
+gem 'font-awesome-sass', '~> 5.0.6'
 
 # Gon #railsの変数をjavascript内で使えるようにするGem
 # gem 'gon'

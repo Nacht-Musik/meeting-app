@@ -7,10 +7,11 @@
       %li.topic-form-name-area
         = f.text_field :name, class: 'form-control'
       %li.topic-form-btn-area
-        %a.topic-del-btn.btn.btn-danger.btn-sm X
+        %a.topic-del-btn.btn.btn-outline-danger.btn-sm
+          = icon('fas' ,'times')
 
   .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment}
 
-    = link_to_add_fields "+", f, :comments, "cmt-add-btn btn btn-primary"
+    = link_to_add_fields icon('fas' ,'plus'), f, :comments, "cmt-add-btn btn btn-primary"
