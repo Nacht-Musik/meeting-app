@@ -1,4 +1,7 @@
 class Meeting < ApplicationRecord
+  # paranoia(論理削除用Gem)の有効/無効 設定
+  # acts_as_paranoid
+
   belongs_to :status, class_name: 'MeetingStatus', optional: true
   belongs_to :user
   belongs_to :inspector, class_name: 'User', optional: true
@@ -10,9 +13,7 @@ class Meeting < ApplicationRecord
   has_many :receiveres, class_name: 'Receiver'
   has_many :files, class_name: 'AttachementFile'
 
-  #### 子要素(Topic)は一緒に削除しない
-  # has_many :topics, class_name: 'Topic', dependent: :destroy
-  # accepts_nested_attributes_for :topics, allow_destroy: true, reject_if: :all_blank
-  has_many :topics, class_name: 'Topic'
-  accepts_nested_attributes_for :topics
+  #### 子要素(Topic)は一緒に削除しない！！
+  has_many :topics, class_name: 'Topic', dependent: :destroy
+  accepts_nested_attributes_for :topics, allow_destroy: true, reject_if: :all_blank
 end

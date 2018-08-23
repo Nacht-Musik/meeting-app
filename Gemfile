@@ -53,7 +53,7 @@ gem 'rails-i18n'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 
-# nested_form <- 関連モデルを一つのform内で同時に更新が楽に出来るGem
+# nested_form <- 関連モデルを一つのform内で同時に更新が楽に出来るGem  (不要のはず)
 gem 'nested_form_fields'
 
 # Gon #railsの変数をjavascript内で使えるようにするGem

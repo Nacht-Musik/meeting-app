@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
-  before_action :set_meeting, only: [:show, :edit, :update]
+  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
   before_action :set_users, only: [:new, :edit]
   before_action :set_projects, only: [:new, :edit]
 
@@ -53,6 +53,11 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def destroy
+    @meeting.destroy
+    redirect_to my_meeting_path, notice: '会議録を削除しました'
+  end
+
   private
     def set_meeting
       @meeting = Meeting.find(params[:id])
@@ -90,7 +95,8 @@ class MeetingsController < ApplicationController
                                           :name,
                                           :sort_num,
                                           :indent,
-                                          :_destroy]
+                                          :_destroy
+                                        ]
                                       ]
                                     )
     end

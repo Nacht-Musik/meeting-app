@@ -169,9 +169,6 @@ $(document).on('turbolinks:load', function() {
 ////////////////////////////////////////////////////////////////////////////////
 // Topic / Comment 削除ボタン
 $(document).on('turbolinks:load', function() {
-  var destroy_topic_ids = [];
-  var destroy_ccmt_ids = [];
-
   // Topic削除ボタン
   $('#topic-area').on('click', '.topic-del-btn', function(){
     // 対象Topicの要素を取得
