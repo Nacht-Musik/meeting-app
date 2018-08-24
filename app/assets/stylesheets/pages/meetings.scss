@@ -1,4 +1,29 @@
-#topic-area{
+#meeting-page{
+  #users-area{
+    %thead{
+
+    }
+    %th {
+      margin-top: 5px;
+      padding-bottom: 0px;
+    }
+  }
+
+  #general-area{
+    .ul{
+      display: -webkit-flex;
+      display: flex;
+      float: left;
+      width: 50%;
+
+      .li{
+      }
+    }
+
+  }
+
+
+
   .topic-form{
     display: -webkit-flex;
     display: flex;
@@ -18,7 +43,7 @@
     display: flex;
 
     .cmt-body{
-      width: 85%;
+      width: 84%;
       float: left;
     }
     .indent-1{
@@ -26,15 +51,19 @@
       float: left;
     }
     .indent-2{
-      width: 5%;
+      width: 4%;
       float: left;
     }
     .indent-3{
-      width: 10%;
+      width: 8%;
       float: left;
     }
     .indent-4{
-      width: 15%;
+      width: 12%;
+      float: left;
+    }
+    .indent-5{
+      width: 16%;
       float: left;
     }
   }
@@ -42,5 +71,4 @@
   .cmt-area::before {
     // content: "[___]";
   }
-
 }

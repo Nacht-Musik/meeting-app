@@ -1,0 +1,14 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th{scope: "col"}= f.label '担当者'
+      %th{scope: "col"}= f.label '審査者'
+      %th{scope: "col"}= f.label '承認者'
+  %tbody
+    %tr
+      %td= f.collection_select :user_id, users, :id, :last_name, {selected: current_user.id},
+                class: 'custom-select'
+      %td= f.collection_select :inspector_id, users, :id, :last_name, {prompt: ""},
+                class: 'custom-select', include_blank: true
+      %td= f.collection_select :approver_id, users, :id, :last_name, {prompt: ""},
+                class: 'custom-select', include_blank: true

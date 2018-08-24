@@ -1,47 +1,44 @@
-.card
+#meeting-page.card
   .card-header
     新規会議作成
   .card-body
     = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
-      = f.label 'タイトル'
+      = f.label '会議名'
       = f.text_field :title, class: 'form-control'
-      %br
-      = f.label '開催日'
-      = f.date_select :date, class: 'form-control'
-      %br
-      = f.label '時間'
-      = f.time_select :start_time, class: 'form-control'
-      = f.label '〜'
-      = f.time_select :finish_time, class: 'form-control'
-      %br
-      = f.label '場所'
-      = f.text_field :place, class: 'form-control'
-      = f.label 'プロジェクト'
-      = f.collection_select :project_id, projects, :id, :name, {prompt: ""}, {class: 'custom-select'}
-      %br
-      = f.label '担当者'
-      = f.collection_select :user_id, users, :id, :name, {prompt: ""}, {class: 'custom-select', selected: current_user.id}
-      = f.label '審査者'
-      = f.collection_select :inspector_id, users, :id, :name, {prompt: ""}, {class: 'custom-select'}
-      = f.label '承認者'
-      = f.collection_select :approver_id, users, :id, :name, {prompt: ""}, {class: 'custom-select'}
-      %br
-      = f.label '備考'
-      = f.text_field :note, class: 'form-control'
-      %br
-      = f.label 'Topic'
 
+      #date-area
+        %br
+        = f.label '開催日'
+        = f.date_select :date, class: 'form-control'
+        ___時間
+        = f.time_select :start_time, class: 'form-control'
+        = f.label '〜'
+        = f.time_select :finish_time, class: 'form-control'
+
+      #general-area
+        %ul
+          %li
+            = f.label '場所'
+            = f.text_field :place, class: 'form-control'
+          %li
+            = f.label 'プロジェクト'
+            = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
+              {class: 'custom-select'}
+
+      #users-area
+        = render partial: 'meetings/users_form', locals: {f: f, users: users}
+
+      #other-area
+        = f.label '備考'
+        = f.text_field :note, class: 'form-control'
+
+      %br
       #topic-area
         = f.fields_for :topics do |topic|
           = render partial: 'meetings/topic_card', locals: {f: topic}
 
         = link_to_add_fields "Topic追加", f, :topics, "topic-add-btn btn btn-outline-secondary"
 
-      -#%br
-      -#%a#test-btn.btn.btn-outline-danger JStest
-      -#%br
-
-      %br
       %br
       = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
 

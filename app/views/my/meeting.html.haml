@@ -21,9 +21,6 @@
       %li.nav-item
         %a.nav-link{href: '#tab-published', 'data-toggle': 'tab'}
           配布済み
-      -# %li.nav-item
-      -#   %a.nav-link{href: '#tab-new', 'data-toggle': 'tab'}
-      -#     新規作成
 
   .card-body
     .tab-content
@@ -39,8 +36,6 @@
         「承認待ち」の本体部分
       .tab-pane#tab-published
         「配布済み」の本体部分
-      -# .tab-pane#tab-new
-      -#   = render 'meetings/form', meeting: @meeting, users: @users, projects: @projects
 %br
 = link_to 'マイページに戻る', my_page_path
 %br
