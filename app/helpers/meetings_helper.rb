@@ -69,8 +69,7 @@ module MeetingsHelper
     # f はビューから渡されたフォームオブジェクト
     # fields_for で f の子要素を作る
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
-      # render(association.to_s.singularize + "_card", f: builder)
-      render(association.to_s.singularize + "_card", f: builder, parent_f: f)
+      render(association.to_s.singularize + "_card", f: builder)
     end
 
     # ボタンの設置。classを指定してJavascriptと連動、fields を渡しておいて、

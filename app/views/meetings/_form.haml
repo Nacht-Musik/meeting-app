@@ -1,6 +1,6 @@
 #meeting-page.card
   .card-header
-    新規会議作成
+    %h4 新規会議作成
   .card-body
     = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
       = f.label '会議名'

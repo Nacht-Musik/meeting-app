@@ -9,7 +9,10 @@ class Meeting < ApplicationRecord
   belongs_to :project, optional: true
 
   has_many :recorderes, class_name: 'Recorder'
+
   has_many :attendees, class_name: 'Attendee'
+  accepts_nested_attributes_for :attendees, allow_destroy: true, reject_if: :all_blank
+
   has_many :receiveres, class_name: 'Receiver'
   has_many :files, class_name: 'AttachementFile'
 

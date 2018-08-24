@@ -12,3 +12,16 @@
                 class: 'custom-select', include_blank: true
       %td= f.collection_select :approver_id, users, :id, :last_name, {prompt: ""},
                 class: 'custom-select', include_blank: true
+%br
+
+.card.attendees-area
+  .card-header
+    %h5= "参加者"
+    = icon('fas', 'toggle-on')
+    = icon('fas', 'toggle-off')
+  .card-body
+    "参加者表示エリア"
+    = f.fields_for :attendees do |attendee|
+      =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
+    .attendee-add-btn.btn.btn-info
+      = icon('fas' ,'plus')

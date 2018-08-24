@@ -13,8 +13,15 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.new
+
+    # Topic枠を一つ作成
     @meeting.topics.build
+
+    # Comment枠を一つ作成（しない）
     # @meeting.topics.first.comments.build
+
+    # 参加者登録枠を一人作成
+    @meeting.attendees.build
   end
 
   def create
@@ -84,6 +91,12 @@ class MeetingsController < ApplicationController
                                       :inspector_id,
                                       :approver_id,
                                       :note,
+                                      attendees_attributes: [
+                                        :id,
+                                        :meeting_id,
+                                        :user_id,
+                                        :_destroy
+                                      ],
                                       topics_attributes: [
                                         :id,
                                         :meeting_id,
