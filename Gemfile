@@ -16,22 +16,12 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
-# Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # haml系
 gem 'haml-rails'
@@ -53,12 +43,8 @@ gem 'rails-i18n'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 
-# nested_form <- 関連モデルを一つのform内で同時に更新が楽に出来るGem  (不要のはず)
-gem 'nested_form_fields'
-gem 'font-awesome-sass', '~> 5.0.6'
-
-# Gon #railsの変数をjavascript内で使えるようにするGem
-# gem 'gon'
+# Font Awesome
+gem 'font-awesome-sass', '~> 5.2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

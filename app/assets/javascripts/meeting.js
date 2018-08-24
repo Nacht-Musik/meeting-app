@@ -189,15 +189,28 @@ $(document).on('turbolinks:load', function() {
     var cmt_destroy_flag = cmt_block_ele.prev('.cmt-destroy-flag');
 
     // 子孫コメントを全て 1 段階昇格（左に1つ移動)
-    var children_cmt_ele = findChildComments(cmt_block_ele);
-    $.each(children_cmt_ele, function(i, child){
-      console.log({i: i, child: child});
-      commentMoveLeft(child);
+    var progeny_cmts = findProgenyComments(cmt_block_ele);
+    $.each(progeny_cmts, function(i, progeny){
+      commentMoveLeft(progeny);
     });
+
 
     // コメント削除フラグを立てて、要素を削除する
     cmt_destroy_flag.val('true');
     cmt_block_ele.remove();
+
+    // コメント移動ボタンの状態を再設定
+    changeStateAllCommentMoveBtn();
   });
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// Card開閉ボタン
+$(document).on('turbolinks:load', function() {
+  $('#meeting-page').on('click', '.card-toggle-btn',function(){
+    var card_block_ele = $(this).closest('.card');
+    var card_body_ele = card_block_ele.children('.card-body');
+    card_body_ele.slideToggle();
+    $(this).find('i').toggleClass('fa-toggle-on fa-toggle-off');
+  });
+});

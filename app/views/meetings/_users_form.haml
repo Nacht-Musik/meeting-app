@@ -16,12 +16,16 @@
 
 .card.attendees-area
   .card-header
-    %h5= "参加者"
-    = icon('fas', 'toggle-on')
-    = icon('fas', 'toggle-off')
+    = "参加者"
+    .card-btn-area
+      .card-toggle-btn.btn
+        = icon('fas', 'toggle-on')
   .card-body
-    "参加者表示エリア"
-    = f.fields_for :attendees do |attendee|
-      =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
+    %ul
+      = f.fields_for :attendees do |attendee|
+        =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
+    .attendee-add-form
+    =f.collection_select :user_id, users, :id, :last_name, {prompt: ""},
+                          class: 'custom-select', include_blank: true
     .attendee-add-btn.btn.btn-info
       = icon('fas' ,'plus')
