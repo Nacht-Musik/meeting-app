@@ -14,18 +14,3 @@
                 class: 'custom-select', include_blank: true
 %br
 
-.card.attendees-area
-  .card-header
-    = "参加者"
-    .card-btn-area
-      .card-toggle-btn.btn
-        = icon('fas', 'toggle-on')
-  .card-body
-    %ul
-      = f.fields_for :attendees do |attendee|
-        =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
-    .attendee-add-form
-    =f.collection_select :user_id, users, :id, :last_name, {prompt: ""},
-                          class: 'custom-select', include_blank: true
-    .attendee-add-btn.btn.btn-info
-      = icon('fas' ,'plus')

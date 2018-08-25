@@ -37,7 +37,7 @@ gem 'switch_user'
 gem 'paranoia'
 
 # 日本語化
-gem 'rails-i18n'
+# gem 'rails-i18n'
 
 # Bootstrap
 gem 'bootstrap', '~> 4.1.1'

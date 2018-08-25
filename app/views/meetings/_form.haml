@@ -1,13 +1,10 @@
 #meeting-page.card
-  .card-header
-    %h4 新規会議作成
-  .card-body
-    = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
-      = f.label '会議名'
+  = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
+    .card-header
+      %h5= f.label '会議名'
       = f.text_field :title, class: 'form-control'
-
+    .card-body
       #date-area
-        %br
         = f.label '開催日'
         = f.date_select :date, class: 'form-control'
         ___時間
@@ -28,6 +25,9 @@
       #users-area
         = render partial: 'meetings/users_form', locals: {f: f, users: users}
 
+      #attendees-area.card
+        -#= render partial: 'meetings/attendees_form', locals: {f: f, users: users}
+
       %br
       #topic-area
         = f.fields_for :topics do |topic|
@@ -47,6 +47,11 @@
 
       %br
       = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
+
+  #user-block-template
+    %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
+    %input{type: "hidden", id: "meeting_item_name_number_user_id", value: "", name: "meeting[item_name][number][user_id]", class: "user-block-user_id"}
+    = render partial: 'meetings/user_card_template', locals: {user_name: "template_name"}
 
 :javascript
   changeStateAllCommentMoveBtn();

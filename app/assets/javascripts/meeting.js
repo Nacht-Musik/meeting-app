@@ -214,3 +214,24 @@ $(document).on('turbolinks:load', function() {
     $(this).find('i').toggleClass('fa-toggle-on fa-toggle-off');
   });
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// Attendee追加ボタン
+$(document).on('turbolinks:load', function() {
+  $('#meeting-page').on('click', '.attendee-add-btn',function(){
+    // ユーザー（参加者）ブロックのテンプレートをコピー
+    var user_block_template = $("#meeting-page").find('#user-block-template');
+
+    // 追加する参加者用の識別番号を生成
+    var attendee_num = new Date().getTime();
+
+    // 参加者セレクターで選択されている、user_id、user.nameを取得
+    // 追加する参加者のuser_id, _destroy要素を設定
+    // var id = user_block.find('user-block-_destroy').attr('id');
+    // console.log({id: id});
+    // 参加者セレクターから追加したユーザーを削除
+    // 参加者表示領域内の最後のユーザーブロック要素を取得
+    // 作成したユーザーブロックを指定のエリアの末に追加
+
+  });
+});

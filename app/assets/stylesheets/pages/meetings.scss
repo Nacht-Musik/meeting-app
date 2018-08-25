@@ -10,29 +10,35 @@
     float:   left;
   }
 
+  .card-btn-area {
+    display: -webkit-flex;
+    display: flex;
+    float:   right;
+  }
+
   #users-area{
     %thead{
 
     }
-    %th {
-      margin-top: 5px;
+    th {
+      margin-top: 0px;
       padding-bottom: 0px;
     }
-    .card-btn-area {
-      display: -webkit-flex;
-      display: flex;
-      float:   right;
+  }
+  #attendees-area{
+    ul li{
+      display: inline;
     }
   }
 
   #general-area{
-    .ul{
+    ul{
       display: -webkit-flex;
       display: flex;
       float: left;
       width: 50%;
 
-      .li{
+      li{
       }
     }
 
@@ -79,5 +85,8 @@
     .cmt-area::before {
       // content: "[___]";
     }
+  }
+  #user-block-template{
+    display: none;
   }
 }
