@@ -219,19 +219,62 @@ $(document).on('turbolinks:load', function() {
 // Attendee追加ボタン
 $(document).on('turbolinks:load', function() {
   $('#meeting-page').on('click', '.attendee-add-btn',function(){
-    // ユーザー（参加者）ブロックのテンプレートをコピー
-    var user_block_template = $("#meeting-page").find('#user-block-template');
+    var item_name = "attendees_attributes";
 
-    // 追加する参加者用の識別番号を生成
-    var attendee_num = new Date().getTime();
+    // ユーザー（参加者）ブロックをコピー
+    var user_block = $("#meeting-page").find('#user-block-template').clone();
+    user_block.attr('ID', '');
 
-    // 参加者セレクターで選択されている、user_id、user.nameを取得
-    // 追加する参加者のuser_id, _destroy要素を設定
-    // var id = user_block.find('user-block-_destroy').attr('id');
-    // console.log({id: id});
-    // 参加者セレクターから追加したユーザーを削除
-    // 参加者表示領域内の最後のユーザーブロック要素を取得
+    // 追加する参加者用のModel用識別子の共通部を生成
+    var user_num = new Date().getTime().toString();
+    var user_id = "meeting_" + item_name + "_" + user_num;
+    var user_name = "meeting[" + item_name + "][" + user_num + "]";
+
+    // セレクターで選択されているユーザーのuser_id, 表示名を取得
+    var selected_user_id = $('#attendee-selector option:selected').val();
+    var selected_user_name = $('#attendee-selector option:selected').text();
+    user_block.find('.user-name').text(selected_user_name);
+
+    // user_id 設定要素に 追加するユーザーの識別子を設定
+    var user_id_ele = user_block.find('#meeting_item_name_number_user_id');
+    user_id_ele.attr('name', user_name + "[user_id]");
+    user_id_ele.attr('id', user_id + "_user_id");
+    user_id_ele.attr('value', selected_user_id);
+
+
+    // destroyフラグに追加するユーザーの識別子を設定
+    var destroy_flag_ele = user_block.find('#meeting_item_name_number__destroy');
+    destroy_flag_ele.attr('name', user_name + "[_destroy]");
+    destroy_flag_ele.attr('id', user_id + "__destroy");
+
+
     // 作成したユーザーブロックを指定のエリアの末に追加
+    $('#attendees-view-area').append(user_block);
 
+    // 参加者セレクターから追加したユーザーを削除
+    $('#attendee-selector option:selected').remove();
+  });
+
+
+  // 参加者削除ボタン
+  $('#meeting-page').on('click', '.attendee-del-btn',function(){
+    var user_block_ele = $(this).closest('.user-block');
+
+    // 参加者セレクターに削除ユーザーを追加する
+    var user_name = user_block_ele.find('.user-name').text();
+    var user_id = user_block_ele.find('.attendee-user-id').attr('value');
+
+    var add_option_attr = {value: user_id, text: user_name}
+    var add_option = $('<option>', add_option_attr);
+
+    // 対象ユーザーの削除フラグをtrueにする
+    user_block_ele.find('.attendee-destroy-flag').attr('value', 'true');
+
+    // 参加者セレクターに削除したユーザーを追加する
+    $('#attendee-selector').append(add_option);
+
+    // 削除対象ユーザーの表示要素を削除
+    var user_card_ele = $(this).closest('.user-card');
+    user_card_ele.remove();
   });
 });

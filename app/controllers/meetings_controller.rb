@@ -12,6 +12,7 @@ class MeetingsController < ApplicationController
   end
 
   def new
+    # ログイン中か否かを判別する条件式を追加すること。
     @meeting = Meeting.new
 
     # Topic枠を一つ作成
@@ -20,8 +21,8 @@ class MeetingsController < ApplicationController
     # Comment枠を一つ作成（しない）
     # @meeting.topics.first.comments.build
 
-    # 参加者登録枠を一人作成
-    @meeting.attendees.build
+    # 参加者に担当者を追加する？
+    # @meeting.attendees.build
   end
 
   def create
@@ -42,6 +43,7 @@ class MeetingsController < ApplicationController
 
   def edit
     # p '#--- editアクション実行 ---#'
+    # ログイン中のユーザーが編集権限を持っているかを判別すること！
   end
 
   def update

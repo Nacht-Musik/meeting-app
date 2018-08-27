@@ -4,12 +4,13 @@
     .card-toggle-btn.btn
       = icon('fas', 'toggle-on')
 .card-body
-  = f.fields_for :attendees do |attendee|
-    =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
   .attendee-add-form
-    %select.attendee-select.custom-select
+    %select#attendee-selector.custom-select
       - users.each do |user|
         %option{value: "#{user.id}"}
-          = user.last_name
+          = "#{user.last_name} #{user.first_name}"
     .attendee-add-btn.btn.btn-info
       = icon('fas' ,'plus')
+  #attendees-view-area
+    = f.fields_for :attendees do |attendee|
+      =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}

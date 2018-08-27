@@ -337,15 +337,15 @@ function findCmtFormItemNames(cmt_block_ele){
   var item_names = [];
 
   cmt_forms.each(function(i, ele){
-    let name = getCmtFormItemName(ele);
+    let name = getFormItemName(ele);
     item_names.push(name);
   });
 
   return item_names;
 }
 
-// 指定フォームのItem名を取得
-function getCmtFormItemName(item_ele){
+// 指定フォーム(<input>)のItem名を取得
+function getFormItemName(item_ele){
   var ele_name = item_ele.name;
 
   ele_name = ele_name.replace(/]/g, "");
@@ -355,3 +355,11 @@ function getCmtFormItemName(item_ele){
   return name_components.pop();
 }
 
+// 参加者追加セレクターの初期化メソッド
+function initializationAttendeeSelector(){
+  // 参加者として登録済みのユーザーをセレクターから削除する
+  var attendee_ids = $('#attendees-view-area').find('.attendee-user-id');
+  attendee_ids.each(function(i, user_id){
+    $('#attendee-selector option[value=' + user_id.value + ']').remove();
+  });
+}

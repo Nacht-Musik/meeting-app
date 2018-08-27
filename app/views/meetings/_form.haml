@@ -26,7 +26,7 @@
         = render partial: 'meetings/users_form', locals: {f: f, users: users}
 
       #attendees-area.card
-        -#= render partial: 'meetings/attendees_form', locals: {f: f, users: users}
+        = render partial: 'meetings/attendees_form', locals: {f: f, users: users}
 
       %br
       #topic-area
@@ -48,10 +48,13 @@
       %br
       = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
 
-  #user-block-template
-    %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
+  #user-block-template.user-block
+    %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "false", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
     %input{type: "hidden", id: "meeting_item_name_number_user_id", value: "", name: "meeting[item_name][number][user_id]", class: "user-block-user_id"}
-    = render partial: 'meetings/user_card_template', locals: {user_name: "template_name"}
+    .card.user-card.float-left
+      .card-body
+        = render partial: 'meetings/user_card', locals: {user_name: "template_name"}
 
 :javascript
   changeStateAllCommentMoveBtn();
+  initializationAttendeeSelector();

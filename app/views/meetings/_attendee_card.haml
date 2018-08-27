@@ -1,5 +1,7 @@
-= f.hidden_field :_destroy, class: "attendee-destroy-flag"
-= f.hidden_field :user_id, class: "attendee-user-id"
-%ul.attendee-block.float-left
-  = render partial:'meetings/user_card_template',
-      locals:{user_name: "#{f.object.user.last_name} #{f.object.user.first_name}"}
+.user-block
+  = f.hidden_field :_destroy, class: "attendee-destroy-flag"
+  = f.hidden_field :user_id, class: "attendee-user-id"
+  .card.user-card.float-left
+    .card-body
+      = render partial:'meetings/user_card',
+          locals:{user_name: "#{f.object.user.last_name} #{f.object.user.first_name}"}
