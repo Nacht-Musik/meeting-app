@@ -37,7 +37,11 @@ gem 'switch_user'
 gem 'paranoia'
 
 # 日本語化
-# gem 'rails-i18n'
+gem 'rails-i18n'
+
+# Date/Time Picker
+gem 'momentjs-rails'
+gem 'bootstrap4-datetime-picker-rails'
 
 # Bootstrap
 gem 'bootstrap', '~> 4.1.1'

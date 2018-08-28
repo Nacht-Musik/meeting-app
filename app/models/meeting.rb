@@ -10,7 +10,7 @@ class Meeting < ApplicationRecord
 
   has_many :recorderes, class_name: 'Recorder'
 
-  has_many :attendees, class_name: 'Attendee'
+  has_many :attendees, class_name: 'Attendee', dependent: :destroy
   accepts_nested_attributes_for :attendees, allow_destroy: true, reject_if: :all_blank
 
   has_many :receiveres, class_name: 'Receiver'
