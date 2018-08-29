@@ -3,6 +3,8 @@ class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
   before_action :set_users, only: [:new, :edit]
   before_action :set_projects, only: [:new, :edit]
+  before_action :set_comment_statuses, only: [:new, :edit]
+  before_action :set_topic_statuses, only: [:new, :edit]
 
   def show
     # ソート番号順に並んだTopicsを取得
@@ -40,22 +42,11 @@ class MeetingsController < ApplicationController
   end
 
   def edit
-    @meeting.topics.each do |topic|
-      p topic.name
-    end
-    # Topicsをソート番号順に並び替え
-    Topic.reorder(:sort_num)
-
-    @meeting.topics.each do |topic|
-      p topic.name
-    end
-
     # p '#--- editアクション実行 ---#'
     # ログイン中のユーザーが編集権限を持っているかを判別すること！
   end
 
   def update
-    Topic.order(:sort_num)
     # p 'updateアクション実行'
     params = meeting_params
 
@@ -89,6 +80,14 @@ class MeetingsController < ApplicationController
       @projects = Project.all
     end
 
+    def set_comment_statuses
+      @comment_statuses = CommentStatus.all
+    end
+
+    def set_topic_statuses
+      @topic_statuses = TopicStatus.all
+    end
+
     # Strong parameters
     def meeting_params
       params.require(:meeting).permit(:id,
@@ -111,11 +110,14 @@ class MeetingsController < ApplicationController
                                       topics_attributes: [
                                         :id,
                                         :meeting_id,
+                                        :status_id,
                                         :name,
                                         :sort_num,
                                         :_destroy,
                                         comments_attributes: [
                                           :id,
+                                          :status_id,
+                                          :user_id,
                                           :name,
                                           :sort_num,
                                           :indent,

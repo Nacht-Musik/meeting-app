@@ -5,18 +5,31 @@
 
   %li.indent-area{class: "#{add_indent_css f.object.indent}"}
   %li.cmt-body
-    %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
-      = icon('fas' ,'arrow-left')
-    %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
-      = icon('fas' ,'arrow-right')
+    .row
+      .col-7
+        -# 左移動ボタン
+        %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+          = icon('fas' ,'arrow-left')
 
-    -# 子コメント追加ボタン
-    %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm
-      = icon('fas' ,'plus')
+        -# 右移動ボタン
+        %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+          = icon('fas' ,'arrow-right')
 
-    -# コメント削除ボタン
-    %a.cmt-del-btn.btn.btn-outline-danger.btn-sm
-      = icon('fas' ,'times')
+        -# 子コメント追加ボタン
+        %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm
+          = icon('fas' ,'plus')
 
-    %br
+        -# コメント削除ボタン
+        %a.cmt-del-btn.btn.btn-outline-danger.btn-sm
+          = icon('fas' ,'times')
+
+      .col-3
+        = f.collection_select :user_id, @users, :id, :last_name,
+                              {include_blank: true, prompt: ""}, class: "form-control form-control-sm"
+      .col-2
+        -# コメントステータス
+        = f.collection_select :status_id, @comment_statuses, :id, :name,
+                              {include_blank: true, prompt: ""}, class: "form-control form-control-sm"
+
+
     = f.text_field :name, class: 'cmt-form-name form-control'
