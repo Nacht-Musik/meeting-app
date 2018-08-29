@@ -6,6 +6,9 @@ const MIN_INDENT = 1;   // インデントの最小値
 ////////////////////////////////////////////////////////////////
 // JavaScriptの動作確認用
 $(document).on('turbolinks:load', function() {
+  $('#topic-area').sortable();
+  // $('#attendees-view-area').sortable();
+
   $('#test-btn').on('click', function () {
       console.log('#--- test-btn exec! ---#');
     }
@@ -278,3 +281,11 @@ $(document).on('turbolinks:load', function() {
     user_card_ele.remove();
   });
 });
+
+///////////////////////////////////////////////////////////////////
+// ドロップアンドドラッグ並び替え
+$(document).on('turbolinks:load', function() {
+  // Topicカード D&D 並び替え
+  $('#topic-area').sortable();
+});
+

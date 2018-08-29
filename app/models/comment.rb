@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  default_scope -> { order(:sort_num)}
+
   belongs_to :topic
   belongs_to :status, class_name: 'CommentStatus', optional: true
   belongs_to :user, class_name: 'User', optional: true

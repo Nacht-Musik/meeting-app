@@ -21,8 +21,6 @@ class MeetingsController < ApplicationController
     # Comment枠を一つ作成（しない）
     # @meeting.topics.first.comments.build
 
-    # 参加者に担当者を追加する？
-    # @meeting.attendees.build
   end
 
   def create
@@ -42,11 +40,22 @@ class MeetingsController < ApplicationController
   end
 
   def edit
+    @meeting.topics.each do |topic|
+      p topic.name
+    end
+    # Topicsをソート番号順に並び替え
+    Topic.reorder(:sort_num)
+
+    @meeting.topics.each do |topic|
+      p topic.name
+    end
+
     # p '#--- editアクション実行 ---#'
     # ログイン中のユーザーが編集権限を持っているかを判別すること！
   end
 
   def update
+    Topic.order(:sort_num)
     # p 'updateアクション実行'
     params = meeting_params
 

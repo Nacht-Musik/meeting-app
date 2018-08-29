@@ -1,4 +1,5 @@
 class Topic < ApplicationRecord
+  default_scope -> { order(:sort_num)}
   belongs_to :meeting
   belongs_to :status, class_name: "TopicStatus", optional: true
 

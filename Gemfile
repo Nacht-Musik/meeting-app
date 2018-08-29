@@ -45,7 +45,10 @@ gem 'bootstrap4-datetime-picker-rails'
 
 # Bootstrap
 gem 'bootstrap', '~> 4.1.1'
+
+# jQuery
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # Font Awesome
 gem 'font-awesome-sass', '~> 5.2.0'
