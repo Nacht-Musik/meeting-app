@@ -6,7 +6,9 @@
       .col-3
         -# Topic Status
         = f.collection_select :status_id, @topic_statuses, :id, :name,
-                              {include_blank: true, prompt: ""}, class: "form-control form-control-sm"
+                              {include_blank: true},
+                              html_options = { tabindex: "-1",
+                              class: "form-control form-control-sm"}
       .col-7
         -# ダミー
       .col-2
