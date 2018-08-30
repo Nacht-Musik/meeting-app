@@ -218,7 +218,7 @@ $(document).on('turbolinks:load', function() {
 ////////////////////////////////////////////////////////////////////////////////
 // Attendee追加ボタン
 $(document).on('turbolinks:load', function() {
-  $('#meeting-page').on('click', '.attendee-add-btn',function(){
+  $('#meeting-page').on('click', '#attendee-add-btn',function(){
     // セレクターで選択されているユーザー名を取得
     var selected_user_name = $('#attendee-selector option:selected').text();
 
@@ -260,6 +260,12 @@ $(document).on('turbolinks:load', function() {
 
     // 参加者セレクターから追加したユーザーを削除
     $('#attendee-selector option:selected').remove();
+
+    // セレクターの中身が空になったら、追加ボタンを無効にする
+    let option_num = $('#attendee-selector').children('option').length;
+    if(option_num <= 0){
+      $(this).addClass("disabled");
+    }
   });
 
 
@@ -283,6 +289,12 @@ $(document).on('turbolinks:load', function() {
     // 削除対象ユーザーの表示要素を削除
     var user_card_ele = $(this).closest('.user-card');
     user_card_ele.remove();
+
+    // 追加ボタンが無効になっていたら有効にする。
+    if ($('#attendee-add-btn').hasClass('disabled')){
+      $('#attendee-add-btn').removeClass("disabled");
+    }
+
   });
 });
 
