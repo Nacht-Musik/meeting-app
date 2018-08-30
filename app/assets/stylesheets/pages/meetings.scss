@@ -10,6 +10,10 @@
     float:   left;
   }
 
+  .section-card{
+    margin-bottom: 1.5em;
+  }
+
   .card-btn-area {
     display: -webkit-flex;
     display: flex;
@@ -55,6 +59,9 @@
   }
 
   #topic-area{
+    .topic-card{
+      margin-bottom: 1em;
+    }
     .topic-form{
       .topic-form-name-area{
         width: 85%;
