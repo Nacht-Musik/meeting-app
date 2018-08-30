@@ -1,16 +1,21 @@
-%table.table.table-bordered
-  %thead
-    %tr
-      %th{scope: "col"}= f.label '担当者'
-      %th{scope: "col"}= f.label '審査者'
-      %th{scope: "col"}= f.label '承認者'
-  %tbody
-    %tr
-      %td= f.collection_select :user_id, users, :id, :last_name, {selected: current_user.id},
+.row
+  .col-12.col-sm-4
+    .form-group
+      =f.label '担当者', class: 'col-form-label'
+      = f.collection_select :user_id, users, :id, :last_name, {selected: current_user.id},
                 class: 'custom-select'
-      %td= f.collection_select :inspector_id, users, :id, :last_name, {prompt: ""},
-                class: 'custom-select', include_blank: true
-      %td= f.collection_select :approver_id, users, :id, :last_name, {prompt: ""},
-                class: 'custom-select', include_blank: true
+
+  .col-12.col-sm-4
+    .form-group
+      =f.label '審査者', class: 'col-form-label'
+      = f.collection_select :inspector_id, users, :id, :last_name, {prompt: ""},
+                    class: 'custom-select', include_blank: true
+
+  .col-12.col-sm-4
+    .form-group
+      =f.label '承認者', class: 'col-form-label'
+      = f.collection_select :approver_id, users, :id, :last_name, {prompt: ""},
+                    class: 'custom-select', include_blank: true
+
 %br
 

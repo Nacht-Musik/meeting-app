@@ -1,53 +1,21 @@
 #meeting-page.card
   = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
     .card-header
-      %h5= f.label '会議名'
-      = f.text_field :title, class: 'form-control'
+      .form-group
+        %h5= f.label '会議名', class: 'col-form-label'
+        = f.text_field :title, class: 'form-control'
     .card-body
       #date-time-area
-        .row
-          .col-6
-            = f.label '開催日'
-          .col-3
-            = f.label '開始時刻'
-          .col-3
-            = f.label '終了時刻'
-        .row
-          .col-6
-            -#= f.date_field :date, class: 'form-control'
-            #date-picker.input-group.date{"data-target-input": "nearest"}
-              = f.date_field :date, class: 'form-control datetimepicker-input',
-                              "data-target": "#date-picker", "data-type": "date"
-              .input-group-append{"data-target": "#date-picker", "data-toggle": "datetimepicker"}
-                .input-group-text
-                  %i.far.fa-calendar-alt
-          .col-3
-            -#= f.time_field :start_time, class: 'form-control'
-            #start-time-picker.input-group.date{"data-target-input": "nearest"}
-              = f.time_field :start_time, class: "form-control datetimepicker-input",
-                              "data-target": "#start-time-picker", "data-type": "text",
-                              step: 300
-              .input-group-append{"data-target": "#start-time-picker", "data-toggle": "datetimepicker"}
-                .input-group-text
-                  %i.far.fa-clock
-          .col-3
-            -#= f.time_field :finish_time, class: 'form-control', step: "300"
-            #finish-time-picker.input-group.date{"data-target-input": "nearest"}
-              = f.time_field :finish_time, class: "form-control datetimepicker-input",
-                              "data-target": "#finish-time-picker", "data-type": "text",
-                              step: 300
-              .input-group-append{"data-target": "#finish-time-picker", "data-toggle": "datetimepicker"}
-                .input-group-text
-                  %i.fas.fa-clock
+        = render partial: 'meetings/date_form', locals: {f: f}
+
       #general-area
-        .row
-          .col-6
-            = f.label '場所'
-            = f.text_field :place, class: 'form-control'
-          .col-6
-            = f.label 'プロジェクト'
-            = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
-              {class: 'custom-select'}
+        .form-group
+          = f.label '場所'
+          = f.text_field :place, class: 'form-control'
+        .form-group
+          = f.label 'プロジェクト'
+          = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
+            {class: 'custom-select'}
 
       #users-area
         = render partial: 'meetings/users_form', locals: {f: f, users: users}
