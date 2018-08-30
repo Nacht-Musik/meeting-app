@@ -16,6 +16,16 @@
     float:   right;
   }
 
+  .user-card {
+    margin: 0.2em 1em 0.2em 0em;
+    .card-body{
+      padding: 0px;
+    }
+    .user-name{
+      padding: 0.5em 1em;
+    }
+  }
+
   #users-area{
     thead{
 

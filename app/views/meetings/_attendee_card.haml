@@ -1,6 +1,8 @@
 .user-block
   = f.hidden_field :_destroy, class: "attendee-destroy-flag"
   = f.hidden_field :user_id, class: "attendee-user-id"
+
+
   .card.user-card.float-left
     .card-body
       = render partial:'meetings/user_card',

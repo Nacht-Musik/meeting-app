@@ -219,6 +219,14 @@ $(document).on('turbolinks:load', function() {
 // Attendee追加ボタン
 $(document).on('turbolinks:load', function() {
   $('#meeting-page').on('click', '.attendee-add-btn',function(){
+    // セレクターで選択されているユーザー名を取得
+    var selected_user_name = $('#attendee-selector option:selected').text();
+
+    // 選択ユーザー名が空の場合、追加処理を実行しない
+    if(selected_user_name === ""){
+      return;
+    }
+
     var item_name = "attendees_attributes";
 
     // ユーザー（参加者）ブロックをコピー
@@ -230,9 +238,8 @@ $(document).on('turbolinks:load', function() {
     var user_id = "meeting_" + item_name + "_" + user_num;
     var user_name = "meeting[" + item_name + "][" + user_num + "]";
 
-    // セレクターで選択されているユーザーのuser_id, 表示名を取得
+    // セレクターで選択されているユーザーのuser_idを取得
     var selected_user_id = $('#attendee-selector option:selected').val();
-    var selected_user_name = $('#attendee-selector option:selected').text();
     user_block.find('.user-name').text(selected_user_name);
 
     // user_id 設定要素に 追加するユーザーの識別子を設定

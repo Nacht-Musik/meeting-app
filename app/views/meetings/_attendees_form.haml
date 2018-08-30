@@ -1,16 +1,20 @@
 .card-header
   = "参加者"
-  .card-btn-area
-    .card-toggle-btn.btn
-      = icon('fas', 'toggle-on')
+  .card-toggle-btn.btn.float-right
+    = icon('fas', 'toggle-on')
 .card-body
-  .attendee-add-form
-    %select#attendee-selector.custom-select
-      - users.each do |user|
-        %option{value: "#{user.id}"}
-          = "#{user.last_name} #{user.first_name}"
-    .attendee-add-btn.btn.btn-info
-      = icon('fas' ,'plus')
+  .row
+    .col-12.col-sm-8.col-md-6.col-lg-4
+      .attendee-add-form.input-group
+        %select#attendee-selector.custom-select
+          - users.each do |user|
+            %option{value: "#{user.id}"}
+              = "#{user.last_name} #{user.first_name}"
+        .input-group-append
+          .attendee-add-btn.btn.btn-info
+            = icon('fas' ,'plus')
+
+  %br
   #attendees-view-area
     = f.fields_for :attendees do |attendee|
       =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}

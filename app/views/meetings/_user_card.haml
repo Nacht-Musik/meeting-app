@@ -1,3 +1,6 @@
-%a.user-name= "#{user_name}"
-%a.attendee-del-btn.btn.btn-outline-danger.btn-sm
-  = icon('fas' ,'minus')
+.input-group
+  %a.user-name= "#{user_name}"
+  .input-group-append
+    %a.attendee-del-btn.btn.btn-outline-danger{tabindex: "-1"}
+      = icon('fas' ,'minus')
+
