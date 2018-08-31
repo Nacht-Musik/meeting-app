@@ -5,6 +5,7 @@ class MeetingsController < ApplicationController
   before_action :set_projects, only: [:new, :edit]
   before_action :set_comment_statuses, only: [:new, :edit]
   before_action :set_topic_statuses, only: [:new, :edit]
+  before_action :set_receiver_type, only: [:new, :edit]
 
   def show
     # ソート番号順に並んだTopicsを取得
@@ -88,6 +89,10 @@ class MeetingsController < ApplicationController
       @topic_statuses = TopicStatus.all
     end
 
+    def set_receiver_type
+      @receiver_type = ReceiverType.all
+    end
+
     # Strong parameters
     def meeting_params
       params.require(:meeting).permit(:id,
@@ -106,6 +111,13 @@ class MeetingsController < ApplicationController
                                         :meeting_id,
                                         :user_id,
                                         :_destroy
+                                      ],
+                                      receiveres_attributes: [
+                                          :id,
+                                          :type_id,
+                                          :user_id,
+                                          :meeting_id,
+                                          :_destroy
                                       ],
                                       topics_attributes: [
                                         :id,

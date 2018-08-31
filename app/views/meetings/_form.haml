@@ -29,6 +29,9 @@
       #attendees-area.card.section-card
         = render partial: 'meetings/attendees_form', locals: {f: f, users: users}
 
+      #receiver-area.card.section-card
+        = render partial: 'meetings/receiver_form', locals: {f: f, users: users}
+
       #main-area.card.section-card
         .card-header
           = "議題"
@@ -59,7 +62,7 @@
 
 :javascript
   changeStateAllCommentMoveBtn();
-  initializationAttendeeSelector();
+  initializationUserSelector();
   $(function () {
     $('#date-picker').datetimepicker({
       format: 'YYYY-MM-DD',

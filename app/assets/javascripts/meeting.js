@@ -216,7 +216,7 @@ $(document).on('turbolinks:load', function() {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// Attendee追加ボタン
+// 参加者 追加／削除ボタン
 $(document).on('turbolinks:load', function() {
   $('#meeting-page').on('click', '#attendee-add-btn',function(){
     // セレクターで選択されているユーザー名を取得
@@ -248,11 +248,15 @@ $(document).on('turbolinks:load', function() {
     user_id_ele.attr('id', user_id + "_user_id");
     user_id_ele.attr('value', selected_user_id);
 
-
     // destroyフラグに追加するユーザーの識別子を設定
     var destroy_flag_ele = user_block.find('#meeting_item_name_number__destroy');
     destroy_flag_ele.attr('name', user_name + "[_destroy]");
     destroy_flag_ele.attr('id', user_id + "__destroy");
+
+    // 削除ボタンのclassを参加者(attendee)用に変更
+    var del_btn_ele = user_block.find('.user-del-btn');
+    del_btn_ele.removeClass('user-del-btn');
+    del_btn_ele.addClass('attendee-del-btn');
 
 
     // 作成したユーザーブロックを指定のエリアの末に追加
@@ -295,6 +299,115 @@ $(document).on('turbolinks:load', function() {
       $('#attendee-add-btn').removeClass("disabled");
     }
 
+  });
+});
+
+
+/////////////////////////////////////////////////////////////
+// 配布先(受信者) 追加／削除ボタン
+$(document).on('turbolinks:load', function() {
+  $('#meeting-page').on('click', '#receiver-add-btn', function () {
+    // セレクターで選択されているユーザー名を取得
+    var selected_user_name = $('#receiver-selector option:selected').text();
+
+    // 選択ユーザー名が空の場合、追加処理を実行しない
+    if(selected_user_name === ""){
+      return;
+    }
+
+    var item_name = "receiveres_attributes";
+
+    // ユーザーブロックのテンプレートをコピー
+    var user_block = $("#meeting-page").find('#user-block-template').clone();
+    user_block.attr('ID', '');
+
+    // 追加する受信者のModel用識別子の共通部を生成
+    var user_num = new Date().getTime().toString();
+    var user_id = "meeting_" + item_name + "_" + user_num;
+    var user_name = "meeting[" + item_name + "][" + user_num + "]";
+
+    // セレクターで選択されているユーザーのuser_idを取得
+    var selected_user_id = $('#receiver-selector option:selected').val();
+    user_block.find('.user-name').text(selected_user_name);
+
+    // user_id 設定要素に 追加するユーザーの識別子を設定
+    var user_id_ele = user_block.find('#meeting_item_name_number_user_id');
+    user_id_ele.attr('name', user_name + "[user_id]");
+    user_id_ele.attr('id', user_id + "_user_id");
+    user_id_ele.attr('value', selected_user_id);
+
+
+    // destroyフラグに追加するユーザーの識別子を設定
+    var destroy_flag_ele = user_block.find('#meeting_item_name_number__destroy');
+    destroy_flag_ele.attr('name', user_name + "[_destroy]");
+    destroy_flag_ele.attr('id', user_id + "__destroy");
+
+
+    // 受信タイプを取得する。
+    var selected_receiver_type_id = $('#receiver-type-selector option:selected').attr('value');
+
+    // receive_type要素を作成
+    var type_id_ele = user_id_ele.clone();
+    type_id_ele.removeClass("user-block-user_id");
+    type_id_ele.addClass("user-block-type_id");
+
+    type_id_ele.attr('name', user_name + "[type_id]");
+    type_id_ele.attr('id', user_id + "_type_id");
+    type_id_ele.attr('value', selected_receiver_type_id);
+
+    // receive_typeの設定要素を追加
+    user_block.prepend(type_id_ele);
+
+
+    // 削除ボタンのclassを参加者(attendee)用に変更
+    var del_btn_ele = user_block.find('.user-del-btn');
+    del_btn_ele.removeClass('user-del-btn');
+    del_btn_ele.addClass('receiver-del-btn');
+
+    //
+    if(selected_receiver_type_id === "1"){
+      $('#receiver-to-area.card').children('.card-body').append(user_block);
+    } else if(selected_receiver_type_id === "2"){
+      $('#receiver-cc-area.card').children('.card-body').append(user_block);
+    } else if(selected_receiver_type_id === "3"){
+      $('#receiver-bcc-area.card').children('.card-body').append(user_block);
+    }
+
+    // 配信先セレクターから追加したユーザーを削除
+    $('#receiver-selector option:selected').remove();
+
+    // セレクターの中身が空になったら、追加ボタンを無効にする
+    let option_num = $('#receiver-selector').children('option').length;
+    if(option_num <= 0){
+      $(this).addClass("disabled");
+    }
+  });
+
+  // 受信者 削除ボタン
+  $('#meeting-page').on('click', '.receiver-del-btn',function() {
+    var user_block_ele = $(this).closest('.user-block');
+
+    // 受信者セレクターに削除ユーザーを追加する
+    var user_name = user_block_ele.find('.user-name').text();
+    var user_id = user_block_ele.find('.receiver-user-id').attr('value');
+
+    var add_option_attr = {value: user_id, text: user_name}
+    var add_option = $('<option>', add_option_attr);
+
+    // 対象ユーザーの削除フラグをtrueにする
+    user_block_ele.find('.receiver-destroy-flag').attr('value', 'true');
+
+    // 参加者セレクターに削除したユーザーを追加する
+    $('#receiver-selector').append(add_option);
+
+    // 削除対象ユーザーの表示要素を削除
+    var user_card_ele = $(this).closest('.user-card');
+    user_card_ele.remove();
+
+    // 追加ボタンが無効になっていたら有効にする。
+    if ($('#receiver-add-btn').hasClass('disabled')) {
+      $('#receiver-add-btn').removeClass("disabled");
+    }
   });
 });
 

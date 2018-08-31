@@ -355,11 +355,29 @@ function getFormItemName(item_ele){
   return name_components.pop();
 }
 
-// 参加者追加セレクターの初期化メソッド
-function initializationAttendeeSelector(){
+// ユーザー（参加者／配信先）追加セレクターの初期化メソッド
+function initializationUserSelector(){
   // 参加者として登録済みのユーザーをセレクターから削除する
   var attendee_ids = $('#attendees-view-area').find('.attendee-user-id');
   attendee_ids.each(function(i, user_id){
     $('#attendee-selector option[value=' + user_id.value + ']').remove();
   });
+
+  // 配信先に登録済みのユーザーをセレクターから削除する
+  var receiver_ids = $('#receiver-view-area').find('.receiver-user-id');
+  receiver_ids.each(function(i, user_id){
+    $('#receiver-selector option[value=' + user_id.value + ']').remove();
+  });
+
+  // 参加者追加セレクターが空だったら、追加ボタンを無効にする
+  let attendee_option_num = $('#attendee-selector').children('option').length;
+  if(attendee_option_num <= 0){
+    $('#attendee-add-btn').addClass("disabled");
+  }
+
+  // 受信者追加セレクターが空だったら、追加ボタンを無効にする
+  let receiver_option_num = $('#receiver-selector').children('option').length;
+  if(receiver_option_num <= 0){
+    $('#receiver-add-btn').addClass("disabled");
+  }
 }
