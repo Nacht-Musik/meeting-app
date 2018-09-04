@@ -1,13 +1,39 @@
+= f.hidden_field :_destroy, class: 'cmt-destroy-flag'
 %ul.cmt-block
-  = f.hidden_field :sort_num, class: "cmt-sort-num"
-  = f.hidden_field :indent, class: "cmt-indent-num"
+  = f.hidden_field :sort_num, class: "cmt-form-sort-num"
+  = f.hidden_field :indent, class: "cmt-form-indent"
 
-  -# indentの値(f.object.indent)によって、空白(.indent-x)を変更
   %li.indent-area{class: "#{add_indent_css f.object.indent}"}
   %li.cmt-body
-    %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
-    class: "#{}" } <
-    %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true",
-    class: "#{}" } >
-    %br
-    = f.text_field :name, class: 'form-control'
+    .row
+      .col-7
+        -# 左移動ボタン
+        %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+          = icon('fas' ,'arrow-left')
+
+        -# 右移動ボタン
+        %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+          = icon('fas' ,'arrow-right')
+
+        -# 子コメント追加ボタン
+        %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm
+          = icon('fas' ,'plus')
+
+        -# コメント削除ボタン
+        %a.cmt-del-btn.btn.btn-outline-danger.btn-sm
+          = icon('fas' ,'times')
+
+      .col-3
+        = f.collection_select :user_id, @users, :id, :last_name,
+                              {include_blank: true},
+                              html_options = { tabindex: "-1",
+                              class: "form-control form-control-sm"}
+      .col-2
+        -# コメントステータス
+        = f.collection_select :status_id, @comment_statuses, :id, :name,
+                              {include_blank: true},
+                              html_options = { tabindex: "-1",
+                              class: "form-control form-control-sm"}
+
+
+    = f.text_field :name, class: 'cmt-form-name form-control'

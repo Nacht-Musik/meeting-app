@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root to: 'top_pages#index'
 
-  # resources :meetings, only: [:create, :show, :destroy, :new, :edit]
+  ### Meeting Controller 関連
   # resources :meetings, only: [:create, :show, :destroy, :new, :edit, :update]
   resources :meetings
 
-  # devise (User) 関連
+  ### devise (User) 関連
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
@@ -15,8 +15,7 @@ Rails.application.routes.draw do
     :registrations => 'users/registrations'
   }
 
-
-  # 'My'関連
+  ### My Controller 関連
   get 'my/page'
   get 'my/meeting'
 

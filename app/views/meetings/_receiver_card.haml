@@ -1,0 +1,12 @@
+.user-block
+  = f.hidden_field :_destroy, class: "receiver-destroy-flag"
+  = f.hidden_field :user_id, class: "receiver-user-id"
+  = f.hidden_field :type_id, class: "receiver-type-id"
+
+  .card.user-card.float-left
+    .card-body
+      .input-group
+        %a.user-name= "#{f.object.user.last_name} #{f.object.user.first_name}"
+        .input-group-append
+          %a.receiver-del-btn.btn.btn-outline-danger{tabindex: "-1"}
+            = icon('fas' ,'minus')

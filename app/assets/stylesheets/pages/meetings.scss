@@ -1,28 +1,109 @@
-.cmt-block{
-  display: -webkit-flex;
-  display: flex;
-  .cmt-body{
-    width: 80%;
-    float: left;
+#meeting-page{
+  .float-right {
+    display: -webkit-flex;
+    display: flex;
+    float:   right;
   }
-  .indent-1{
-    width: 0%;
-    float: left;
+  .float-left {
+    display: -webkit-flex;
+    display: flex;
+    float:   left;
   }
-  .indent-2{
-    width: 5%;
-    float: left;
-  }
-  .indent-3{
-    width: 10%;
-    float: left;
-  }
-  .indent-4{
-    width: 15%;
-    float: left;
-  }
-}
 
-.cmt-area::before {
-  // content: "[___]";
+  .section-card{
+    margin-bottom: 1.5em;
+  }
+
+  .card-btn-area {
+    display: -webkit-flex;
+    display: flex;
+    float:   right;
+  }
+
+  .user-card {
+    margin: 0.2em 1em 0.2em 0em;
+    .card-body{
+      padding: 0px;
+    }
+    .user-name{
+      padding: 0.5em 1em;
+    }
+  }
+
+  #users-area{
+    thead{
+
+    }
+    th {
+      margin-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+  #attendees-area{
+    ul li{
+      display: inline;
+    }
+  }
+
+  #general-area{
+    ul{
+      display: -webkit-flex;
+      display: flex;
+      float: left;
+      width: 50%;
+
+      li{
+      }
+    }
+
+  }
+
+  #topic-area{
+    .topic-card{
+      margin-bottom: 1em;
+    }
+    .topic-form{
+      .topic-form-name-area{
+        width: 85%;
+        float: left;
+      }
+    }
+
+    .cmt-block{
+      display: -webkit-flex;
+      display: flex;
+
+      .cmt-body{
+        width: 84%;
+        float: left;
+      }
+      .indent-1{
+        width: 0%;
+        float: left;
+      }
+      .indent-2{
+        width: 4%;
+        float: left;
+      }
+      .indent-3{
+        width: 8%;
+        float: left;
+      }
+      .indent-4{
+        width: 12%;
+        float: left;
+      }
+      .indent-5{
+        width: 16%;
+        float: left;
+      }
+    }
+
+    .cmt-area::before {
+      // content: "[___]";
+    }
+  }
+  #user-block-template{
+    display: none;
+  }
 }

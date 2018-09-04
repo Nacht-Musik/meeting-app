@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # paranoia(論理削除用Gem)の有効/無効 設定
+  # acts_as_paranoid
+
   #nameを必須・一意とする
   validates_uniqueness_of :name
   validates_presence_of :name

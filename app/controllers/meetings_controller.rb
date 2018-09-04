@@ -1,8 +1,11 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
-  before_action :set_meeting, only: [:show, :edit, :update]
+  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
   before_action :set_users, only: [:new, :edit]
   before_action :set_projects, only: [:new, :edit]
+  before_action :set_comment_statuses, only: [:new, :edit]
+  before_action :set_topic_statuses, only: [:new, :edit]
+  before_action :set_receiver_type, only: [:new, :edit]
 
   def show
     # ソート番号順に並んだTopicsを取得
@@ -12,9 +15,15 @@ class MeetingsController < ApplicationController
   end
 
   def new
+    # ログイン中か否かを判別する条件式を追加すること。
     @meeting = Meeting.new
+
+    # Topic枠を一つ作成
     @meeting.topics.build
-    @meeting.topics.first.comments.build
+
+    # Comment枠を一つ作成（しない）
+    # @meeting.topics.first.comments.build
+
   end
 
   def create
@@ -35,6 +44,7 @@ class MeetingsController < ApplicationController
 
   def edit
     # p '#--- editアクション実行 ---#'
+    # ログイン中のユーザーが編集権限を持っているかを判別すること！
   end
 
   def update
@@ -53,6 +63,11 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def destroy
+    @meeting.destroy
+    redirect_to my_meeting_path, notice: '会議録を削除しました'
+  end
+
   private
     def set_meeting
       @meeting = Meeting.find(params[:id])
@@ -64,6 +79,18 @@ class MeetingsController < ApplicationController
 
     def set_projects
       @projects = Project.all
+    end
+
+    def set_comment_statuses
+      @comment_statuses = CommentStatus.all
+    end
+
+    def set_topic_statuses
+      @topic_statuses = TopicStatus.all
+    end
+
+    def set_receiver_type
+      @receiver_type = ReceiverType.all
     end
 
     # Strong parameters
@@ -79,18 +106,35 @@ class MeetingsController < ApplicationController
                                       :inspector_id,
                                       :approver_id,
                                       :note,
+                                      attendees_attributes: [
+                                        :id,
+                                        :meeting_id,
+                                        :user_id,
+                                        :_destroy
+                                      ],
+                                      receiveres_attributes: [
+                                          :id,
+                                          :type_id,
+                                          :user_id,
+                                          :meeting_id,
+                                          :_destroy
+                                      ],
                                       topics_attributes: [
                                         :id,
                                         :meeting_id,
+                                        :status_id,
                                         :name,
                                         :sort_num,
                                         :_destroy,
                                         comments_attributes: [
                                           :id,
+                                          :status_id,
+                                          :user_id,
                                           :name,
                                           :sort_num,
                                           :indent,
-                                          :_destroy]
+                                          :_destroy
+                                        ]
                                       ]
                                     )
     end
