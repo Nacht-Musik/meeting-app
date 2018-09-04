@@ -25,6 +25,10 @@ class User < ApplicationRecord
   # belongs_to :authority,          class_name: 'Authority'
   belongs_to :authority,          class_name: 'Authority', optional: true
 
+  ### Group
+  has_many :group_members
+  has_many :groups, through: :group_members, source: :group
+
   # ログイン用パラメータ(login)の設定
   attr_accessor :login
 
