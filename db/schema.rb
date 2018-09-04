@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180822111324) do
+ActiveRecord::Schema.define(version: 20180904043312) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 20180822111324) do
     t.index ["status_id"], name: "index_comments_on_status_id"
     t.index ["topic_id"], name: "index_comments_on_topic_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "nick_name"
+    t.bigint "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_groups_on_parent_id"
   end
 
   create_table "meeting_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -153,7 +162,9 @@ ActiveRecord::Schema.define(version: 20180822111324) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["authority_id"], name: "index_users_on_authority_id"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -166,6 +177,7 @@ ActiveRecord::Schema.define(version: 20180822111324) do
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "topics"
   add_foreign_key "comments", "users"
+  add_foreign_key "groups", "groups", column: "parent_id"
   add_foreign_key "meetings", "meeting_statuses", column: "status_id"
   add_foreign_key "meetings", "projects"
   add_foreign_key "meetings", "users"
