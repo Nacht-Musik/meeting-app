@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180904052440) do
+ActiveRecord::Schema.define(version: 20180904062531) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -106,6 +106,26 @@ ActiveRecord::Schema.define(version: 20180904052440) do
     t.index ["user_id"], name: "index_meetings_on_user_id"
   end
 
+  create_table "notice_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "notifier_id"
+    t.bigint "category_id"
+    t.boolean "acknowledge", default: false, null: false
+    t.string "body"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_notices_on_category_id"
+    t.index ["notifier_id"], name: "index_notices_on_notifier_id"
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
   create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
@@ -195,6 +215,9 @@ ActiveRecord::Schema.define(version: 20180904052440) do
   add_foreign_key "meetings", "users"
   add_foreign_key "meetings", "users", column: "approver_id"
   add_foreign_key "meetings", "users", column: "inspector_id"
+  add_foreign_key "notices", "notice_categories", column: "category_id"
+  add_foreign_key "notices", "users"
+  add_foreign_key "notices", "users", column: "notifier_id"
   add_foreign_key "receivers", "meetings"
   add_foreign_key "receivers", "receiver_types", column: "type_id"
   add_foreign_key "receivers", "users"

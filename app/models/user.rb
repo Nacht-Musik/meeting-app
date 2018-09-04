@@ -29,6 +29,10 @@ class User < ApplicationRecord
   has_many :group_members
   has_many :groups, through: :group_members, source: :group
 
+  ### Notice
+  has_many :notices
+  has_many :notifier, class_name: "Notice", foreign_key: "notifier_id"
+
   # ログイン用パラメータ(login)の設定
   attr_accessor :login
 
