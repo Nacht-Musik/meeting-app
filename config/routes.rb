@@ -18,6 +18,13 @@ Rails.application.routes.draw do
   ### My Controller 関連
   get 'my/page'
   get 'my/meeting'
+  get 'my/mail'     # メール送信テスト用.
+
+  ### Letter_opener_web
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

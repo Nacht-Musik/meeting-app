@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      = @user.name
+      様、meeting.asist.appへようこそ。
+    %p
+      = "your username is: #{@user.last_name} #{@user.first_name}"
+      %br/
