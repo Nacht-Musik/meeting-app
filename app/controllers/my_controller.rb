@@ -12,6 +12,10 @@ class MyController < ApplicationController
     end
   end
 
+  def mail
+    SystemMailer.with(user: current_user).welcome_email.deliver_now
+  end
+
   private
     def set_meetings
       @meetings = Meeting.all

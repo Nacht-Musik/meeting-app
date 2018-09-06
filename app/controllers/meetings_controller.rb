@@ -7,6 +7,8 @@ class MeetingsController < ApplicationController
   before_action :set_topic_statuses, only: [:new, :edit]
   before_action :set_receiver_type, only: [:new, :edit]
 
+  before_action :authenticate_user!, only: [:new, :edit]
+
   def show
     # ソート番号順に並んだTopicsを取得
     @topics = sort_topics(@meeting.topics)
@@ -20,9 +22,6 @@ class MeetingsController < ApplicationController
 
     # Topic枠を一つ作成
     @meeting.topics.build
-
-    # Comment枠を一つ作成（しない）
-    # @meeting.topics.first.comments.build
 
   end
 
