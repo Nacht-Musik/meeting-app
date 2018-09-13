@@ -12,10 +12,8 @@
       = ""
   - if mode == "edit" || mode == "new"
     %td.member-edit.text-center
-      = f.hidden_field :user_id
-      .member-edit-btn.btn.btn-outline-success
+      .member-edit-btn.btn.btn-outline-success{data: {"user-id": f.object.user_id}}
         = icon('fas' ,'user-edit')
     %td.member-delete.text-center
-      = f.hidden_field :user_id
-      .member-del-btn.btn.btn-outline-danger
+      .member-del-btn.btn.btn-outline-danger{data: {"user-id": f.object.user_id}}
         = icon('fas' ,'user-minus')
