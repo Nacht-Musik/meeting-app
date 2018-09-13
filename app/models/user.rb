@@ -21,13 +21,12 @@ class User < ApplicationRecord
   has_many :attendees, class_name: 'Attendee'
   has_many :receiveres, class_name: 'Receiver'
 
-  ### ユーザー権限（マストにするか悩み中）
-  # belongs_to :authority,          class_name: 'Authority'
+  ### ユーザー権限（マストにするか悩み中） <- ユーザーModelに対しては設定しないので、まるっと不要！
   belongs_to :authority,          class_name: 'Authority', optional: true
 
   ### Group
-  has_many :group_members
-  has_many :groups, through: :group_members, source: :group
+  has_many :authorities, class_name: "GroupMember"
+  has_many :groups, through: :authorities, source: :group
 
   ### Notice
   has_many :notices

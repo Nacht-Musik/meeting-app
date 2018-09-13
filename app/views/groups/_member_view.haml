@@ -1,0 +1,21 @@
+%tr.member-row
+  %td.user-name.text-center
+    = "#{f.object.user.last_name} #{f.object.user.first_name}"
+  %td.user-email.text-center
+    = "#{f.object.user.email}"
+  %td.user-authority.text-center
+    = "#{f.object.authority.name}"
+  %td.user-admin.text-center
+    - if f.object.admin
+      = icon('fas' ,'check')
+    - else
+      = ""
+  - if mode == "edit" || mode == "new"
+    %td.member-edit.text-center
+      = f.hidden_field :user_id
+      .member-edit-btn.btn.btn-outline-success
+        = icon('fas' ,'user-edit')
+    %td.member-delete.text-center
+      = f.hidden_field :user_id
+      .member-del-btn.btn.btn-outline-danger
+        = icon('fas' ,'user-minus')

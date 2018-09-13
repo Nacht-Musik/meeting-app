@@ -1,0 +1,70 @@
+#group-page.card
+  = form_for group, html: {"dataa-persist" => "garlic"} do |f|
+    .card-header
+      .form-group
+        = f.label 'グループ名'
+        = f.text_field :name, class: 'form-control'
+    .card-body
+      -#所属メンバー表示部
+      .form-group
+        = f.label '所属メンバー'
+        -#%table#member-table.table.table-sm.table-hover.table-responsive.table-bordered
+        %table#member-table.table.table-sm.table-hover.table-bordered
+          %thead.thead-light
+            %tr
+              %th.text-center{scope: "col"} 名前
+              %th.text-center{scope: "col"} メールアドレス
+              %th.text-center{scope: "col"} 権限
+              %th.text-center{scope: "col"} グループ管理者
+              %th.text-center{scope: "col"} 編集
+              %th.text-center{scope: "col"} 削除
+          %tbody#member-list-area
+            = f.fields_for :group_members do |member|
+              = render partial: "groups/member_view", locals: {f: member, mode: mode}
+
+        #member-params-area
+          - if mode == "edit" || mode == "new"
+            = f.fields_for :group_members do |member|
+              = render partial: "groups/member_params", locals: {f: member}
+
+      - if mode == "edit" || mode == "new"
+        .member-add-form.input-group.form-group
+          %select#member-selector.custom-select
+            - users.each do |user|
+              %option{value: "#{user.id}", data: {email: user.email} }
+                = "#{user.last_name} #{user.first_name} （#{user.email}）"
+          .input-group-append
+            %select#authority-selector.custom-select
+              - authorities.each do |authority|
+                %option{value: "#{authority.id}"}
+                  = "#{authority.name}"
+            %select#admin-selector.custom-select
+              %option{value: 0, selected: "true"} メンバー
+              %option{value: 1} 管理者
+
+            #member-add-btn.btn.btn-info
+              = icon('fas' ,'user-plus')
+
+        #member-block-template
+          .member-params
+            %input{type: "hidden", class: 'member-destroy-flag'}
+            %input{type: "hidden", class: 'member-user-id'}
+            %input{type: "hidden", class: 'member-authority-flag'}
+            %input{type: "hidden", class: 'member-admin-flag'}
+          %table
+            %tbody
+              %tr.member-row
+                %td.user-name.text-center
+                %td.user-email.text-center
+                %td.user-authority.text-center
+                %td.user-admin.text-center
+                  = icon('fas' ,'check')
+                %td.member-edit.text-center
+                  %input{type: "hidden", class: 'member-user-id'}
+                  .member-edit-btn.btn.btn-outline-success
+                    = icon('fas' ,'user-edit')
+                %td.member-delete.text-center
+                  %input{type: "hidden", class: 'member-user-id'}
+                  .member-del-btn.btn.btn-outline-danger
+                    = icon('fas' ,'user-minus')
+        = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'

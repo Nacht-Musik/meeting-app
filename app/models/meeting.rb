@@ -8,12 +8,10 @@ class Meeting < ApplicationRecord
   belongs_to :approver, class_name: 'User', optional: true
   belongs_to :project, optional: true
 
-  # has_many :recorderes, class_name: 'Recorder'
-
   has_many :attendees, class_name: 'Attendee', dependent: :destroy
   accepts_nested_attributes_for :attendees, allow_destroy: true
 
-  has_many :receiveres, class_name: 'Receiver'
+  has_many :receiveres, class_name: 'Receiver', dependent: :destroy
   accepts_nested_attributes_for :receiveres, allow_destroy: true
 
   has_many :files, class_name: 'AttachementFile'

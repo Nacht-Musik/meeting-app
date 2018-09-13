@@ -1,0 +1,8 @@
+- groups.each do |group|
+  .group-list.form-group
+    .input-group
+      .form-control= "#{group.name}"
+      .input-group-append
+        - if group_admin? current_user, group
+          = link_to '編集', edit_group_path(group), class: 'btn btn-outline-info'
+        = link_to '詳細', group_path(group), class: 'btn btn-outline-info'
