@@ -34,7 +34,7 @@
               %option{value: "#{user.id}",
                       data: {last_name: user.last_name, first_name: user.first_name,
                               email: user.email} }
-                = "#{user.last_name} #{user.first_name} （#{user.email}）"
+                = "#{user.last_name} #{user.first_name} （ #{user.email} ）"
           .input-group-append
             %select#authority-selector.custom-select
               - authorities.each do |authority|
@@ -45,6 +45,7 @@
               %option{value: 1} 管理者
 
             #member-add-btn.btn.btn-info
+              = "メンバーを追加"
               = icon('fas' ,'user-plus')
 
         #member-block-template
@@ -67,3 +68,8 @@
                   .member-del-btn.btn.btn-outline-danger
                     = icon('fas' ,'user-minus')
         = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
+
+- if mode == "edit" || mode == "new"
+  :javascript
+    initializationMemberSelector();
+
