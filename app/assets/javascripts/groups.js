@@ -127,7 +127,6 @@ $(document).on('turbolinks:load', function() {
 
 });
 
-
 // メンバーセレクターの初期化
 function initializationMemberSelector() {
   // 所属済みのメンバーを追加セレクターから削除
