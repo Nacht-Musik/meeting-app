@@ -1,8 +1,21 @@
-- groups.each do |group|
-  .group-list.form-group
-    .input-group
-      .form-control= "#{group.name}"
-      .input-group-append
+%table#group-table.table.table-sm.table-hover.table-bordered
+  %thead.thead-light
+    %tr
+      %th.text-center{scope: "col"} グループ名
+      %th.text-center{scope: "col"} 詳細
+      %th.text-center{scope: "col"} 編集
+      %th.text-center{scope: "col"} 削除
+  %tbody#member-list-area
+    - groups.each do |group|
+      %tr
+        %td.text-center
+          = "#{group.name}"
+        %td.text-center
+          = link_to icon('fas', 'users'), group_path(group), class: 'btn btn-outline-info'
         - if group_admin? current_user, group
-          = link_to '編集', edit_group_path(group), class: 'btn btn-outline-info'
-        = link_to '詳細', group_path(group), class: 'btn btn-outline-info'
+          %td.text-center
+            = link_to icon('fas', 'edit'), edit_group_path(group), class: 'btn btn-outline-success'
+          %td.text-center
+            %button.btn.btn-outline-danger
+              = icon('fas', 'trash-alt')
+

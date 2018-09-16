@@ -1,8 +1,6 @@
 $(document).on('turbolinks:load', function() {
   // メンバー追加ボタン
   $('#group-page').on('click', '#member-add-btn', function () {
-    console.log("メンバー追加ボタン押下");
-
     // セレクターで選択されているユーザー名を取得
     let selected_user_name = $('#member-selector option:selected').text();
 
@@ -83,12 +81,10 @@ $(document).on('turbolinks:load', function() {
     if(option_num <= 0){
       $(this).addClass("disabled");
     }
-  })
+  });
 
   // メンバー削除ボタン
   $('#group-page').on('click', '.member-del-btn', function () {
-    console.log("メンバー削除");
-
     // 対象ユーザーのID番号を取得
     let user_id = $(this).attr('data-user-id');
 
