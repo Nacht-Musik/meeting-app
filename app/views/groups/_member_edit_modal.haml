@@ -1,37 +1,30 @@
-#member-add-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "memberAddModalCenterTitle", :role => "dialog", :tabindex => "-1"}
+#member-edit-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "memberAddModalCenterTitle", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
       .modal-header
         %h5#memberAddModalLongTitle.modal-title
-          メンバー追加フォーム
+          メンバー編集フォーム
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
         .form-group
           %label 名前（メールアドレス）
-          %select#member-selector.custom-select
-            - users.each do |user|
-              %option{value: "#{user.id}",
-                            data: {last_name: user.last_name,
-                                  first_name: user.first_name,
-                                       email: user.email} }
-                = "#{user.last_name} #{user.first_name} （ #{user.email} ）"
+          #member-edit-modal-user-name.form-control
         .form-group
           %label 権限
-          %select#authority-selector.custom-select
+          %select.authority-selector.custom-select
             - authorities.each do |authority|
               %option{value: "#{authority.id}"}
                 = "#{authority.name}"
         .form-group
           %label グループ管理者
-          %select#admin-selector.custom-select
-            %option{value: 0, selected: "true", "data-mark": " <i>-</i>"}
+          %select.admin-selector.custom-select
+            %option{value: 0, "data-mark": " <i>-</i>"}
               %i= '-'
             %option{value: 1, "data-mark": "<i class=\"fas fa-check\">"}
               %i= '管理者'
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
-        #member-add-btn.btn.btn-info{"data-dismiss" => "modal"}
+        #member-edit-btn.btn.btn-success{data: {dismiss: "modal", "user-id": ""}}
           = icon('fas' ,'user-plus')
-          = "このユーザを追加する"
-
+          = "このユーザ情報を変更する"

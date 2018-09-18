@@ -28,20 +28,25 @@
               = render partial: "groups/member_params", locals: {f: member}
 
 
+      -# 表示のみの場合は以下不要
       - if mode == "edit" || mode == "new"
-        %button.btn.btn-info{"data-target" => "#member-add-modal", "data-toggle" => "modal", :type => "button"}
+        %button.btn.btn-info{data: {target: "#member-add-modal", toggle: "modal"}, type: "button"}
           = icon('fas' ,'user-plus')
           = "メンバーを追加する"
-        %br
-        = render partial: "groups/member_add_modal", locals: {users: users, authorities: authorities}
-        = render partial: "groups/member_delete_modal"
+
+        #modals
+          = render partial: "groups/member_add_modal", locals: {users: users, authorities: authorities}
+          = render partial: "groups/member_edit_modal", locals: {users: users, authorities: authorities}
+          = render partial: "groups/member_delete_modal"
 
         #member-block-template
           = render partial: 'groups/member_template'
 
+        %br
         = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
 
-- if mode == "edit" || mode == "new"
-  :javascript
-    initializationMemberSelector();
+        :javascript
+          initializationMemberSelector();
+
+= link_to '戻る', my_page_path, class: "btn btn-secondary"
 

@@ -67,9 +67,11 @@ $(document).on('turbolinks:load', function() {
     member_row_ele.find('.user-name').attr('data-first-name', first_name);
     member_row_ele.find('.user-email').text(email);
     member_row_ele.find('.user-authority').text(authority_text);
-    member_row_ele.find('.member-edit-btn').attr('data-user-id', user_id);
+    member_row_ele.find('.call-member-edit-modal').attr('data-user-id', user_id);
     member_row_ele.find('.call-member-del-modal').attr('data-user-id', user_id);
+
     member_row_ele.find('.user-admin').append(admin_mark);
+    member_row_ele.find('.user-admin').attr('data-admin-flag', admin_flag);
 
 
     $('#member-list-area').append(member_row_ele);
@@ -83,9 +85,11 @@ $(document).on('turbolinks:load', function() {
       $(this).addClass("disabled");
     }
   });
+});
 
-
-  // メンバー削除
+// メンバー削除関連
+$(document).on('turbolinks:load', function() {
+  // メンバー削除 実行ボタン
   $('#group-page').on('click', '#member-del-btn', function () {
     // 削除対象メンバーのユーザーid取得
     let user_id = parseInt($(this).attr('data-user-id'));
@@ -118,8 +122,10 @@ $(document).on('turbolinks:load', function() {
 
   // メンバー削除画面呼び出し
   $('#group-page').on('click', '.call-member-del-modal', function () {
-    // 削除対象メンバーのuser-id を削除ボタンに埋め込む
+    // 削除対象メンバーのuser-id を取得
     let user_id = parseInt($(this).attr('data-user-id'));
+
+    // 削除対象メンバーのuser-id を削除ボタンに埋め込む
     $('#member-del-btn').attr('data-user-id', user_id);
 
     // 対象ユーザーの表示部要素を取得
@@ -140,17 +146,66 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
-// メンバーセレクターの初期化
-function initializationMemberSelector() {
-  // 所属済みのメンバーを追加セレクターから削除
-  let member_ids = $('#member-params-area').find('.member-user-id');
-  member_ids.each(function(i, user_id){
-    $('#member-selector option[value=' + user_id.value + ']').remove();
-  });
-  // メンバー追加セレクターが空だったら、追加ボタンを無効にする
-  let member_option_num = $('#member-selector').children('option').length;
-  if(member_option_num <= 0){
-    $('#member-add-btn').addClass("disabled");
-  }
-}
+// メンバー編集機能
+$(document).on('turbolinks:load', function() {
+  // メンバー編集 実行ボタン
+  $('#group-page').on('click', '#member-edit-btn', function () {
+    // user-idを取得
+    let user_id = parseInt($(this).attr('data-user-id'));
 
+    /////////////////////////
+    // Model保存用のユーザデータを修正
+    let authority_val = $('#member-edit-modal').find('.authority-selector option:selected').val();
+    let admin_val = $('#member-edit-modal').find('.admin-selector option:selected').val();
+
+    // 対象メンバーのuser-paramsを変更
+    let member_params = findMemberParamsEle(user_id);
+    member_params.find('.member-authority-flag').val(authority_val);
+    member_params.find('.member-admin-flag').val(admin_val);
+
+    ///////////////////////
+    // 表示関係
+    let authority_text = $('#member-edit-modal').find('.authority-selector option:selected').text();
+    let admin_mark = $('#member-edit-modal').find('.admin-selector option:selected').attr('data-mark');
+
+    // 対象メンバーの表示部を変更
+    let member_row_ele = findMemberRowEle(user_id);
+    member_row_ele.find('.user-authority').text(authority_text);
+
+    member_row_ele.find('.user-admin').empty();
+    member_row_ele.find('.user-admin').append(admin_mark);
+    member_row_ele.find('.user-admin').attr('data-admin-flag', admin_val);
+  });
+
+  // メンバー編集モーダル呼び出し
+  $('#group-page').on('click', '.call-member-edit-modal', function () {
+    // 編集対象メンバーのuser-id を取得
+    let user_id = parseInt($(this).attr('data-user-id'));
+
+    // 編集対象メンバーのuser-id を編集ボタンに埋め込む
+    $('#member-edit-btn').attr('data-user-id', user_id);
+
+    // 対象メンバーのユーザー情報を取得
+    let user_info = getMemberUserInfo(user_id);
+
+    // // ユーザー名をモーダル表示部にセット
+    let user_name = user_info.last_name + " "
+                    + user_info.first_name
+                    + "（" + user_info.email + "）";
+    $('#member-edit-modal-user-name').text(user_name);
+
+
+    // ユーザー権限の状態をセレクターにセット
+    let authority_selector = $('#member-edit-modal').find('.authority-selector');
+    let authority_options = authority_selector.children();
+    authority_options.each(function(index, option){
+      if($.trim($(option).text()) === user_info.authority){
+        authority_selector.val($(option).val());
+      }
+    });
+
+    // グループ管理者の状態をセレクターにセット
+    let admin_selector = $('#member-edit-modal').find('.admin-selector');
+    admin_selector.val(user_info.admin_flag);
+  });
+});
