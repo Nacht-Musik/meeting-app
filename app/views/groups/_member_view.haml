@@ -1,5 +1,6 @@
-%tr.member-row
-  %td.user-name.text-center
+%tr.member-row{data: {"user-id": f.object.user_id}}
+  %td.user-name.text-center{data: {"last-name": f.object.user.last_name,
+                                  "first-name": f.object.user.first_name}}
     = "#{f.object.user.last_name} #{f.object.user.first_name}"
   %td.user-email.text-center
     = "#{f.object.user.email}"
@@ -9,11 +10,13 @@
     - if f.object.admin
       = icon('fas' ,'check')
     - else
-      = ""
+      %i= "-"
   - if mode == "edit" || mode == "new"
     %td.member-edit.text-center
       .member-edit-btn.btn.btn-outline-success{data: {"user-id": f.object.user_id}}
         = icon('fas' ,'user-edit')
     %td.member-delete.text-center
-      .member-del-btn.btn.btn-outline-danger{data: {"user-id": f.object.user_id}}
+      %button.call-member-del-modal.btn.btn-danger{ type: "button",
+              data:{target: "#member-del-modal", toggle: "modal",
+              "user-id": f.object.user_id}}
         = icon('fas' ,'user-minus')

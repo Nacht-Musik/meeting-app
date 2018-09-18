@@ -34,6 +34,7 @@
           = "メンバーを追加する"
         %br
         = render partial: "groups/member_add_modal", locals: {users: users, authorities: authorities}
+        = render partial: "groups/member_delete_modal"
 
         #member-block-template
           .member-params
@@ -43,16 +44,19 @@
             %input{type: "hidden", class: 'member-admin-flag'}
           %table
             %tbody
-              %tr.member-row
-                %td.user-name.text-center
+              %tr.member-row{"data-user-id": ""}
+                %td.user-name.text-center{data: {"last-name": "", "first-name": ""}}
                 %td.user-email.text-center
                 %td.user-authority.text-center
                 %td.user-admin.text-center
                 %td.member-edit.text-center
-                  .member-edit-btn.btn.btn-outline-success
+                  %button.member-edit-btn.btn.btn-outline-success{"data-user-id": ""}
                     = icon('fas' ,'user-edit')
                 %td.member-delete.text-center
-                  .member-del-btn.btn.btn-outline-danger
+                  -#%button.call-member-del-modal.btn.btn-danger{"data-user-id": ""}
+                  %button.call-member-del-modal.btn.btn-danger{ type: "button",
+                          data:{target: "#member-del-modal", toggle: "modal",
+                          "user-id": ""}}
                     = icon('fas' ,'user-minus')
         = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
 

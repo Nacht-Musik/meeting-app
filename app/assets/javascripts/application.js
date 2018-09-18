@@ -21,10 +21,12 @@
 //= require turbolinks
 //= require_tree .
 
+// popoverのために追加
 $(function () {
   $('[data-toggle="popover"]').popover()
-}) // popoverのために追加
+});
 
+// tooltipのために追加
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
-}) // tooltipのために追加
+});

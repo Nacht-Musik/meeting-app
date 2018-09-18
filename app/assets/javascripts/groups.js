@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function() {
     let id_com = "group_group_members_attributes";
     let name_com = "group[group_members_attributes]";
 
-    // 固有番号をランダム取得
+    // 固有番号を時間関数から取得 ※被らない値ならOK！
     let model_num = new Date().getTime().toString(10);
     id_com += "_" + model_num;
     name_com += "[" + model_num.toString(10) + "]";
@@ -26,6 +26,7 @@ $(document).on('turbolinks:load', function() {
 
     // 追加ユーザーのGroupMember Model登録用データ作成
     let member_params_ele = $('#member-block-template').find('.member-params').clone();
+    member_params_ele.attr("data-user-id", user_id);
 
     let user_id_ele = member_params_ele.find('.member-user-id');
     user_id_ele.val(user_id);
@@ -56,20 +57,20 @@ $(document).on('turbolinks:load', function() {
     let user_name = last_name + " " + first_name;
     let email = $('#member-selector option:selected').attr('data-email');
     let authority_text = $('#authority-selector option:selected').text();
-    let admin_text = $('#admin-selector').attr('data-mark');
-
+    let admin_mark = $('#admin-selector option:selected').attr('data-mark');
 
     // 追加メンバー表示データ展開
     let member_row_ele = $('#member-block-template').find('.member-row').clone();
+    member_row_ele.attr('data-user-id', user_id);
     member_row_ele.find('.user-name').text(user_name);
+    member_row_ele.find('.user-name').attr('data-last-name', last_name);
+    member_row_ele.find('.user-name').attr('data-first-name', first_name);
     member_row_ele.find('.user-email').text(email);
     member_row_ele.find('.user-authority').text(authority_text);
     member_row_ele.find('.member-edit-btn').attr('data-user-id', user_id);
-    member_row_ele.find('.member-del-btn').attr('data-user-id', user_id);
+    member_row_ele.find('.call-member-del-modal').attr('data-user-id', user_id);
+    member_row_ele.find('.user-admin').append(admin_mark);
 
-    if(admin_flag === "1"){
-      member_row_ele.find('.user-admin').append(admin_text);
-    }
 
     $('#member-list-area').append(member_row_ele);
 
@@ -83,36 +84,30 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-  // メンバー削除ボタン
-  $('#group-page').on('click', '.member-del-btn', function () {
-    // 対象ユーザーのID番号を取得
-    let user_id = $(this).attr('data-user-id');
 
-    // 対象メンバーの削除フラグ(_destroy)をTrueにする
-    let user_params_elems = $('#member-params-area').find('.member-params');
-    user_params_elems.each(function(){
-      if($(this).attr('data-user-id') == user_id){
-        $(this).find('.member-destroy-flag').val('true');
-      }
-    });
+  // メンバー削除
+  $('#group-page').on('click', '#member-del-btn', function () {
+    // 削除対象メンバーのユーザーid取得
+    let user_id = parseInt($(this).attr('data-user-id'));
 
-    // 対象メンバーのユーザー情報を取得
-    let user_row_ele = $(this).closest('.member-row');
-    let user_name = user_row_ele.find('.user-name').text();
-    let user_name_split = user_name.split(' ');
-    let last_name = user_name_split[0].replace(/\s+/g, "");
-    let first_name = user_name_split[1].replace(/\s+/g, "");
-    let email = user_row_ele.find('.user-email').text().replace(/\s+/g, "");
+    // 削除メンバーのユーザー情報を取得
+    let user_info = getMemberUserInfo(user_id);
+    let user_name = user_info.last_name + " " + user_info.first_name;
 
     // メンバー追加セレクターに削除したユーザーを追加する
-    var add_option_attr = {value: user_id, text: user_name + "（" + email + "）",
-                            'data-last-name': last_name,
-                            'data-first-name': first_name,
-                            'data-email': email};
-    var add_option = $('<option>', add_option_attr);
+    let add_option_attr = {value: user_id, text: user_name + "（" + user_info.email + "）",
+                            'data-last-name': user_info.last_name,
+                            'data-first-name': user_info.first_name,
+                            'data-email': user_info.email};
+    let add_option = $('<option>', add_option_attr);
     $('#member-selector').append(add_option);
 
+    // 対象メンバーの削除フラグ(_destroy)をTrueにする
+    let user_params_ele = findMemberParamsEle(user_id);
+    user_params_ele.find('.member-destroy-flag').val('true');
+
     // 対象メンバーの表示部を削除
+    let user_row_ele = findMemberRowEle(user_id);
     user_row_ele.remove();
 
     // メンバー追加ボタンが無効になっていたら有効にする。
@@ -121,6 +116,28 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
+  // メンバー削除画面呼び出し
+  $('#group-page').on('click', '.call-member-del-modal', function () {
+    // 削除対象メンバーのuser-id を削除ボタンに埋め込む
+    let user_id = parseInt($(this).attr('data-user-id'));
+    $('#member-del-btn').attr('data-user-id', user_id);
+
+    // 対象ユーザーの表示部要素を取得
+    let user_row_ele = findMemberRowEle(user_id);
+
+    // ユーザー名をセット
+    let user_name = user_row_ele.find('.user-name').text();
+    $('#member-del-modal-user-name').text(user_name);
+
+    // ユーザー権限をセット
+    let authority = user_row_ele.find('.user-authority').text();
+    $('#member-del-modal-authority').text(authority);
+
+    // グループ管理者(true or false)の表示をセット
+    let admin_view = user_row_ele.find('.user-admin').children().clone();
+    $('#member-del-modal-admin').empty();
+    $('#member-del-modal-admin').append(admin_view);
+  });
 });
 
 // メンバーセレクターの初期化

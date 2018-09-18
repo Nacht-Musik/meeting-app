@@ -1,0 +1,142 @@
+[
+    {
+        "Id": "sha256:0dcb091ca6896e5dfcf797a0279f5331813e2799d4272166d4be7adbc426f1ee",
+        "RepoTags": [
+            "meeting-app_rails:latest",
+            "meeting-app_spring:latest"
+        ],
+        "RepoDigests": [],
+        "Parent": "sha256:63c7b1b9c26189172e1845b836c023ed8f179b74d44c5971ec6e63c55157df88",
+        "Comment": "",
+        "Created": "2018-09-15T01:56:16.16491117Z",
+        "Container": "aaedb2a4cbde7047b3557060c2ec3ecfcabda71114050a2002343bbb7e5a7db4",
+        "ContainerConfig": {
+            "Hostname": "aaedb2a4cbde",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/node_modules/.bin:/node_modules:/usr/local/nvm/versions/node/v8.6.0/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RUBY_MAJOR=2.5",
+                "RUBY_VERSION=2.5.1",
+                "RUBY_DOWNLOAD_SHA256=886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d",
+                "RUBYGEMS_VERSION=2.7.7",
+                "BUNDLER_VERSION=1.16.4",
+                "GEM_HOME=/usr/local/bundle",
+                "BUNDLE_PATH=/usr/local/bundle",
+                "BUNDLE_SILENCE_ROOT_WARNING=1",
+                "BUNDLE_APP_CONFIG=/usr/local/bundle",
+                "LANG=C.UTF-8",
+                "NVM_DIR=/usr/local/nvm",
+                "NODE_VERSION=8.6.0",
+                "NODE_PATH=/usr/local/nvm/v8.6.0/lib/node_modules",
+                "ENTRYKIT_VERSION=0.4.0"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "ENTRYPOINT [\"prehook\" \"ruby -v\" \"--\" \"prehook\" \"bundle install -j3 --quiet\" \"--\"]"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:63c7b1b9c26189172e1845b836c023ed8f179b74d44c5971ec6e63c55157df88",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "prehook",
+                "ruby -v",
+                "--",
+                "prehook",
+                "bundle install -j3 --quiet",
+                "--"
+            ],
+            "OnBuild": [],
+            "Labels": {}
+        },
+        "DockerVersion": "18.06.1-ce",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/node_modules/.bin:/node_modules:/usr/local/nvm/versions/node/v8.6.0/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RUBY_MAJOR=2.5",
+                "RUBY_VERSION=2.5.1",
+                "RUBY_DOWNLOAD_SHA256=886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d",
+                "RUBYGEMS_VERSION=2.7.7",
+                "BUNDLER_VERSION=1.16.4",
+                "GEM_HOME=/usr/local/bundle",
+                "BUNDLE_PATH=/usr/local/bundle",
+                "BUNDLE_SILENCE_ROOT_WARNING=1",
+                "BUNDLE_APP_CONFIG=/usr/local/bundle",
+                "LANG=C.UTF-8",
+                "NVM_DIR=/usr/local/nvm",
+                "NODE_VERSION=8.6.0",
+                "NODE_PATH=/usr/local/nvm/v8.6.0/lib/node_modules",
+                "ENTRYKIT_VERSION=0.4.0"
+            ],
+            "Cmd": null,
+            "ArgsEscaped": true,
+            "Image": "sha256:63c7b1b9c26189172e1845b836c023ed8f179b74d44c5971ec6e63c55157df88",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "prehook",
+                "ruby -v",
+                "--",
+                "prehook",
+                "bundle install -j3 --quiet",
+                "--"
+            ],
+            "OnBuild": [],
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 939952902,
+        "VirtualSize": 939952902,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/043e96bc02fd009b51fe7811e29823a8da707be9e6870c9cef563fd9fa824c64/diff:/var/lib/docker/overlay2/8b5d49cdbf4a131394385c43d4b7e5d300237af6069e234a7c12f7eaf512b96b/diff:/var/lib/docker/overlay2/ea9b1308d8dd79baafd901affca8b79cae762acb221691d571053088a5545c9e/diff:/var/lib/docker/overlay2/a927af8014cf34af1323fbbdd80f564583511d925431f74600c2a9848fdc3b30/diff:/var/lib/docker/overlay2/e4f21ea1f6cd088d22b0541f00dbf92647a70bc094457e5896b594b63c877cc4/diff:/var/lib/docker/overlay2/148abc413315c3f46b1f2e978979cb8cdc0c0902719a985bf84e792efb8b86b0/diff:/var/lib/docker/overlay2/cbe5e32a5100ea96a061fcf4275be78a6a7effe15cd2c5b71eaa27db29446011/diff:/var/lib/docker/overlay2/ac87aa4dd6abb15572afe05b656f34b8f9591efd9fe5bcfccd7307b537f02501/diff:/var/lib/docker/overlay2/b36b476e2f8749762c7eb8b6ddff69a975439d0923349c2c3ba4762e2afc21f8/diff:/var/lib/docker/overlay2/bc4295a9f9dd01160ffba1f89f1633947fa23d867cd5571936b15273f3f864f5/diff:/var/lib/docker/overlay2/3e7dfc74f7a2c4a6473da2734c0227adde24f8665b760c413017666d80225beb/diff:/var/lib/docker/overlay2/495a5d23d43516f0a1213caffbcd120a4defe67f63ad27a5bc404b8360f1871b/diff:/var/lib/docker/overlay2/b3e1628ff0276af4a0361cdbb7207a04400212d4690246e9826d7b2ab7cc7baf/diff",
+                "MergedDir": "/var/lib/docker/overlay2/399c8e4111d6f314c95321e6008e1f997b8c78e5718521e0acdff1b4b4ac18e2/merged",
+                "UpperDir": "/var/lib/docker/overlay2/399c8e4111d6f314c95321e6008e1f997b8c78e5718521e0acdff1b4b4ac18e2/diff",
+                "WorkDir": "/var/lib/docker/overlay2/399c8e4111d6f314c95321e6008e1f997b8c78e5718521e0acdff1b4b4ac18e2/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:b28ef0b6fef80faa25436bec0a1375214d9a23a91e9b75975bba3b2889f8504f",
+                "sha256:0b703c74a09c1e55d52e6b689babc6ae6374a793c1acfe8ff21a554014d8f434",
+                "sha256:2eb1c9bfc5ead1e646e39ab760ead591f995cf606c327235a21eeb075ec5c178",
+                "sha256:ab016c9ea8f8bb97f7b1c2871b0560787028864d06a49d062816ad72b9336cc6",
+                "sha256:a19cb627cc73f012e468dc1ad9778e77e6307ebae31ffc8ba9f55d9f9fde5d3f",
+                "sha256:37db8875fa510026653d49e33331ba9e6b11cb79653e54ac10a1972ad3729a03",
+                "sha256:4ff7a84c844cc9a18218e2e175010348aab68777e7ef9320f3662c97cc911bc2",
+                "sha256:2c8f224b23f2d54b33b0a32d78008e6b9dfcaddf9c099e17eb10052def0aae5c",
+                "sha256:0f77fa8818e2490350cccc230056c892d18329dc2a2b23c50aa6aee621aeaa45",
+                "sha256:40cf0cb4d8a622cb4f4c90a69cac3aae0fe1b65b60632e8062b344dac1f620dc",
+                "sha256:eccb0a90ab85159376af4d152dc46346a4fe2d4ed7fea9217fc20a0924287830",
+                "sha256:b4f6a2176a352c16607f2944a39e7ed783b8b5234123e4ee215c944228bc112e",
+                "sha256:8af94bba2a246451bd881ea59f380b4f6c5af9bbaf8e4d8ee8fbf6544adebeec",
+                "sha256:640d27424d8acb652f5805962de9552a12d297842c1b61658b0a7e0e480a9d1f"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2018-09-15T01:56:18.668745753Z"
+        }
+    }
+]
