@@ -12,6 +12,21 @@ function initializationMemberSelector() {
   }
 }
 
+// 子グループセレクターの初期化
+function initializationChildGroupSelector() {
+  // 登録済みの子グループをセレクターから削除
+  let child_group_ids = $('#children-group-params-area').find('.children-group-id');
+  child_group_ids.each(function(i, child_group_id){
+    $('#child-group-selector option[value=' + child_group_id.value + ']').remove();
+  });
+
+  // メンバー追加セレクターが空だったら、追加ボタンを無効にする
+  let child_group_option_num = $('#children-group-selector').children('option').length;
+  if(child_group_option_num <= 0){
+    $('#children-group-add-btn').addClass("disabled");
+  }
+}
+
 // 指定user-idのmember表示部要素を取得
 function findMemberRowEle(user_id) {
   let member_rows = $('#member-list-area').find('.member-row');

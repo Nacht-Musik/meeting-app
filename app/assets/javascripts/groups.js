@@ -266,9 +266,13 @@ $(document).on('turbolinks:load', function() {
 
 
     // 子グループ候補セレクターから要素を削除
+    $('#child-group-selector option:selected').remove();
 
-
-    // セレクターが空になっていたらボタンを無効化する
+    // セレクターの中身が空になったら、追加ボタンを無効にする
+    let option_num = $('#child-group-selector').children('option').length;
+    if(option_num <= 0){
+      $(this).addClass("disabled");
+    }
 
   });
 });

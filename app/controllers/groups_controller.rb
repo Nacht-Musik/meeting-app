@@ -43,7 +43,7 @@ class GroupsController < ApplicationController
     # スマートなやり方が見つかり次第修正のこと！
     # -> 自己参照Modelだと 親インスタンスと子インスタンスを一緒にアップデートできない？
     children = params[:children_attributes].clone
-    update_children_group(@group, children)
+    update_children_group(children)
 
     params.delete(:children_attributes)
 
