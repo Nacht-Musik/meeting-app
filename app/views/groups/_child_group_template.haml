@@ -1,0 +1,14 @@
+.child-group-params{"data-group-id": ""}
+  %input{type: "hidden", class: 'child-group-id'}
+  %input{type: "hidden", class: 'parent-group-id'}
+%table
+  %tbody
+    %tr.child-group-row
+      %td.group-name.text-center
+      %td.child-group-cancel.text-center
+        %button{type: "button",
+                 data: {target: "#child-group-cancel-modal",
+                        toggle: "modal",
+                        "group-id": ""},
+                 class: "call-child-group-cancel-modal btn btn-outline-danger"}
+          = icon('fas', 'unlink')

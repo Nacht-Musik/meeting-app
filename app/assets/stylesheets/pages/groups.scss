@@ -2,7 +2,12 @@
   th, td{
     vertical-align: middle;
   }
+
   #member-block-template{
+    display: none;
+  }
+
+  #child-group-template{
     display: none;
   }
 }

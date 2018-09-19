@@ -19,9 +19,9 @@ $(document).on('turbolinks:load', function() {
     let name_com = "group[group_members_attributes]";
 
     // 固有番号を時間関数から取得 ※被らない値ならOK！
-    let model_num = new Date().getTime().toString(10);
-    id_com += "_" + model_num;
-    name_com += "[" + model_num.toString(10) + "]";
+    let entry_num = new Date().getTime().toString(10);
+    id_com += "_" + entry_num;
+    name_com += "[" + entry_num.toString(10) + "]";
 
 
     // 追加ユーザーのGroupMember Model登録用データ作成
@@ -49,7 +49,6 @@ $(document).on('turbolinks:load', function() {
 
 
     $('#member-params-area').append(member_params_ele);
-
 
     // 追加ユーザーの表示用データ取得
     let first_name = $('#member-selector option:selected').attr('data-first-name');
@@ -207,5 +206,69 @@ $(document).on('turbolinks:load', function() {
     // グループ管理者の状態をセレクターにセット
     let admin_selector = $('#member-edit-modal').find('.admin-selector');
     admin_selector.val(user_info.admin_flag);
+  });
+});
+
+// 子グループ追加機能
+$(document).on('turbolinks:load', function() {
+  // 子グループ追加 実行ボタン
+  $('#group-page').on('click', '#child-group-add-btn', function () {
+    //////////////////////////////////////////
+    // 有効性判定
+
+    let child_id = $('#child-group-selector option:selected').val();
+    // セレクター選択値が空の場合終了
+    if(child_id === ""){
+      return;
+    }
+
+
+    ////////////////////////////////////////
+    // 下準備
+    let group_id = $(this).attr('data-group-id');
+
+
+    // DB登録用のid/nameを生成
+    let id_com = "group_children_attributes";
+    let name_com = "group[children_attributes]";
+
+    // 固有番号を時間関数から取得 ※ 被らない値ならOK！
+    let entry_num = new Date().getTime().toString(10);
+    id_com += "_" + entry_num;
+    name_com += "[" + parseInt(entry_num) + "]";
+
+    // Group Model登録用のデータを作成 -> View内の所定箇所に追加
+    let child_group_params = $('#child-group-template').find('.child-group-params').clone();
+    child_group_params.attr('data-group-id', child_id);
+
+    let child_group_id_ele = child_group_params.find('.child-group-id');
+    child_group_id_ele.val(child_id);
+    child_group_id_ele.attr('id', id_com + "_id");
+    child_group_id_ele.attr('name', name_com + "[id]");
+
+    let parent_id_ele = child_group_params.find('.parent-group-id');
+    parent_id_ele.val(group_id);
+    parent_id_ele.attr('id', id_com + "_parent_id");
+    parent_id_ele.attr('name', name_com + "[parent_id]");
+
+
+    $('#children-group-params-area').append(child_group_params);
+
+
+    // 子グループの表示要素を作成 -> View内の所定箇所に追加
+    let child_group_name = $('#child-group-selector option:selected').text();
+    let child_group_row_ele = $('#child-group-template').find('.child-group-row').clone();
+
+    child_group_row_ele.find('.group-name').text(child_group_name);
+    child_group_row_ele.find('.call-child-group-cancel-modal').attr('data-group-id', child_id);
+
+    $('#children-group-view-area').append(child_group_row_ele);
+
+
+    // 子グループ候補セレクターから要素を削除
+
+
+    // セレクターが空になっていたらボタンを無効化する
+
   });
 });
