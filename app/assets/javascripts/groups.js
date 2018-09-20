@@ -213,20 +213,18 @@ $(document).on('turbolinks:load', function() {
 $(document).on('turbolinks:load', function() {
   // 子グループ追加 実行ボタン
   $('#group-page').on('click', '#child-group-add-btn', function () {
+
     //////////////////////////////////////////
     // 有効性判定
-
     let child_id = $('#child-group-selector option:selected').val();
     // セレクター選択値が空の場合終了
     if(child_id === ""){
       return;
     }
 
-
     ////////////////////////////////////////
     // 下準備
     let group_id = $(this).attr('data-group-id');
-
 
     // DB登録用のid/nameを生成
     let id_com = "group_children_attributes";
@@ -258,6 +256,7 @@ $(document).on('turbolinks:load', function() {
     // 子グループの表示要素を作成 -> View内の所定箇所に追加
     let child_group_name = $('#child-group-selector option:selected').text();
     let child_group_row_ele = $('#child-group-template').find('.child-group-row').clone();
+    child_group_row_ele.attr("data-group-id", child_id);
 
     child_group_row_ele.find('.group-name').text(child_group_name);
     child_group_row_ele.find('.call-child-group-cancel-modal').attr('data-group-id', child_id);
@@ -273,6 +272,40 @@ $(document).on('turbolinks:load', function() {
     if(option_num <= 0){
       $(this).addClass("disabled");
     }
+  });
+});
+
+// 子グループ関係削除機能
+$(document).on('turbolinks:load', function() {
+  // 子グループ関係解除モーダル 呼び出しボタン
+  $('#group-page').on('click', '.call-child-group-cancel-modal', function () {
+    // 解除対象子グループのidを取得
+    let child_group_id = parseInt($(this).attr('data-group-id'));
+    // 子グループid を 削除実行ボタンに埋め込む
+    $('#child-group-cancel-btn').attr('data-child-id', child_group_id);
+
+    // 子グループ名を取得
+    let child_group_row_ele = findChildGroupRowEle(child_group_id);
+    let child_group_name = child_group_row_ele.find('.group-name').text();
+    $('#child-group-cancel-modal-group-name').text(child_group_name);
+  });
+
+  // 子グループ関係解除 実行ボタン
+  $('#group-page').on('click', '#child-group-cancel-btn', function () {
+    // 子グループのgroup-id取得
+    let child_group_id = parseInt($(this).attr('data-child-id'));
+
+    // 子グループのModel登録要素を取得 -> parent_id を nilに変更
+    let child_params_ele = findChildGroupParamsEle(child_group_id);
+    child_params_ele.find('.parent-group-id').val('0');
+
+    // 子グループの表示要素を取得 -> 削除
+    let child_row_ele = findChildGroupRowEle(child_group_id);
+    child_row_ele.remove();
+
+    // 子グループ追加selectorに削除したグループを追加
+
+    // 子グループ追加ボタンが無効になっていた場合、有効化
 
   });
 });

@@ -33,6 +33,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @relation_groups = set_relation_groups(@group.id)
 
   end
 
@@ -70,6 +71,14 @@ class GroupsController < ApplicationController
 
     def set_authorities
       @authorities = Authority.all
+    end
+
+    def set_relation_groups(group_id)
+      # 始祖グループを取得
+      elder_group = h
+
+      # 関連グループを返す
+      
     end
 
     def group_params
