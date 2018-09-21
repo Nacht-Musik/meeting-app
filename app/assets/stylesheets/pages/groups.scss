@@ -10,4 +10,53 @@
   #child-group-template{
     display: none;
   }
+
+  #relation-groups{
+    .current-group {
+      color: #EFEFEF;
+      background-color: lightcoral;
+
+    }
+    a {
+      display: inline-block;
+      padding: 0.2em;
+    }
+    h1 {
+      margin: 0;
+      line-height: 1.5;
+      font-weight: normal;
+      font-size: 100%;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+      list-style: none;
+    }
+    ul li {
+      margin: 0 0 0 0.5em;
+      padding: 0;
+      border-left: 1px solid #999;
+      zoom: 1;
+    }
+    ul li:before {
+      margin-right: 0.5em;
+      border-bottom: 1px solid #999;
+      float: left;
+      width: 1em;
+      height: 0.75em;
+      overflow: hidden;
+      content: "";
+    }
+    ul li:last-child {
+      border: none;
+    }
+    ul li:last-child:before {
+      border-left: 1px solid #999;
+    }
+    ul li ul {
+      margin-left: 1.5em;
+    }
+  }
+
 }

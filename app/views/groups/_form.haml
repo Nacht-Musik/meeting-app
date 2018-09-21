@@ -39,8 +39,10 @@
               = "メンバーを追加する"
 
             #member-modals
-              = render partial: "groups/member_add_modal", locals: {users: users, authorities: authorities}
-              = render partial: "groups/member_edit_modal", locals: {users: users, authorities: authorities}
+              = render partial: "groups/member_add_modal",
+                        locals: {users: users, authorities: authorities}
+              = render partial: "groups/member_edit_modal",
+                        locals: {users: users, authorities: authorities}
               = render partial: "groups/member_delete_modal"
 
             #member-block-template
@@ -76,7 +78,8 @@
 
               #child-group-modals
                 = render partial: 'groups/child_group_add_modal',
-                          locals: {current_group_id: f.object.id, groups: current_user.groups}
+                          locals: {current_group_id: f.object.id, groups: current_user.groups,
+                                    founder_group_id: founder_group.id}
                 = render partial: 'groups/child_group_cancel_modal',
                           locals: {current_group_id: f.object.id, groups: current_user.groups}
 
@@ -88,7 +91,13 @@
             = f.label '関連グループ'
           .card-body
             .form-group
-              = "関連グループをツリー表示（予定）"
+              - if founder_group.id == params[:id].to_i
+                %a.current-group= founder_group.name
+              - else
+                %a= founder_group.name
+              = render partial:'groups/show_relation_groups',
+                        locals:{ parent_group: founder_group }
+
 
       %br
       - if mode == 'new'

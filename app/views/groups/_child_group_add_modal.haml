@@ -13,7 +13,7 @@
           %label グループ名
           %select#child-group-selector.custom-select
             - groups.each do |group|
-              - if group.parent.nil? && group.id != current_group_id
+              - if group.parent.nil? && group.id != current_group_id && group.id != founder_group_id
                 %option{value: "#{group.id}"}
                   = "#{group.name}"
       .modal-footer

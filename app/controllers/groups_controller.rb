@@ -4,6 +4,7 @@ class GroupsController < ApplicationController
   before_action :set_users, only: [:show, :new, :edit]
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :set_authorities, only: [:show, :new, :edit]
+  before_action :set_founder_group, only: [:show, :edit]
 
   def show
 
@@ -33,7 +34,6 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @relation_groups = set_relation_groups(@group.id)
 
   end
 
@@ -73,12 +73,8 @@ class GroupsController < ApplicationController
       @authorities = Authority.all
     end
 
-    def set_relation_groups(group_id)
-      # 始祖グループを取得
-      elder_group = h
-
-      # 関連グループを返す
-      
+    def set_founder_group
+      @founder_group = find_founder_group(params[:id])
     end
 
     def group_params
