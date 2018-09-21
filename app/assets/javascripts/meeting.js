@@ -391,7 +391,7 @@ $(document).on('turbolinks:load', function() {
     var user_name = user_block_ele.find('.user-name').text();
     var user_id = user_block_ele.find('.receiver-user-id').attr('value');
 
-    var add_option_attr = {value: user_id, text: user_name}
+    var add_option_attr = {value: user_id, text: user_name};
     var add_option = $('<option>', add_option_attr);
 
     // 対象ユーザーの削除フラグをtrueにする

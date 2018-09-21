@@ -1,0 +1,10 @@
+%tr.child-group-row{"data-group-id": f.object.id}
+  %td.group-name.text-center
+    = f.object.name
+  %td.child-group-cancel.text-center
+    %button{type: "button",
+                   data: {target: "#child-group-cancel-modal",
+                          toggle: "modal",
+                          "group-id": f.object.id},
+                   class: "call-child-group-cancel-modal btn btn-outline-danger"}
+      = icon('fas', 'unlink')

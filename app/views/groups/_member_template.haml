@@ -1,0 +1,22 @@
+.member-params
+  %input{type: "hidden", class: 'member-destroy-flag'}
+  %input{type: "hidden", class: 'member-user-id'}
+  %input{type: "hidden", class: 'member-authority-flag'}
+  %input{type: "hidden", class: 'member-admin-flag'}
+%table
+  %tbody
+    %tr.member-row{"data-user-id": ""}
+      %td.user-name.text-center{data: {"last-name": "", "first-name": ""}}
+      %td.user-email.text-center
+      %td.user-authority.text-center
+      %td.user-admin.text-center{"data-admin-flag": ""}
+      %td.member-edit.text-center
+        %button.call-member-edit-modal.btn.btn-outline-success{ type: "button",
+                data:{target: "#member-edit-modal", toggle: "modal",
+                "user-id": ""}}
+          = icon('fas' ,'user-edit')
+      %td.member-delete.text-center
+        %button.call-member-del-modal.btn.btn-danger{ type: "button",
+                      data:{target: "#member-del-modal", toggle: "modal",
+                      "user-id": ""}}
+          = icon('fas' ,'user-minus')

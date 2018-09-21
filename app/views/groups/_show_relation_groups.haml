@@ -1,0 +1,9 @@
+%ul
+  - parent_group.children.each do |child|
+    %li
+      - if child.id == params[:id].to_i
+        %a.current-group= child.name
+      - else
+        %a= child.name
+      - if child.children.present?
+        = render partial: 'groups/show_relation_groups', locals: { parent_group: child }

@@ -1,22 +1,42 @@
-%h3 マイページ
+#my-page
+  %h3 マイページ
+  #meeting-menu.card
+    .card-header
+      会議関連
+    .card-body
+      %ul
+        %li
+          = link_to 'マイ会議', my_meeting_path
+        %li
+          = link_to '新しい会議を作成する', new_meeting_path, class: "btn btn-primary"
 
-%ul
-  %li
-    = link_to '会議 新規作成', new_meeting_path
-  %li
-    = link_to 'マイ会議', my_meeting_path
-  %li
-    = link_to 'ユーザ情報 確認／編集', edit_user_registration_path
-  %li
-    = link_to 'メール送信テスト', my_mail_path
-  %li
-    = link_to '受信メール確認', letter_opener_web_path
-%br
-%p 以下は追加予定のメニュー
-%ul
-  %li
-    %p 代表／管理ユーザーメニュー
-  %li
-    %p グループ情報
-%br
-%p Find me in app/views/my/page.html.haml
+  #user-menu.card
+    .card-header
+      ユーザー関連
+    .card-body
+      %ul
+        %li
+          = link_to 'ユーザ情報 確認／編集', edit_user_registration_path
+
+  #group-menu.card
+    .card-header
+      グループ関連
+    .card-body
+      - if current_user.groups.blank?
+        %p 所属しているグループはありません。
+      - else
+        %label.control-label 所属グループ
+        = render partial: 'my/groups', locals: { groups: current_user.groups}
+
+      = link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
+
+
+  #debug-menu.card
+    .card-header
+      デバッグ関連
+    .card-body
+      %ul
+        %li
+          = link_to 'メール送信テスト', my_mail_path
+        %li
+          = link_to '受信メール確認', letter_opener_web_path

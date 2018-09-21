@@ -1,0 +1,26 @@
+#member-del-modal.modal.fade{"aria-hidden": "true",
+                            "aria-labelledby": "memberDelModalCenterTitle",
+                            role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#memberDelModalLongTitle.modal-title
+          メンバー削除
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        .form-group
+          %label 名前
+          #member-del-modal-user-name.form-control
+        .form-group
+          %label 権限
+          #member-del-modal-authority.form-control
+        .form-group
+          %label グループ管理者
+          #member-del-modal-admin.form-control
+
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} キャンセル
+        #member-del-btn.btn.btn-danger{data:{ dismiss: "modal", "user-id": ""}}
+          = "このメンバーを削除する"
+          = icon('fas' ,'user-minus')

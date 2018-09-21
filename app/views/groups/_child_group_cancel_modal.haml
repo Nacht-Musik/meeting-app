@@ -1,0 +1,20 @@
+#child-group-cancel-modal.modal.fade{"aria-hidden": "true",
+                                  "aria-labelledby": "childGroupCancelModalCenterTitle",
+                                   role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5#childGroupCancelModalLongTitle.modal-title
+          子グループ解除
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+          %span{"aria-hidden": "true"} ×
+      .modal-body
+        .form-group
+          %label グループ名
+          #child-group-cancel-modal-group-name.form-control
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        #child-group-cancel-btn.btn.btn-danger{data: {dismiss: "modal",
+                                                    "group-id": current_group_id}}
+          = icon('fas' ,'unlink')
+          = "子グループを解除する"

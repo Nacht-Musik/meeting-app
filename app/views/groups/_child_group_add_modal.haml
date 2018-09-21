@@ -1,0 +1,23 @@
+#child-group-add-modal.modal.fade{"aria-hidden": "true",
+                                  "aria-labelledby": "childGroupAddModalCenterTitle",
+                                   role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5#childGroupAddModalLongTitle.modal-title
+          子グループ追加
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+          %span{"aria-hidden": "true"} ×
+      .modal-body
+        .form-group
+          %label グループ名
+          %select#child-group-selector.custom-select
+            - groups.each do |group|
+              - if group.parent.nil? && group.id != current_group_id && group.id != founder_group_id
+                %option{value: "#{group.id}"}
+                  = "#{group.name}"
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        #child-group-add-btn.btn.btn-info{data: {dismiss: "modal", "group-id": current_group_id}}
+          = icon('fas' ,'user-plus')
+          = "子グループに追加する"

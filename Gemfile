@@ -73,6 +73,9 @@ group :development do
   gem 'binding_of_caller'
   # mail送受信テスト
   gem 'letter_opener_web'
+  # ActiveRecord Console表示整形
+  gem 'hirb'
+  gem 'hirb-unicode'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
