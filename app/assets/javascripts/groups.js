@@ -217,8 +217,9 @@ $(document).on('turbolinks:load', function() {
     //////////////////////////////////////////
     // 有効性判定
     let child_id = $('#child-group-selector option:selected').val();
+    let child_name = $('#child-group-selector option:selected').text();
     // セレクター選択値が空の場合終了
-    if(child_id === ""){
+    if(child_id === "" || child_name === ""){
       return;
     }
 
@@ -304,8 +305,17 @@ $(document).on('turbolinks:load', function() {
     child_row_ele.remove();
 
     // 子グループ追加selectorに削除したグループを追加
+    let child_group_row = $(this).closest('.child-group-row');
+    let child_group_name = child_group_row.find('.group-name').text();
+    console.log(child_group_name);
+
+    let add_option_attr = {value: child_group_id, text: child_group_name};
+    let add_option = $('<option>', add_option_attr);
+    $('#child-group-selector').append(add_option);
 
     // 子グループ追加ボタンが無効になっていた場合、有効化
-
+    if ( $('#child-group-add-btn').hasClass("disabled") ){
+       $('#child-group-add-btn').removeClass("disabled");
+    }
   });
 });
