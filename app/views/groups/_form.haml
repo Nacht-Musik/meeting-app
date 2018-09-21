@@ -99,6 +99,19 @@
                         locals:{ parent_group: founder_group }
 
 
+      - if mode == 'edit'
+        #other.card
+          .card-header
+            %label その他
+          .card-body
+            %button.btn.btn-danger{data: {target: "#group-del-modal", toggle: "modal"}, type: "button"}
+              = "このグループを削除する"
+            -#= link_to 'このグループを削除する', group_path, method: :delete,
+                      class: "btn btn-danger",
+                      data: {confirm: "【#{f.object.name}】グループを削除しますか？"}
+        #other-modal
+          = render partial: 'groups/group_delete_modal', locals: {group_name: f.object.name}
+
       %br
       - if mode == 'new'
         = f.submit '新規グループ作成', class: 'btn btn-primary', id: 'meeting-submit-btn'

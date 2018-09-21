@@ -4,7 +4,6 @@
       %th.text-center{scope: "col"} グループ名
       %th.text-center{scope: "col"} 詳細
       %th.text-center{scope: "col"} 編集
-      %th.text-center{scope: "col"} 削除
   %tbody#member-list-area
     - groups.each do |group|
       %tr
@@ -15,9 +14,6 @@
         - if group_admin? current_user, group
           %td.text-center
             = link_to icon('fas', 'edit'), edit_group_path(group), class: 'btn btn-outline-success'
-          %td.text-center
-            %button.btn.btn-outline-danger
-              = icon('fas', 'trash-alt')
         - else
           %td.text-center
           %td.text-center

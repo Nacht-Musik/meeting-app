@@ -40,9 +40,6 @@ class GroupsController < ApplicationController
   def update
     params = group_params
 
-    # 子グループのアップデート処理
-    # スマートなやり方が見つかり次第修正のこと！
-    # -> 自己参照Modelだと 親インスタンスと子インスタンスを一緒にアップデートできない？
     children = params[:children_attributes].clone
     update_children_group(children)
 
@@ -57,7 +54,17 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    # 子グループがある場合、関係を解除する
+    if @group.children.present?
+      @group.children.each do |child|
+        child.parent = nil
+        child.save
+      end
+    end
+    notice_msg = "【#{@group.name}】グループを削除しました"
 
+    @group.destroy
+    redirect_to my_page_path, notice: notice_msg
   end
 
   private
