@@ -1,124 +1,119 @@
-#group-page.card
-  = form_for group, html: {"data-persist" => "garlic"} do |f|
-    .card-header
-      .form-group
-        = f.label 'グループ名'
-        = f.text_field :name, class: 'form-control'
-    .card-body
+#group-page
+  .card.main-card.border-dark
+    = form_for group, html: {"data-persist" => "garlic"} do |f|
+      .card-header.border-dark.bg-dark.text-white
+        .form-group
+          = f.label 'グループ名'
+          = f.text_field :name, class: 'form-control'
+      .card-body
 
-      -# 所属メンバーカード
-      #group-member.card
-        .card-header
-          = f.label '所属メンバー'
-        .form-group.card-body
-          %table#member-table.table.table-sm.table-hover.table-bordered
-            %thead.thead-light
-              %tr
-                %th.text-center{scope: "col"} 名前
-                %th.text-center{scope: "col"} メールアドレス
-                %th.text-center{scope: "col"} 権限
-                %th.text-center{scope: "col"} グループ管理者
-                - if mode == "edit" || mode == "new"
-                  %th.text-center{scope: "col"} 編集
-                  %th.text-center{scope: "col"} 削除
-            %tbody#member-list-area
-              = f.fields_for :group_members do |member|
-                = render partial: "groups/member_view", locals: {f: member, mode: mode}
-
-          #member-params-area
-            - if mode == "edit" || mode == "new"
-              = f.fields_for :group_members do |member|
-                = render partial: "groups/member_params", locals: {f: member}
-
-
-        .card-footer
-          -# 表示のみの場合は以下不要
-          - if mode == "edit" || mode == "new"
-            %button.btn.btn-info{data: {target: "#member-add-modal", toggle: "modal"}, type: "button"}
-              = icon('fas' ,'user-plus')
-              = "メンバーを追加する"
-
-            #member-modals
-              = render partial: "groups/member_add_modal",
-                        locals: {users: users, authorities: authorities}
-              = render partial: "groups/member_edit_modal",
-                        locals: {users: users, authorities: authorities}
-              = render partial: "groups/member_delete_modal"
-
-            #member-block-template
-              = render partial: 'groups/member_template'
-
-      - if mode == "edit" || mode == "show"
-        #children-groups.card
-          .card-header
-            = f.label '子グループ'
-          .card-body
-            %table#children-group-table.table.table-sm.table-hover.table-bordered
+        #group-member.card.sub-card.border-dark
+          .card-header.border-dark.bg-dark.text-white
+            = f.label '所属メンバー'
+          .form-group.card-body.bg-light
+            %table#member-table.table.table-sm.table-hover.table-bordered
               %thead.thead-light
                 %tr
-                  %th.text-center{scope: "col"} グループ名
-                  %th.text-center{scope: "col"} 解除
-              %tbody#children-group-view-area
+                  %th.text-center{scope: "col"} 名前
+                  %th.text-center{scope: "col"} メールアドレス
+                  %th.text-center{scope: "col"} 権限
+                  %th.text-center{scope: "col"} グループ管理者
+                  - if mode == "edit" || mode == "new"
+                    %th.text-center{scope: "col"} 編集
+                    %th.text-center{scope: "col"} 削除
+              %tbody#member-list-area
+                = f.fields_for :group_members do |member|
+                  = render partial: "groups/member_view", locals: {f: member, mode: mode}
+
+            #member-params-area
+              - if mode == "edit" || mode == "new"
+                = f.fields_for :group_members do |member|
+                  = render partial: "groups/member_params", locals: {f: member}
+
+          .card-footer.border-light
+            -# 表示のみの場合は以下不要
+            - if mode == "edit" || mode == "new"
+              %button.btn.btn-info{data: {target: "#member-add-modal", toggle: "modal"}, type: "button"}
+                = icon('fas' ,'user-plus')
+                = "メンバーを追加する"
+
+              #member-modals
+                = render partial: "groups/member_add_modal",
+                          locals: {users: users, authorities: authorities}
+                = render partial: "groups/member_edit_modal",
+                          locals: {users: users, authorities: authorities}
+                = render partial: "groups/member_delete_modal"
+
+              #member-block-template
+                = render partial: 'groups/member_template'
+
+        - if mode == "edit" || mode == "show"
+          #children-groups.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              = f.label '子グループ'
+            .card-body.bg-light
+              %table#children-group-table.table.table-sm.table-hover.table-bordered
+                %thead.thead-light
+                  %tr
+                    %th.text-center{scope: "col"} グループ名
+                    %th.text-center{scope: "col"} 解除
+                %tbody#children-group-view-area
+                  = f.fields_for :children do |child|
+                    = render partial: 'groups/child_group_view',
+                              locals: { f: child }
+
+              #children-group-params-area
                 = f.fields_for :children do |child|
-                  = render partial: 'groups/child_group_view',
+                  = render partial: 'groups/child_group_params',
                             locals: { f: child }
 
-            #children-group-params-area
-              = f.fields_for :children do |child|
-                = render partial: 'groups/child_group_params',
-                          locals: { f: child }
+
+            .card-footer.border-light
+              - if mode == "edit"
+                %button.btn.btn-info{data: {target: "#child-group-add-modal", toggle: "modal"}, type: "button"}
+                  = icon('fas' ,'user-plus')
+                  = "子グループを追加する"
 
 
-          .card-footer
-            - if mode == "edit"
-              %button.btn.btn-info{data: {target: "#child-group-add-modal", toggle: "modal"}, type: "button"}
-                = icon('fas' ,'user-plus')
-                = "子グループを追加する"
+                #child-group-modals
+                  = render partial: 'groups/child_group_add_modal',
+                            locals: {current_group_id: f.object.id, groups: current_user.groups,
+                                      founder_group_id: founder_group.id}
+                  = render partial: 'groups/child_group_cancel_modal',
+                            locals: {current_group_id: f.object.id, groups: current_user.groups}
+
+                #child-group-template
+                  = render partial: 'groups/child_group_template'
+
+          #relation-groups.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              = f.label '関連グループ'
+            .card-body.bg-light
+              .form-group
+                - if founder_group.id == params[:id].to_i
+                  %a.current-group= founder_group.name
+                - else
+                  %a= founder_group.name
+                = render partial:'groups/show_relation_groups',
+                          locals:{ parent_group: founder_group }
 
 
-              #child-group-modals
-                = render partial: 'groups/child_group_add_modal',
-                          locals: {current_group_id: f.object.id, groups: current_user.groups,
-                                    founder_group_id: founder_group.id}
-                = render partial: 'groups/child_group_cancel_modal',
-                          locals: {current_group_id: f.object.id, groups: current_user.groups}
+        - if mode == 'edit'
+          #other.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              %label その他
+            .card-body.bg-light
+              %button.btn.btn-danger{data: {target: "#group-del-modal", toggle: "modal"}, type: "button"}
+                = "このグループを削除する"
+            #other-modal
+              = render partial: 'groups/group_delete_modal', locals: {group_name: f.object.name}
 
-              #child-group-template
-                = render partial: 'groups/child_group_template'
+        - if mode == 'new'
+          = f.submit '新規グループ作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
+        - if mode == 'edit'
+          = f.submit '更新', class: 'btn btn-primary', id: 'meeting-submit-btn'
 
-        #relation-groups.card
-          .card-header
-            = f.label '関連グループ'
-          .card-body
-            .form-group
-              - if founder_group.id == params[:id].to_i
-                %a.current-group= founder_group.name
-              - else
-                %a= founder_group.name
-              = render partial:'groups/show_relation_groups',
-                        locals:{ parent_group: founder_group }
-
-
-      - if mode == 'edit'
-        #other.card
-          .card-header
-            %label その他
-          .card-body
-            %button.btn.btn-danger{data: {target: "#group-del-modal", toggle: "modal"}, type: "button"}
-              = "このグループを削除する"
-            -#= link_to 'このグループを削除する', group_path, method: :delete,
-                      class: "btn btn-danger",
-                      data: {confirm: "【#{f.object.name}】グループを削除しますか？"}
-        #other-modal
-          = render partial: 'groups/group_delete_modal', locals: {group_name: f.object.name}
-
-      %br
-      - if mode == 'new'
-        = f.submit '新規グループ作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
-      - if mode == 'edit'
-        = f.submit '更新', class: 'btn btn-primary', id: 'meeting-submit-btn'
-
-= link_to '戻る', my_page_path, class: "btn btn-secondary"
+  = link_to '戻る', my_page_path, class: "btn btn-secondary"
 
 
 -# 初期化スクリプト郡

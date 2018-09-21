@@ -3,6 +3,17 @@
     vertical-align: middle;
   }
 
+  .main-card {
+    margin-bottom: 0.5em;
+  }
+
+  .sub-card{
+    margin-bottom: 1em;
+    .card-body{
+      margin: 0px;
+    }
+  }
+
   #member-block-template{
     display: none;
   }
