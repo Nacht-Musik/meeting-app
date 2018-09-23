@@ -1,0 +1,19 @@
+%table#project-table.table.table-sm.table-hover.table-bordered
+  %thead.thead-light
+    %tr
+      %th.text-center{scope: "col"} プロジェクト名
+      %th.text-center{scope: "col"} 詳細
+      %th.text-center{scope: "col"} 編集
+  %tbody#member-list-area
+    - projects.each do |project|
+      %tr
+        %td.text-center
+          = "#{project.name}"
+        %td.text-center
+          = link_to icon('fas', 'users'), project_path(project), class: 'btn btn-outline-info'
+        - if project_admin? current_user, project
+          %td.text-center
+            = link_to icon('fas', 'edit'), edit_project_path(project), class: 'btn btn-outline-success'
+        - else
+          %td.text-center
+          %td.text-center

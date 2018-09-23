@@ -1,0 +1,23 @@
+#child-project-add-modal.modal.fade{"aria-hidden": "true",
+                                  "aria-labelledby": "childGroupAddModalCenterTitle",
+                                   role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5#childGroupAddModalLongTitle.modal-title
+          サブプロジェクト追加メニュー
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+          %span{"aria-hidden": "true"} ×
+      .modal-body
+        .form-group
+          %label プロジェクト名
+          %select#child-project-selector.custom-select
+            - projects.each do |project|
+              - if project.parent.nil? && project.id != current_project_id && project.id != founder_project_id
+                %option{value: "#{project.id}"}
+                  = "#{project.name}"
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        #child-project-add-btn.btn.btn-info{data: {dismiss: "modal", "project-id": current_project_id}}
+          = icon('fas' ,'user-plus')
+          = "追加する"

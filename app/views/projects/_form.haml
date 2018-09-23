@@ -1,0 +1,130 @@
+#project-page
+  - if project.errors.any?
+    #error-card.card.border-danger
+      .card-header.bg-danger.text-white
+        保存エラー
+      .card-body.border-danger
+        .ul
+        - project.errors.full_messages.each do |message|
+          .li.text-danger= message
+
+  .card.main-card.border-dark
+    = form_for project, html: {"data-persist" => "garlic"} do |f|
+      .card-header.border-dark.bg-dark.text-white
+        .form-group
+          = f.label 'プロジェクト名'
+          = f.text_field :name, class: 'form-control'
+      .card-body
+        #project-member.card.sub-card.border-dark
+          .card-header.border-dark.bg-dark.text-white
+            = f.label '所属メンバー'
+          .form-group.card-body.bg-light
+            %table#member-table.table.table-sm.table-hover.table-bordered
+              %thead.thead-light
+                %tr
+                  %th.text-center{scope: "col"} 名前
+                  %th.text-center{scope: "col"} メールアドレス
+                  %th.text-center{scope: "col"} 権限
+                  %th.text-center{scope: "col"} プロジェクト管理者
+                  - if mode == "edit" || mode == "new"
+                    %th.text-center{scope: "col"} 編集
+                    %th.text-center{scope: "col"} 削除
+              %tbody#member-list-area
+                = f.fields_for :project_members do |member|
+                  = render partial: "projects/member/view", locals: {f: member, mode: mode}
+
+            #member-params-area
+              - if mode == "edit" || mode == "new"
+                = f.fields_for :project_members do |member|
+                  = render partial: "projects/member/params", locals: {f: member}
+
+          .card-footer.border-light
+            -# 表示のみの場合は以下不要
+            - if mode == "edit" || mode == "new"
+              %button.btn.btn-info{data: {target: "#member-add-modal", toggle: "modal"}, type: "button"}
+                = icon('fas' ,'user-plus')
+                = "メンバーを追加する"
+
+              #member-modals
+                = render partial: "projects/member/add_modal",
+                          locals: {users: users, authorities: authorities}
+                = render partial: "projects/member/edit_modal",
+                          locals: {users: users, authorities: authorities}
+                = render partial: "projects/member/delete_modal"
+
+              #member-block-template
+                = render partial: 'projects/member/template'
+
+        - if mode == "edit" || mode == "show"
+          #children-projects.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              = f.label 'サブプロジェクト'
+            .card-body.bg-light
+              %table#children-project-table.table.table-sm.table-hover.table-bordered
+                %thead.thead-light
+                  %tr
+                    %th.text-center{scope: "col"} プロジェクト名
+                    %th.text-center{scope: "col"} 解除
+                %tbody#children-project-view-area
+                  = f.fields_for :children do |child|
+                    = render partial: 'projects/sub_project/view',
+                              locals: { f: child }
+
+              #children-project-params-area
+                = f.fields_for :children do |child|
+                  = render partial: 'projects/sub_project/params',
+                            locals: { f: child }
+
+
+            .card-footer.border-light
+              - if mode == "edit"
+                %button.btn.btn-info{data: {target: "#child-project-add-modal", toggle: "modal"}, type: "button"}
+                  = icon('fas' ,'plus-square')
+                  = "サブプロジェクトを追加する"
+
+
+                #child-project-modals
+                  = render partial: 'projects/sub_project/add_modal',
+                            locals: {current_project_id: f.object.id, projects: current_user.projects,
+                                      founder_project_id: founder_project.id}
+                  = render partial: 'projects/sub_project/cancel_modal',
+                            locals: {current_project_id: f.object.id, projects: current_user.projects}
+
+                #child-project-template
+                  = render partial: 'projects/sub_project/template'
+
+          #relation-projects.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              = f.label '関連プロジェクト'
+            .card-body.bg-light
+              .form-group
+                - if founder_project.id == params[:id].to_i
+                  %a.current-project= founder_project.name
+                - else
+                  %a= founder_project.name
+                = render partial:'projects/show_relation_projects',
+                          locals:{ parent_project: founder_project }
+
+
+        - if mode == 'edit'
+          #other.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              %label その他
+            .card-body.bg-light
+              %button.btn.btn-danger{data: {target: "#project-del-modal", toggle: "modal"}, type: "button"}
+                = "このプロジェクトを削除する"
+            #other-modal
+              = render partial: 'projects/project_delete_modal', locals: {project_name: f.object.name}
+
+        - if mode == 'new'
+          = f.submit '新規プロジェクト作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
+        - if mode == 'edit'
+          = f.submit '更新', class: 'btn btn-primary', id: 'meeting-submit-btn'
+
+  = link_to '戻る', my_page_path, class: "btn btn-secondary"
+
+
+-# 初期化スクリプト郡
+- if mode == "edit" || mode == "new"
+  :javascript
+    initializationMemberSelector();

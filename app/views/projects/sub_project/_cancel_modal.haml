@@ -1,0 +1,20 @@
+#child-project-cancel-modal.modal.fade{"aria-hidden": "true",
+                                  "aria-labelledby": "childGroupCancelModalCenterTitle",
+                                   role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5#childGroupCancelModalLongTitle.modal-title
+          このサブプロジェクトを解除しますか？
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+          %span{"aria-hidden": "true"} ×
+      .modal-body
+        .form-group
+          %label プロジェクト名
+          #child-project-cancel-modal-project-name.form-control
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        #child-project-cancel-btn.btn.btn-danger{data: {dismiss: "modal",
+                                                    "project-id": current_project_id}}
+          = icon('fas' ,'unlink')
+          = "解除する"

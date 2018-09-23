@@ -1,0 +1,26 @@
+%tr.member-row{data: {"user-id": f.object.user_id}}
+  %td.user-name.text-center{data: {"last-name": f.object.user.last_name,
+                                  "first-name": f.object.user.first_name}}
+    = "#{f.object.user.last_name} #{f.object.user.first_name}"
+  %td.user-email.text-center
+    = "#{f.object.user.email}"
+  %td.user-authority.text-center
+    = "#{f.object.authority.name}"
+  - if f.object.admin
+    %td.user-admin.text-center{"data-admin-flag": "1"}
+      = icon('fas' ,'check')
+  - else
+    %td.user-admin.text-center{"data-admin-flag": "0"}
+      %i= "-"
+
+  - if mode == "edit" || mode == "new"
+    %td.member-edit.text-center
+      %button.call-member-edit-modal.btn.btn-outline-success{ type: "button",
+              data:{target: "#member-edit-modal", toggle: "modal",
+              "user-id": f.object.user_id}}
+        = icon('fas' ,'user-edit')
+    %td.member-delete.text-center
+      %button.call-member-del-modal.btn.btn-danger{ type: "button",
+              data:{target: "#member-del-modal", toggle: "modal",
+              "user-id": f.object.user_id}}
+        = icon('fas' ,'user-minus')

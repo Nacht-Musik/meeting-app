@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
     params = group_params
 
     children = params[:children_attributes].clone
-    update_children_group(children)
+    update_children_group(children) if children.present?
 
     params.delete(:children_attributes)
 

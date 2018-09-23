@@ -1,0 +1,20 @@
+#project-del-modal.modal.fade{"aria-hidden": "true",
+                            "aria-labelledby": "projectDelModalCenterTitle",
+                            role: "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-dialog-centered{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#projectDelModalLongTitle.modal-title
+          このプロジェクトを本当に削除しますか？
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        .form-group
+          %label プロジェクト名
+          #project-del-modal-user-name.form-control
+            = project_name
+
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} キャンセル
+        = link_to 'このプロジェクトを削除する', project_path, method: :delete,
+                  class: "btn btn-danger"

@@ -24,8 +24,12 @@ class User < ApplicationRecord
   belongs_to :authority,          class_name: 'Authority', optional: true
 
   ### Group
-  has_many :authorities, class_name: "GroupMember"
-  has_many :groups, through: :authorities, source: :group
+  has_many :group_members, class_name: "GroupMember"
+  has_many :groups, through: :group_members, source: :group
+
+  ### Project
+  has_many :project_members, class_name: "ProjectMember"
+  has_many :projects, through: :project_members, source: :project
 
   ### Notice
   has_many :notices
