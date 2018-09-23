@@ -17,7 +17,6 @@ class User < ApplicationRecord
   has_many :approve_meetings,     class_name: 'Meeting', foreign_key: 'authorither_id'
 
   ### 必要？ (記録者、参加者、配信先)
-  has_many :recorderes, class_name: 'Recorder'
   has_many :attendees, class_name: 'Attendee'
   has_many :receiveres, class_name: 'Receiver'
 

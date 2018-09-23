@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180921125303) do
+ActiveRecord::Schema.define(version: 20180923042709) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -154,15 +154,6 @@ ActiveRecord::Schema.define(version: 20180921125303) do
     t.index ["user_id"], name: "index_receivers_on_user_id"
   end
 
-  create_table "recorders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
-    t.bigint "meeting_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["meeting_id"], name: "index_recorders_on_meeting_id"
-    t.index ["user_id"], name: "index_recorders_on_user_id"
-  end
-
   create_table "topic_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
@@ -227,8 +218,6 @@ ActiveRecord::Schema.define(version: 20180921125303) do
   add_foreign_key "receivers", "meetings"
   add_foreign_key "receivers", "receiver_types", column: "type_id"
   add_foreign_key "receivers", "users"
-  add_foreign_key "recorders", "meetings"
-  add_foreign_key "recorders", "users"
   add_foreign_key "topics", "meetings"
   add_foreign_key "topics", "topic_statuses", column: "status_id"
   add_foreign_key "users", "authorities"
