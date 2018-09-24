@@ -42,3 +42,16 @@ function findChildProjectParamsEle(project_id) {
 
   return params;
 }
+
+// サブプロジェクトテーブルの表示初期化
+function initializationSubProjectView() {
+  let sub_projects_num = $('#children-project-view-area').find('.child-project-row').length;
+
+  if( sub_projects_num > 0 ){
+    $('#children-project-table').removeClass('d-none');
+    $('#sub-project-none-msg').addClass('d-none');
+  } else {
+    $('#sub-project-none-msg').removeClass('d-none');
+    $('#children-project-table').addClass('d-none');
+  }
+}

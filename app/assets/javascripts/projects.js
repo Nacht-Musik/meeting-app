@@ -273,6 +273,10 @@ $(document).on('turbolinks:load', function() {
     if(option_num <= 0){
       $(this).addClass("disabled");
     }
+
+    // サブプロジェクトの表示テーブルを必要に応じて表示させる。
+    initializationSubProjectView();
+
   });
 });
 
@@ -300,22 +304,26 @@ $(document).on('turbolinks:load', function() {
     let child_params_ele = findChildProjectParamsEle(child_project_id);
     child_params_ele.find('.parent-project-id').val('0');
 
-    // 子プロジェクトの表示要素を取得 -> 削除
-    let child_row_ele = findChildProjectRowEle(child_project_id);
-    child_row_ele.remove();
+    // 子プロジェクトの表示要素を取得
+    let child_project_row_ele = findChildProjectRowEle(child_project_id);
 
-    // 子プロジェクト追加selectorに削除したプロジェクトを追加
-    let child_project_row = $(this).closest('.child-project-row');
-    let child_project_name = child_project_row.find('.project-name').text();
+    // 子プロジェクト追加selectorの選択肢に削除するプロジェクトを追加
+    let child_project_name = child_project_row_ele.find('.project-name').text();
     console.log(child_project_name);
 
     let add_option_attr = {value: child_project_id, text: child_project_name};
     let add_option = $('<option>', add_option_attr);
     $('#child-project-selector').append(add_option);
 
+    // 子プロジェクトの表示要素を削除
+    child_project_row_ele.remove();
+
     // 子プロジェクト追加ボタンが無効になっていた場合、有効化
     if ( $('#child-project-add-btn').hasClass("disabled") ){
       $('#child-project-add-btn').removeClass("disabled");
     }
+
+    // サブプロジェクトの表示部を初期化
+    initializationSubProjectView();
   });
 });

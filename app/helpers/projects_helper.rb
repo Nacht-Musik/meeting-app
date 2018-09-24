@@ -25,4 +25,33 @@ module ProjectsHelper
     end
     return founder_project
   end
+
+  # 子孫プロジェクトのidをすべて取得
+  def find_progeny_project_ids(project_id)
+    return [] if Project.find(project_id).children.blank?
+    progeny_project_ids = []
+
+    Project.find(project_id).children.each do |child|
+      progeny_project_ids.push(child.id)
+      next if child.children.blank?
+
+      grandchildren_ids = find_children_project_ids(child.id)
+      grandchildren_ids.each do |id|
+        progeny_project_ids.push(id)
+      end
+    end
+
+    return progeny_project_ids
+  end
+
+  # 子プロジェクトのidをすべて取得
+  def find_children_project_ids(project_id)
+    return [] if Project.find(project_id).children.blank?
+    children_project_ids = []
+
+    Project.find(project_id).children.each do |child|
+      children_project_ids.push(child.id)
+    end
+    return children_project_ids
+  end
 end

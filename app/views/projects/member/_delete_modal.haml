@@ -3,9 +3,9 @@
                             role: "dialog", :tabindex => "-1"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
-      .modal-header
+      .modal-header.bg-danger.text-white
         %h5#memberDelModalLongTitle.modal-title
-          メンバー削除
+          このユーザーをメンバーから削除しますか？
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
@@ -22,5 +22,5 @@
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} キャンセル
         #member-del-btn.btn.btn-danger{data:{ dismiss: "modal", "user-id": ""}}
-          = "このメンバーを削除する"
           = icon('fas' ,'user-minus')
+          = "削除する"

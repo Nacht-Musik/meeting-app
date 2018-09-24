@@ -3,7 +3,7 @@
                                    role: "dialog", :tabindex => "-1"}
   .modal-dialog.modal-dialog-centered{role: "document"}
     .modal-content
-      .modal-header
+      .modal-header.bg-info.text-white
         %h5#childGroupAddModalLongTitle.modal-title
           サブプロジェクト追加メニュー
         %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
@@ -12,6 +12,7 @@
         .form-group
           %label プロジェクト名
           %select#child-project-selector.custom-select
+            %option{value: ""} --- プロジェクトを選択して下さい ---
             - projects.each do |project|
               - if project.parent.nil? && project.id != current_project_id && project.id != founder_project_id
                 %option{value: "#{project.id}"}

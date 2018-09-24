@@ -49,20 +49,19 @@ class ProjectsController < ApplicationController
       flash = {success: 'プロジェクト情報を更新しました。'}
       redirect_to my_page_path, flash: flash
     else
-      # 更新処理失敗。。。
       render 'edit'
     end
   end
 
   def destroy
     # 子プロジェクトがある場合、関係を解除する
-    if @project.children.present?
-      @project.children.each do |child|
-        child.parent = nil
-        child.save
-      end
-    end
-    notice_msg = "【#{@project.name}】プロジェクトを削除しました"
+    # if @project.children.present?
+    #   @project.children.each do |child|
+    #     child.parent = nil
+    #     child.save
+    #   end
+    # end
+    notice_msg = "【#{@project.name}】プロジェクトを終了しました"
 
     @project.destroy
     redirect_to my_page_path, notice: notice_msg

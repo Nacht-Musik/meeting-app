@@ -1,7 +1,7 @@
 #member-add-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "memberAddModalCenterTitle", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
-      .modal-header
+      .modal-header.bg-info.text-white
         %h5#memberAddModalLongTitle.modal-title
           メンバー追加フォーム
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
@@ -10,6 +10,7 @@
         .form-group
           %label 名前（メールアドレス）
           %select#member-selector.custom-select
+            %option{value: ""} --- 追加するユーザーを選択して下さい ---
             - users.each do |user|
               %option{value: "#{user.id}",
                             data: {last_name: user.last_name,

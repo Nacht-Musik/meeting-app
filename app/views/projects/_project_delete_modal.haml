@@ -3,9 +3,9 @@
                             role: "dialog", :tabindex => "-1"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
-      .modal-header
+      .modal-header.bg-danger.text-white
         %h5#projectDelModalLongTitle.modal-title
-          このプロジェクトを本当に削除しますか？
+          本当にこのプロジェクトを終了しますか？
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
@@ -16,5 +16,5 @@
 
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} キャンセル
-        = link_to 'このプロジェクトを削除する', project_path, method: :delete,
+        = link_to '終了する', project_path, method: :delete,
                   class: "btn btn-danger"

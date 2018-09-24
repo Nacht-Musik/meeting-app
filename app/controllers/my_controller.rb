@@ -2,6 +2,7 @@ class MyController < ApplicationController
   before_action :set_meetings, only: [:meeting]
   before_action :set_projects, only: [:meeting]
   before_action :set_users, only: [:meeting]
+  before_action :set_finished_projects, only: [:page]
 
   def page
   end
@@ -28,4 +29,9 @@ class MyController < ApplicationController
     def set_projects
       @projects = Project.all
     end
+
+    def set_finished_projects
+      @finished_projects = current_user.projects.only_deleted
+    end
+
 end

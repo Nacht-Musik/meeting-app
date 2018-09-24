@@ -20,7 +20,8 @@
               "user-id": f.object.user_id}}
         = icon('fas' ,'user-edit')
     %td.member-delete.text-center
-      %button.call-member-del-modal.btn.btn-danger{ type: "button",
-              data:{target: "#member-del-modal", toggle: "modal",
-              "user-id": f.object.user_id}}
-        = icon('fas' ,'user-minus')
+      - if current_user.id != f.object.user_id
+        %button.call-member-del-modal.btn.btn-danger{ type: "button",
+                data:{target: "#member-del-modal", toggle: "modal",
+                "user-id": f.object.user_id}}
+          = icon('fas' ,'user-minus')

@@ -14,7 +14,9 @@
         .form-group
           = f.label 'プロジェクト名'
           = f.text_field :name, class: 'form-control'
+
       .card-body
+        -# プロジェクト参加メンバー表示部
         #project-member.card.sub-card.border-dark
           .card-header.border-dark.bg-dark.text-white
             = f.label '所属メンバー'
@@ -55,16 +57,43 @@
               #member-block-template
                 = render partial: 'projects/member/template'
 
-        - if mode == "edit" || mode == "show"
+        -# 親プロジェクトカード
+        -#- if mode == "new" || mode == "edit"
+        - if mode == "new"
+          #parent-project.card.sub-card.border-dark
+            .card-header.border-dark.bg-dark.text-white
+              = f.label '親プロジェクト'
+            .card-body.bg-light
+              - if mode ==  "new"
+                - candidate_parent_projects = current_user.projects
+                = f.collection_select :parent_id, candidate_parent_projects, :id, :name,
+                                      {prompt: "------------"},
+                                      {class: "custom-select"}
+              -# Edit mode で親プロジェクトを変更出来るようにするならば、
+              -# サブプロジェクトを選べないようにさせること！
+              -# 現状コードではサブプロジェクトと親プロジェクトに同じプロジェクトを選べてしまう。
+              -#- if mode ==  "edit"
+                - progeny_project_ids = find_progeny_project_ids(f.object.id)
+                - progeny_project_ids.push(f.object.id)
+                - candidate_parent_projects = current_user.projects.where.not(id: progeny_project_ids)
+                = f.collection_select :parent_id, candidate_parent_projects, :id, :name,
+                                      {prompt: "------------"},
+                                      {class: "custom-select"}
+
+        -# サブプロジェクト カード
+        - if mode == "edit"
           #children-projects.card.sub-card.border-dark
             .card-header.border-dark.bg-dark.text-white
               = f.label 'サブプロジェクト'
             .card-body.bg-light
-              %table#children-project-table.table.table-sm.table-hover.table-bordered
+              %label#sub-project-none-msg.d-none
+                サブプロジェクトはありません。
+
+              %table#children-project-table.table.table-sm.table-hover.table-bordered.d-none
                 %thead.thead-light
                   %tr
                     %th.text-center{scope: "col"} プロジェクト名
-                    %th.text-center{scope: "col"} 解除
+                    %th.text-center{scope: "col"} 登録解除
                 %tbody#children-project-view-area
                   = f.fields_for :children do |child|
                     = render partial: 'projects/sub_project/view',
@@ -75,12 +104,11 @@
                   = render partial: 'projects/sub_project/params',
                             locals: { f: child }
 
-
             .card-footer.border-light
               - if mode == "edit"
                 %button.btn.btn-info{data: {target: "#child-project-add-modal", toggle: "modal"}, type: "button"}
                   = icon('fas' ,'plus-square')
-                  = "サブプロジェクトを追加する"
+                  = "サブプロジェクトを登録する"
 
 
                 #child-project-modals
@@ -93,6 +121,8 @@
                 #child-project-template
                   = render partial: 'projects/sub_project/template'
 
+        -# 関連プロジェクト表示カード
+        - if mode == 'show' || mode == 'edit'
           #relation-projects.card.sub-card.border-dark
             .card-header.border-dark.bg-dark.text-white
               = f.label '関連プロジェクト'
@@ -106,13 +136,14 @@
                           locals:{ parent_project: founder_project }
 
 
+        -# その他
         - if mode == 'edit'
           #other.card.sub-card.border-dark
             .card-header.border-dark.bg-dark.text-white
               %label その他
             .card-body.bg-light
               %button.btn.btn-danger{data: {target: "#project-del-modal", toggle: "modal"}, type: "button"}
-                = "このプロジェクトを削除する"
+                = "このプロジェクトを終了する"
             #other-modal
               = render partial: 'projects/project_delete_modal', locals: {project_name: f.object.name}
 
@@ -128,3 +159,4 @@
 - if mode == "edit" || mode == "new"
   :javascript
     initializationMemberSelector();
+    initializationSubProjectView();
