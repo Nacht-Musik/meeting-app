@@ -2,8 +2,18 @@ class Project < ApplicationRecord
   # paranoia(論理削除用Gem)の有効/無効 設定
   acts_as_paranoid
 
-  validates :name, presence: true
+  # validates :name, presence: true
+  validate :add_error_message
 
+  def add_error_message
+    if name.empty?
+      errors[:base] << "入力項目に漏れがあります。"
+      errors[:name] << "・プロジェクト名を入力して下さい。"
+    end
+  end
+
+  #####################
+  # Model Relations
   has_many :meetings,   class_name: "Meeting"
 
   belongs_to :parent, class_name: "Project", foreign_key: "parent_id", optional: true

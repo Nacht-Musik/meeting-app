@@ -1,4 +1,13 @@
 #project-page{
+  .error-form{
+    border: solid 5px orangered;
+  }
+  .error-message{
+    color: orangered;
+    //background-color: lightgray;
+    //border-radius: 10px 10px;
+  }
+
   th, td{
     vertical-align: middle;
   }

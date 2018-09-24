@@ -2,14 +2,15 @@
   - if project.errors.any?
     #error-card.card.border-danger
       .card-header.bg-danger.text-white
-        保存エラー
+        エラー
       .card-body.border-danger
         .ul
         - project.errors.full_messages.each do |message|
           .li.text-danger= message
 
   .card.main-card.border-dark
-    = form_for project, html: {"data-persist" => "garlic"} do |f|
+    = form_for project, builder: ProjectsHelper::FormWithErrorMessageBuilder,
+                        html: {"data-persist" => "garlic"} do |f|
       .card-header.border-dark.bg-dark.text-white
         .form-group
           = f.label 'プロジェクト名'
