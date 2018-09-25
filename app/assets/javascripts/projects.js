@@ -1,8 +1,14 @@
 $(document).on('turbolinks:load', function() {
   // メンバー追加ボタン
   $('#project-page').on('click', '#member-add-btn', function () {
+    // メンバー追加フォーム上のセレクター選択情報を取得
+    let selected_member_selector = $('#member-selector option:selected');
+    let selected_authority_selector = $('#member-add-modal').find('.authority-selector option:selected');
+    let selected_admin_selector = $('#member-add-modal').find('.admin-selector option:selected');
+
     // セレクターで選択されているユーザー名を取得
-    let selected_user_name = $('#member-selector option:selected').text();
+    // let selected_user_name = $('#member-selector option:selected').text();
+    let selected_user_name = selected_member_selector.text();
 
     // 選択ユーザー名が空の場合、追加処理を実行しない
     if(selected_user_name === ""){
@@ -10,9 +16,9 @@ $(document).on('turbolinks:load', function() {
     }
 
     // 追加するユーザー情報取得
-    let user_id = $('#member-selector option:selected').val();
-    let authority = $('#authority-selector option:selected').val();
-    let admin_flag = $('#admin-selector option:selected').val();
+    let user_id = selected_member_selector.val();
+    let authority = selected_authority_selector.val();
+    let admin_flag = selected_admin_selector.val();
 
     // DB登録用のid/nameを生成
     let id_com = "project_project_members_attributes";
@@ -51,12 +57,12 @@ $(document).on('turbolinks:load', function() {
     $('#member-params-area').append(member_params_ele);
 
     // 追加ユーザーの表示用データ取得
-    let first_name = $('#member-selector option:selected').attr('data-first-name');
-    let last_name = $('#member-selector option:selected').attr('data-last-name');
+    let first_name = selected_member_selector.attr('data-first-name');
+    let last_name = selected_member_selector.attr('data-last-name');
     let user_name = last_name + " " + first_name;
-    let email = $('#member-selector option:selected').attr('data-email');
-    let authority_text = $('#authority-selector option:selected').text();
-    let admin_mark = $('#admin-selector option:selected').attr('data-mark');
+    let email = selected_member_selector.attr('data-email');
+    let authority_text = selected_authority_selector.text();
+    let admin_mark = selected_admin_selector.attr('data-mark');
 
     // 追加メンバー表示データ展開
     let member_row_ele = $('#member-block-template').find('.member-row').clone();
@@ -72,15 +78,15 @@ $(document).on('turbolinks:load', function() {
     member_row_ele.find('.user-admin').append(admin_mark);
     member_row_ele.find('.user-admin').attr('data-admin-flag', admin_flag);
 
-
     $('#member-list-area').append(member_row_ele);
 
     // 追加したユーザーをセレクターから削除
-    $('#member-selector option:selected').remove();
+    selected_member_selector.remove();
 
     // セレクターの中身が空になったら、追加ボタンを無効にする
     let option_num = $('#member-selector').children('option').length;
     if(option_num <= 0){
+      console.log('メンバー追加セレクターを無効化！');
       $(this).addClass("disabled");
     }
   });
@@ -326,4 +332,45 @@ $(document).on('turbolinks:load', function() {
     // サブプロジェクトの表示部を初期化
     initializationSubProjectView();
   });
+});
+
+
+// select2 設定 (セレクターに検索機能付加)
+$(document).on('turbolinks:load', function() {
+  // メンバー追加セレクター
+  $('#member-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    allowClear: true
+  });
+
+  // 権限セレクター
+  $('.authority-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    allowClear: true
+  });
+
+  // 管理者セレクター
+  $('.admin-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    allowClear: true
+  });
+
+  // 親プロジェクトセレクター
+  $('.parent-project-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    placeholder: "--- (親プロジェクトが有る場合のみ選択して下さい) ---",
+    allowClear: true
+  });
+
+  // サブプロジェクト追加セレクター
+  $('#child-project-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    allowClear: true
+  });
+
 });

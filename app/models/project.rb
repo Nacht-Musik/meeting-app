@@ -7,7 +7,7 @@ class Project < ApplicationRecord
 
   def add_error_message
     if name.empty?
-      errors[:base] << "入力項目に漏れがあります。"
+      errors[:base] << "入力項目に記入漏れがあります。"
       errors[:name] << "・プロジェクト名を入力して下さい。"
     end
   end

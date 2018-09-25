@@ -6,7 +6,8 @@
       .modal-header.bg-danger.text-white
         %h5#memberDelModalLongTitle.modal-title
           このユーザーをメンバーから削除しますか？
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
+                      class: "btn text-white"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
         .form-group

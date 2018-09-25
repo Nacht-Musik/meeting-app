@@ -6,12 +6,14 @@
       .modal-header.bg-info.text-white
         %h5#childGroupAddModalLongTitle.modal-title
           サブプロジェクト追加メニュー
-        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
+                      class: "btn text-white"}
           %span{"aria-hidden": "true"} ×
       .modal-body
         .form-group
           %label プロジェクト名
-          %select#child-project-selector.custom-select
+          -#%select#child-project-selector.custom-select
+          %select#child-project-selector.select2
             %option{value: ""} --- プロジェクトを選択して下さい ---
             - projects.each do |project|
               - if project.parent.nil? && project.id != current_project_id && project.id != founder_project_id

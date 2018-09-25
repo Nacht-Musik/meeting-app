@@ -1,12 +1,13 @@
 #member-edit-modal.modal.fade{"aria-hidden": "true",
                               "aria-labelledby": "memberEditModalCenterTitle",
-                              role: "dialog", tabindex: "-1"}
+                              role: "dialog"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
       .modal-header.bg-success.text-white
         %h5#memberEditModalLongTitle.modal-title
           メンバー情報編集フォーム
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
+                      class: "btn text-white"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
         .form-group

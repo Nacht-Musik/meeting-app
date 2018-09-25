@@ -9,8 +9,8 @@
           .li.text-danger= message
 
   .card.main-card.border-dark
-    = form_for project, builder: ProjectsHelper::FormWithErrorMessageBuilder,
-                        html: {"data-persist" => "garlic"} do |f|
+    = form_for project, builder: ProjectsHelper::FormWithErrorMessageBuilder do |f|
+
       .card-header.border-dark.bg-dark.text-white
         .form-group
           = f.label 'プロジェクト名'
@@ -63,14 +63,14 @@
         - if mode == "new"
           #parent-project.card.sub-card.border-dark
             .card-header.border-dark.bg-dark.text-white
-              = f.label '親プロジェクト'
+              = f.label '親プロジェクト （オプション）'
             .card-body.bg-light
               - if mode ==  "new"
                 - candidate_parent_projects = current_user.projects
                 = f.collection_select :parent_id, candidate_parent_projects, :id, :name,
-                                      {prompt: "------------"},
-                                      {class: "custom-select"}
-              -# Edit mode で親プロジェクトを変更出来るようにするならば、
+                                      {prompt: ""},
+                                      {class: "parent-project-selector select2"}
+              -# Edit mode で親プロジェクトを変更出来るようにするのならば、
               -# サブプロジェクトを選べないようにさせること！
               -# 現状コードではサブプロジェクトと親プロジェクトに同じプロジェクトを選べてしまう。
               -#- if mode ==  "edit"

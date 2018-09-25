@@ -1,16 +1,16 @@
-#member-add-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "memberAddModalCenterTitle", :role => "dialog", :tabindex => "-1"}
+#member-add-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "memberAddModalCenterTitle", :role => "dialog"}
   .modal-dialog.modal-dialog-centered{:role => "document"}
     .modal-content
       .modal-header.bg-info.text-white
         %h5#memberAddModalLongTitle.modal-title
           メンバー追加フォーム
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
+                      class: "btn text-white"}
           %span{"aria-hidden" => "true"} ×
-      .modal-body
+      .modal-body.bg-light
         .form-group
           %label 名前（メールアドレス）
-          %select#member-selector.custom-select
-            %option{value: ""} --- 追加するユーザーを選択して下さい ---
+          %select#member-selector.select2
             - users.each do |user|
               %option{value: "#{user.id}",
                             data: {last_name: user.last_name,
@@ -19,14 +19,14 @@
                 = "#{user.last_name} #{user.first_name} （ #{user.email} ）"
         .form-group
           %label 権限
-          %select#authority-selector.custom-select
+          %select.authority-selector.select2
             - authorities.each do |authority|
               %option{value: "#{authority.id}"}
                 = "#{authority.name}"
         .form-group
           %label プロジェクト管理者
-          %select#admin-selector.custom-select
-            %option{value: 0, selected: "true", "data-mark": " <i>-</i>"}
+          %select.admin-selector.select2
+            %option{value: 0, "data-mark": " <i>-</i>"}
               %i= '-'
             %option{value: 1, "data-mark": "<i class=\"fas fa-check\">"}
               %i= '管理者'

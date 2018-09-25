@@ -6,7 +6,7 @@ function initializationChildProjectSelector() {
     $('#child-project-selector option[value=' + child_project_id.value + ']').remove();
   });
 
-  // メンバー追加セレクターが空だったら、追加ボタンを無効にする
+  // サブプロジェクトセレクターが空だったら、追加ボタンを無効にする
   let child_project_option_num = $('#children-project-selector').children('option').length;
   if(child_project_option_num <= 0){
     $('#children-project-add-btn').addClass("disabled");
