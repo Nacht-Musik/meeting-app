@@ -202,13 +202,13 @@ $(document).on('turbolinks:load', function() {
     let authority_options = authority_selector.children();
     authority_options.each(function(index, option){
       if($.trim($(option).text()) === user_info.authority){
-        authority_selector.val($(option).val());
+        authority_selector.val($(option).val()).trigger('change');
       }
     });
 
     // プロジェクト管理者の状態をセレクターにセット
     let admin_selector = $('#member-edit-modal').find('.admin-selector');
-    admin_selector.val(user_info.admin_flag);
+    admin_selector.val(user_info.admin_flag).trigger('change');
   });
 });
 

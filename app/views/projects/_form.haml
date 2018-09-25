@@ -136,6 +136,13 @@
                 = render partial:'projects/show_relation_projects',
                           locals:{ parent_project: founder_project }
 
+        -# 備考欄 表示カード
+        -##project-remarks.card.sub-card.border-dark
+          .card-header.border-dark.bg-dark.text-white
+            = f.label '備考'
+          .card-body.bg-light
+            .form-group
+              %textarea
 
         -# その他
         - if mode == 'edit'
