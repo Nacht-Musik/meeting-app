@@ -3,6 +3,15 @@
     vertical-align: middle;
   }
 
+  textarea{
+    .form-control{
+      height: auto;
+      min-height: 60px !important;
+      max-height: 180px;
+    }
+
+  }
+
   .main-card {
     margin-bottom: 0.5em;
   }
@@ -13,6 +22,7 @@
       margin: 0px;
     }
   }
+
 
   #member-block-template{
     display: none;

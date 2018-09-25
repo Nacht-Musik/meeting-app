@@ -88,6 +88,7 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:id,
                                   :name,
                                   :parent_id,
+                                  :remarks,
                                   project_members_attributes: [
                                       :id,
                                       :project_id,

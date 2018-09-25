@@ -366,7 +366,7 @@ $(document).on('turbolinks:load', function() {
   $('.parent-project-selector').select2({
     theme: 'bootstrap4',
     width: '100%',
-    placeholder: "親プロジェクト無し",
+    placeholder: "--- none ---",
     allowClear: true
   });
 

@@ -14,7 +14,10 @@
       .card-header.border-dark.bg-dark.text-white
         .form-group
           = f.label 'プロジェクト名'
-          = f.text_field :name, class: 'form-control'
+          - if mode == 'show'
+            = f.text_field :name, class: 'form-control bg-white', readonly: "true"
+          - else
+            = f.text_field :name, class: 'form-control'
 
       .card-body
         -# プロジェクト参加メンバー表示部
@@ -59,7 +62,6 @@
                 = render partial: 'projects/member/template'
 
         -# 親プロジェクトカード
-        -#- if mode == "new" || mode == "edit"
         - if mode == "new"
           #parent-project.card.sub-card.border-dark
             .card-header.border-dark.bg-dark.text-white
@@ -70,16 +72,6 @@
                 = f.collection_select :parent_id, candidate_parent_projects, :id, :name,
                                       {prompt: ""},
                                       {class: "parent-project-selector select2"}
-              -# Edit mode で親プロジェクトを変更出来るようにするのならば、
-              -# サブプロジェクトを選べないようにさせること！
-              -# 現状コードではサブプロジェクトと親プロジェクトに同じプロジェクトを選べてしまう。
-              -#- if mode ==  "edit"
-                - progeny_project_ids = find_progeny_project_ids(f.object.id)
-                - progeny_project_ids.push(f.object.id)
-                - candidate_parent_projects = current_user.projects.where.not(id: progeny_project_ids)
-                = f.collection_select :parent_id, candidate_parent_projects, :id, :name,
-                                      {prompt: "------------"},
-                                      {class: "custom-select"}
 
         -# サブプロジェクト カード
         - if mode == "edit"
@@ -137,12 +129,15 @@
                           locals:{ parent_project: founder_project }
 
         -# 備考欄 表示カード
-        -##project-remarks.card.sub-card.border-dark
+        #project-remarks.card.sub-card.border-dark
           .card-header.border-dark.bg-dark.text-white
             = f.label '備考'
           .card-body.bg-light
             .form-group
-              %textarea
+              - if mode == 'show'
+                = f.text_area :remarks, class: "form-control bg-white", rows: "5", readonly: "true"
+              - else
+                = f.text_area :remarks, class: "form-control", rows: "5"
 
         -# その他
         - if mode == 'edit'
