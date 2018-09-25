@@ -7,7 +7,9 @@
         %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
                       class: "btn text-white"}
           %span{"aria-hidden" => "true"} ×
-      .modal-body.bg-light
+      .modal-body.empty-message.d-none
+        = "追加可能なユーザーがいません。"
+      .modal-body.add-member-info
         .form-group
           %label 名前（メールアドレス）
           %select#member-selector.select2

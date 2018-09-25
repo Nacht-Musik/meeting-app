@@ -155,9 +155,13 @@
 
   = link_to '戻る', my_page_path, class: "btn btn-secondary"
 
+- if mode == "new"
+  :javascript
+    initializationParentProjectForm();
 
 -# 初期化スクリプト郡
 - if mode == "edit" || mode == "new"
   :javascript
     initializationMemberSelector();
     initializationSubProjectView();
+    initializationChildProjectSelector();

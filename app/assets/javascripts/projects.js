@@ -7,7 +7,6 @@ $(document).on('turbolinks:load', function() {
     let selected_admin_selector = $('#member-add-modal').find('.admin-selector option:selected');
 
     // セレクターで選択されているユーザー名を取得
-    // let selected_user_name = $('#member-selector option:selected').text();
     let selected_user_name = selected_member_selector.text();
 
     // 選択ユーザー名が空の場合、追加処理を実行しない
@@ -86,8 +85,7 @@ $(document).on('turbolinks:load', function() {
     // セレクターの中身が空になったら、追加ボタンを無効にする
     let option_num = $('#member-selector').children('option').length;
     if(option_num <= 0){
-      console.log('メンバー追加セレクターを無効化！');
-      $(this).addClass("disabled");
+      disabledMemberAddFunction();
     }
   });
 });
@@ -120,8 +118,8 @@ $(document).on('turbolinks:load', function() {
     user_row_ele.remove();
 
     // メンバー追加ボタンが無効になっていたら有効にする。
-    if ($('#member-add-btn').hasClass('disabled')) {
-      $('#member-add-btn').removeClass("disabled");
+    if ($('#member-add-btn').hasClass('d-none')) {
+      enableMemberAddFunction();
     }
   });
 
@@ -199,7 +197,6 @@ $(document).on('turbolinks:load', function() {
         + "（" + user_info.email + "）";
     $('#member-edit-modal-user-name').text(user_name);
 
-
     // ユーザー権限の状態をセレクターにセット
     let authority_selector = $('#member-edit-modal').find('.authority-selector');
     let authority_options = authority_selector.children();
@@ -215,6 +212,7 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
+
 // 子プロジェクト追加機能
 $(document).on('turbolinks:load', function() {
   // 子プロジェクト追加 実行ボタン
@@ -224,6 +222,7 @@ $(document).on('turbolinks:load', function() {
     // 有効性判定
     let child_id = $('#child-project-selector option:selected').val();
     let child_name = $('#child-project-selector option:selected').text();
+
     // セレクター選択値が空の場合終了
     if(child_id === "" || child_name === ""){
       return;
@@ -274,14 +273,16 @@ $(document).on('turbolinks:load', function() {
     // 子プロジェクト候補セレクターから要素を削除
     $('#child-project-selector option:selected').remove();
 
-    // セレクターの中身が空になったら、追加ボタンを無効にする
+    // セレクターの中身が空になったら、追加機能を無効化
     let option_num = $('#child-project-selector').children('option').length;
     if(option_num <= 0){
-      $(this).addClass("disabled");
+      disabeleChildProjectAddFunction();
     }
 
     // サブプロジェクトの表示テーブルを必要に応じて表示させる。
-    initializationSubProjectView();
+    if ($("#children-project-table").hasClass('d-none') ) {
+      initializationSubProjectView();
+    }
 
   });
 });
@@ -315,7 +316,6 @@ $(document).on('turbolinks:load', function() {
 
     // 子プロジェクト追加selectorの選択肢に削除するプロジェクトを追加
     let child_project_name = child_project_row_ele.find('.project-name').text();
-    console.log(child_project_name);
 
     let add_option_attr = {value: child_project_id, text: child_project_name};
     let add_option = $('<option>', add_option_attr);
@@ -325,12 +325,16 @@ $(document).on('turbolinks:load', function() {
     child_project_row_ele.remove();
 
     // 子プロジェクト追加ボタンが無効になっていた場合、有効化
-    if ( $('#child-project-add-btn').hasClass("disabled") ){
-      $('#child-project-add-btn').removeClass("disabled");
+    if ( $('#child-project-add-btn').hasClass("d-none") ){
+      enableChildProjectAddFunction();
     }
 
-    // サブプロジェクトの表示部を初期化
-    initializationSubProjectView();
+    // サブプロジェクトがない場合、サブプロジェクト表示部を初期化
+    let children_project_num = $('#children-project-view-area').children('tr').length;
+    if (children_project_num <= 0) {
+      console.log("初期化実行！");
+      initializationSubProjectView();
+    }
   });
 });
 
@@ -362,7 +366,7 @@ $(document).on('turbolinks:load', function() {
   $('.parent-project-selector').select2({
     theme: 'bootstrap4',
     width: '100%',
-    placeholder: "--- (親プロジェクトが有る場合のみ選択して下さい) ---",
+    placeholder: "親プロジェクト無し",
     allowClear: true
   });
 

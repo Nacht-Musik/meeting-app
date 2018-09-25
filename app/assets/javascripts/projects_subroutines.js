@@ -1,3 +1,16 @@
+// サブプロジェクトテーブルの表示初期化
+function initializationSubProjectView() {
+  let sub_projects_num = $('#children-project-view-area').find('.child-project-row').length;
+
+  if( sub_projects_num > 0 ){
+    $('#children-project-table').removeClass('d-none');
+    $('#sub-project-none-msg').addClass('d-none');
+  } else {
+    $('#sub-project-none-msg').removeClass('d-none');
+    $('#children-project-table').addClass('d-none');
+  }
+}
+
 // 子プロジェクトセレクターの初期化
 function initializationChildProjectSelector() {
   // 登録済みの子プロジェクトをセレクターから削除
@@ -6,10 +19,23 @@ function initializationChildProjectSelector() {
     $('#child-project-selector option[value=' + child_project_id.value + ']').remove();
   });
 
-  // サブプロジェクトセレクターが空だったら、追加ボタンを無効にする
-  let child_project_option_num = $('#children-project-selector').children('option').length;
+  // サブプロジェクトセレクターが空だったら、子プロジェクト追加機能を無効化
+  let child_project_option_num = $('#child-project-selector').children('option').length;
   if(child_project_option_num <= 0){
-    $('#children-project-add-btn').addClass("disabled");
+    disabeleChildProjectAddFunction();
+  } else {
+    enableChildProjectAddFunction();
+  }
+}
+
+// 親プロジェクト選択フォームの初期化
+function initializationParentProjectForm(){
+  let option_num = $('#parent-project').find('.parent-project-selector').children('option').length
+  console.log({num: option_num});
+  if (option_num > 1) {
+    $('#parent-project').removeClass('d-none');
+  } else {
+    $('#parent-project').addClass('d-none');
   }
 }
 
@@ -24,7 +50,6 @@ function findChildProjectRowEle(project_id){
       return false;
     }
   });
-
   return child_project_ele;
 }
 
@@ -39,19 +64,21 @@ function findChildProjectParamsEle(project_id) {
       return false;
     }
   });
-
   return params;
 }
 
-// サブプロジェクトテーブルの表示初期化
-function initializationSubProjectView() {
-  let sub_projects_num = $('#children-project-view-area').find('.child-project-row').length;
 
-  if( sub_projects_num > 0 ){
-    $('#children-project-table').removeClass('d-none');
-    $('#sub-project-none-msg').addClass('d-none');
-  } else {
-    $('#sub-project-none-msg').removeClass('d-none');
-    $('#children-project-table').addClass('d-none');
-  }
+// サブプロジェクト追加機能を無効化
+function disabeleChildProjectAddFunction(){
+  $('#child-project-add-modal').find('.add-sub-project-info').addClass('d-none');
+  $('#child-project-add-btn').addClass('d-none');
+  $('#child-project-add-modal').find('.empty-message').removeClass('d-none');
 }
+
+// サブプロジェクト追加機能を有効化
+function enableChildProjectAddFunction(){
+  $('#child-project-add-modal').find('.add-sub-project-info').removeClass('d-none');
+  $('#child-project-add-btn').removeClass('d-none');
+  $('#child-project-add-modal').find('.empty-message').addClass('d-none');
+}
+

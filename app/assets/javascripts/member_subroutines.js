@@ -5,10 +5,13 @@ function initializationMemberSelector() {
   member_ids.each(function(i, user_id){
     $('#member-selector option[value=' + user_id.value + ']').remove();
   });
-  // メンバー追加セレクターが空だったら、追加ボタンを無効にする
+
+  // メンバー追加セレクターが空なら、メンバー追加機能を無効化
   let member_option_num = $('#member-selector').children('option').length;
   if(member_option_num <= 0){
-    $('#member-add-btn').addClass("disabled");
+    disabledMemberAddFunction();
+  }else{
+    enableMemberAddFunction();
   }
 }
 
@@ -60,4 +63,18 @@ function getMemberUserInfo(user_id) {
     admin_mark: admin_mark};
 
   return info;
+}
+
+// プロジェクトメンバー追加機能を無効化
+function enableMemberAddFunction() {
+  $('#member-add-modal').find('.empty-message').addClass('d-none');
+  $('#member-add-modal').find('.add-member-info').removeClass('d-none');
+  $('#member-add-btn').removeClass('d-none');
+}
+
+// プロジェクトメンバー追加機能を無効化
+function disabledMemberAddFunction() {
+  $('#member-add-modal').find('.empty-message').removeClass('d-none');
+  $('#member-add-modal').find('.add-member-info').addClass('d-none');
+  $('#member-add-btn').addClass('d-none');
 }

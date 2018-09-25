@@ -10,11 +10,11 @@
                       class: "btn text-white"}
           %span{"aria-hidden": "true"} ×
       .modal-body
-        .form-group
+        .form-group.empty-message.d-none
+          = "追加可能なプロジェクトがありません。"
+        .form-group.add-sub-project-info
           %label プロジェクト名
-          -#%select#child-project-selector.custom-select
           %select#child-project-selector.select2
-            %option{value: ""} --- プロジェクトを選択して下さい ---
             - projects.each do |project|
               - if project.parent.nil? && project.id != current_project_id && project.id != founder_project_id
                 %option{value: "#{project.id}"}
