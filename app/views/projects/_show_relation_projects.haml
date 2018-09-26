@@ -1,0 +1,9 @@
+%ul
+  - parent_project.children.each do |child|
+    %li
+      - if child.id == params[:id].to_i
+        %a.current-project= child.name
+      - else
+        %a= child.name
+      - if child.children.present?
+        = render partial: 'projects/show_relation_projects', locals: { parent_project: child }

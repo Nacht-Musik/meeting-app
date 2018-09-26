@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180923042709) do
+ActiveRecord::Schema.define(version: 20180925084049) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -131,10 +131,28 @@ ActiveRecord::Schema.define(version: 20180923042709) do
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
-  create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name", default: "", null: false
+  create_table "project_members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "project_id"
+    t.bigint "user_id"
+    t.bigint "authority_id"
+    t.boolean "admin", default: false, null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["authority_id"], name: "index_project_members_on_authority_id"
+    t.index ["project_id"], name: "index_project_members_on_project_id"
+    t.index ["user_id"], name: "index_project_members_on_user_id"
+  end
+
+  create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", default: "", null: false
+    t.bigint "parent_id"
+    t.text "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_projects_on_deleted_at"
+    t.index ["parent_id"], name: "index_projects_on_parent_id"
   end
 
   create_table "receiver_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -215,6 +233,10 @@ ActiveRecord::Schema.define(version: 20180923042709) do
   add_foreign_key "notices", "notice_categories", column: "category_id"
   add_foreign_key "notices", "users"
   add_foreign_key "notices", "users", column: "notifier_id"
+  add_foreign_key "project_members", "authorities"
+  add_foreign_key "project_members", "projects"
+  add_foreign_key "project_members", "users"
+  add_foreign_key "projects", "projects", column: "parent_id"
   add_foreign_key "receivers", "meetings"
   add_foreign_key "receivers", "receiver_types", column: "type_id"
   add_foreign_key "receivers", "users"

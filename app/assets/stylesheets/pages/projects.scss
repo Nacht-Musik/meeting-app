@@ -1,15 +1,15 @@
-#group-page{
-  th, td{
-    vertical-align: middle;
+#project-page{
+  .error-form{
+    border: solid 5px orangered;
+  }
+  .error-message{
+    color: orangered;
+    //background-color: lightgray;
+    //border-radius: 10px 10px;
   }
 
-  textarea{
-    .form-control{
-      height: auto;
-      min-height: 60px !important;
-      max-height: 180px;
-    }
-
+  th, td{
+    vertical-align: middle;
   }
 
   .main-card {
@@ -23,17 +23,16 @@
     }
   }
 
-
   #member-block-template{
     display: none;
   }
 
-  #child-group-template{
+  #child-project-template{
     display: none;
   }
 
-  #relation-groups{
-    .current-group {
+  #relation-projects{
+    .current-project {
       color: #EFEFEF;
       background-color: lightcoral;
 
@@ -79,5 +78,4 @@
       margin-left: 1.5em;
     }
   }
-
 }

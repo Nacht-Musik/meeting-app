@@ -19,10 +19,16 @@ Rails.application.routes.draw do
   get 'my/page'
   get 'my/meeting'
   get 'my/group'
-  get 'my/mail'     # メール送信テスト用.
+  get 'my/project'
+
+  # メール送信テスト用.
+  get 'my/mail'
 
   ### Group Controller 関連
   resources :groups
+
+  ### Project Controller 関連
+  resources :projects
 
   ### Letter_opener_web
   if Rails.env.development?

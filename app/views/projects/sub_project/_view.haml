@@ -1,0 +1,10 @@
+%tr.child-project-row{"data-project-id": f.object.id}
+  %td.project-name.text-center
+    = f.object.name
+  %td.child-project-cancel.text-center
+    %button{type: "button",
+                   data: {target: "#child-project-cancel-modal",
+                          toggle: "modal",
+                          "project-id": f.object.id},
+                   class: "call-child-project-cancel-modal btn btn-outline-danger"}
+      = icon('fas', 'unlink')

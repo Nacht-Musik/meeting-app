@@ -1,0 +1,33 @@
+#member-edit-modal.modal.fade{"aria-hidden": "true",
+                              "aria-labelledby": "memberEditModalCenterTitle",
+                              role: "dialog"}
+  .modal-dialog.modal-dialog-centered{:role => "document"}
+    .modal-content
+      .modal-header.bg-success.text-white
+        %h5#memberEditModalLongTitle.modal-title
+          メンバー情報編集フォーム
+        %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button",
+                      class: "btn text-white"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        .form-group
+          %label 名前（メールアドレス）
+          #member-edit-modal-user-name.form-control
+        .form-group
+          %label 権限
+          %select.authority-selector.custom-select
+            - authorities.each do |authority|
+              %option{value: "#{authority.id}"}
+                = "#{authority.name}"
+        .form-group
+          %label プロジェクト管理者
+          %select.admin-selector.custom-select
+            %option{value: 0, "data-mark": " <i>-</i>"}
+              %i= '-'
+            %option{value: 1, "data-mark": "<i class=\"fas fa-check\">"}
+              %i= '管理者'
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        #member-edit-btn.btn.btn-success{data: {dismiss: "modal", "user-id": ""}}
+          = icon('fas' ,'user-plus')
+          = "変更する"
