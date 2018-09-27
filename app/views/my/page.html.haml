@@ -29,6 +29,11 @@
         = render partial: 'my/groups', locals: { groups: current_user.groups}
 
       -#= link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
+      - if (can? :create, Group)
+        = "グループ作成権限有り。"
+        = link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
+      - else
+        = "グループ作成権限無し！"
 
   #project-menu.card
     .card-header
