@@ -1,51 +1,56 @@
-%h2
-  Edit #{resource_name.to_s.humanize}
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+#user-page
   = devise_error_messages!
-  .field
-    = f.label :name
-    %br/
-    = f.text_field :name, autofocus: true, autocomplete: "user"
-    
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Currently waiting confirmation for: #{resource.unconfirmed_email}
+  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+    .card.border-dark
+      .card-header.bg-dark.text-white
+        アカウント情報
+      .card-body.bg-light
+        .row.user-name
+          .col-6
+            .form-group
+              %label= "姓"
+              = f.text_field :last_name, autofocus: true, autocomplete: "last_name",
+                              class: "form-control"
+          .col-6
+            .form-group
+              %label= "名"
+              = f.text_field :first_name, autofocus: true, autocomplete: "first_name",
+                               class: "form-control"
 
-  .field
-    = f.label :last_name
-    %br/
-    = f.text_field :last_name, autofocus: true, autocomplete: "last_name"
-  .field
-    = f.label :first_name
-    %br/
-    = f.text_field :first_name, autofocus: true, autocomplete: "first_name"
+        .form-group
+          %label= "ログインID"
+          = f.text_field :name, autofocus: true, autocomplete: "user",
+                           class: "form-control"
+        .form-group
+          %label= "メールアドレス"
+          = f.email_field :email, autofocus: true, autocomplete: "email",
+                           class: "form-control"
 
-  .field
-    = f.label :password
-    %i (leave blank if you don't want to change it)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-    - if @minimum_password_length
-      %br/
-      %em
-        = @minimum_password_length
-        characters minimum
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .field
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br/
-    = f.password_field :current_password, autocomplete: "off"
-  .actions
-    = f.submit "Update"
-%h3 Cancel my account
-%p
-  Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
-= link_to "Back", :back
+
+      .card-footer.border-dark
+        .password-card.card.border-dark
+          .card-header.bg-secondary.text-white.border-dark
+            = "パスワードの変更"
+          .card-body.bg-light.border-dark
+            .form-group
+              %label= "新しいパスワード"
+              - if @minimum_password_length
+                %em
+                  (#{@minimum_password_length}  文字以上)
+              = f.password_field :password, autocomplete: "off",
+                                  class: "form-control"
+              %i (変更しない場合は空白のままにして下さい)
+            .form-group
+              %label= "新しいパスワード(確認)"
+              = f.password_field :password_confirmation, autocomplete: "off",
+                                  class: "form-control"
+        .form-group
+          %label= "現在のパスワード"
+          = f.password_field :current_password, autocomplete: "off",
+                              class: "form-control"
+          %i (アカウント情報を更新するためには現在のパスワードが必要です)
+        .actions
+          = f.submit "更新", class: "btn btn-primary"
+      .card-footer.bg-dark
+
+  = link_to "戻る", :back, class: "btn btn-secondary"

@@ -10,9 +10,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    p "--- create action start ---"
+    p params
+    super
+    # Welcome Messageをメール通知する
+    p "--- create action  ---"
+  end
 
   # GET /resource/edit
   # def edit
