@@ -29,7 +29,8 @@
 
       .card-footer.border-dark
         .password-card.card.border-dark
-          .card-header.bg-secondary.text-white.border-dark
+          .card-header.card-toggle-btn.bg-dark.text-white.border-dark
+            = icon('fas', 'toggle-off')
             = "パスワードの変更"
           .card-body.bg-light.border-dark
             .form-group
@@ -44,6 +45,9 @@
               %label= "新しいパスワード(確認)"
               = f.password_field :password_confirmation, autocomplete: "off",
                                   class: "form-control"
+          .card-footer.bg-dark.border-dark
+
+      .card-footer.border-dark
         .form-group
           %label= "現在のパスワード"
           = f.password_field :current_password, autocomplete: "off",

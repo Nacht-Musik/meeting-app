@@ -204,16 +204,6 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
-////////////////////////////////////////////////////////////////////////////////
-// Card開閉ボタン
-$(document).on('turbolinks:load', function() {
-  $('#meeting-page').on('click', '.card-toggle-btn',function(){
-    var card_block_ele = $(this).closest('.card');
-    var card_body_ele = card_block_ele.children('.card-body');
-    card_body_ele.slideToggle();
-    $(this).find('i').toggleClass('fa-toggle-on fa-toggle-off');
-  });
-});
 
 ////////////////////////////////////////////////////////////////////////////////
 // 参加者 追加／削除ボタン

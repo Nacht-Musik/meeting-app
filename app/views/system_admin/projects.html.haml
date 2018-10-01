@@ -1,4 +1,8 @@
-%h3 プロジェクトリスト
-#system-admin-page
-  = render partial: 'system_admin/projects/lists',
-    locals:{ projects: @projects}
+#system-admin-page.card.border-danger
+  .card-header.bg-danger.text-white
+    プロジェクトリスト （SystemAdminユーザー専用）
+
+  .card-body
+    = render partial: 'system_admin/projects/lists',
+      locals:{ projects: @projects}
+= link_to "戻る", :back, class: "btn btn-secondary"
