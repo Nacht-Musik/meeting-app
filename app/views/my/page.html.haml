@@ -124,7 +124,8 @@
             = icon('fas', 'toggle-off')
             = "グループメンテナンス"
           .card-body
-            %a.btn.btn-light.text-danger.border-dark 既存グループのメンテナンス
+            = link_to '既存グループのメンテナンス', system_admin_groups_path,
+                      class: "btn btn-btn-light text-danger border-dark"
             = link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
           .card-footer
 
@@ -133,7 +134,8 @@
             = icon('fas', 'toggle-off')
             = "プロジェクトメンテナンス"
           .card-body
-            %a.btn.btn-light.text-danger.border-dark 既存グループのメンテナンス
+            = link_to '既存プロジェクトのメンテナンス', system_admin_projects_path,
+                      class: "btn btn-btn-light text-danger border-dark"
             = link_to '新しいプロジェクトを作成する', new_project_path, class: "btn btn-primary"
           .card-footer
 
@@ -142,7 +144,8 @@
             = icon('fas', 'toggle-off')
             = "ユーザーメンテナンス"
           .card-body
-            %a.btn.btn-light.text-danger.border-dark 既存ユーザのメンテナンス
+            = link_to '既存ユーザーのメンテナンス', system_admin_projects_path,
+                      class: "btn btn-btn-light text-danger border-dark"
             %a.btn.btn-light.text-primary.border-dark 新しいユーザーを作成する
             -#= link_to '新しいユーザーを作成する', new_user_registration_path, class: "btn btn-primary"
           .card-footer
