@@ -1,0 +1,25 @@
+%table#user-table.table.table-sm.table-hover.table-bordered
+  %thead.thead-light
+    %tr
+      %th.text-center{scope: "col"} ユーザーID
+      %th.text-center{scope: "col"} メールアドレス
+      %th.text-center{scope: "col"} 姓
+      %th.text-center{scope: "col"} 名
+      %th.text-center{scope: "col"} 作成日
+      %th.text-center{scope: "col"} 編集
+
+  %tbody#user-list-area
+    - users.each do |user|
+      %tr
+        %td.text-center
+          = "#{user.name}"
+        %td.text-center
+          = "#{user.email}"
+        %td.text-center
+          = "#{user.last_name}"
+        %td.text-center
+          = "#{user.first_name}"
+        %td.text-center
+          = "#{user.created_at}"
+        %td.text-center
+          = link_to icon('fas', 'edit'), edit_user_path(user), class: 'btn btn-outline-success'

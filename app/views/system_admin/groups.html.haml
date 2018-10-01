@@ -1,5 +1,5 @@
-%h3 SystemAdmin#groups
-%p Find me in app/views/system_admin/groups.html.haml
+#system-admin-page
+  %h3 グループリスト（SystemAdmin用)
 
-= render partial: 'system_admin/groups/lists',
-          locals:{ groups: @groups }
+  = render partial: 'system_admin/groups/lists',
+            locals:{ groups: @groups }

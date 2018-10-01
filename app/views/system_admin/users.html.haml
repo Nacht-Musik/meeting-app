@@ -1,2 +1,3 @@
-%h1 SystemAdmin#users
-%p Find me in app/views/system_admin/users.html.haml
+#system-admin-page
+  %h3 ユーザーリスト(SystemAdmin用)
+  = render partial: "system_admin/users/lists", locals:{ users: @users}

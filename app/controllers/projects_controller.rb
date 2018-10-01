@@ -69,7 +69,7 @@ class ProjectsController < ApplicationController
 
   private
   def set_project
-    @project = Project.find(params[:id])
+    @project = Project.with_deleted.find(params[:id])
   end
 
   def set_users

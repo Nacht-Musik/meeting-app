@@ -53,18 +53,18 @@ module ProjectsHelper
 
   # 始祖プロジェクトを返す
   def find_founder_project(project_id)
-    founder_project = Project.find(project_id)
+    founder_project = Project.with_deleted.find(project_id)
 
     while true do
       break if founder_project.parent.nil?
-      founder_project = Project.find(founder_project.parent_id)
+      founder_project = Project.with_deleted.find(founder_project.parent_id)
     end
     return founder_project
   end
 
   # 子孫プロジェクトのidをすべて取得
   def find_progeny_project_ids(project_id)
-    return [] if Project.find(project_id).children.blank?
+    return [] if Project.with_deleted.find(project_id).children.blank?
     progeny_project_ids = []
 
     Project.find(project_id).children.each do |child|
@@ -82,7 +82,7 @@ module ProjectsHelper
 
   # 子プロジェクトのidをすべて取得
   def find_children_project_ids(project_id)
-    return [] if Project.find(project_id).children.blank?
+    return [] if Project.with_deleted.find(project_id).children.blank?
     children_project_ids = []
 
     Project.find(project_id).children.each do |child|
