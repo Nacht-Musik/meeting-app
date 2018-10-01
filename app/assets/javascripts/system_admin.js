@@ -18,4 +18,14 @@ $(document).on('turbolinks:load', function() {
     info: false,
     language: datatables_japanese,
   });
+
+  // SystemAdmin用 Usersリストの設定
+  $('#system-admin-page').find("#user-table").DataTable({
+    //状態保持
+    stateSave: true,
+    // 縦方向（X軸）にスクロールを表示
+    scrollX: false,
+    info: false,
+    language: datatables_japanese,
+  });
 });

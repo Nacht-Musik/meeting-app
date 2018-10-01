@@ -2,7 +2,10 @@
   %nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary
     .container
       .navbar-brand
-        = link_to '会議支援アプリ（仮）', '/', class: "text-light"
+        - if user_signed_in?
+          = link_to 'Meeting-App.tokyo', my_page_path, class: "text-light"
+        - else
+          = link_to 'Meeting-App.tokyo', '/', class: "text-light"
       %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse',
                               'data-target':   '#navbarNavAltMarkup',
                               'aria-controls': 'navbarNavAltMarkup',
