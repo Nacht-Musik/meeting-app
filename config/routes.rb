@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   get 'system_admin/projects'
   get 'system_admin/users'
   get 'system_admin/meetings'
+  get 'system_admin/:id/edit', to: 'system_admin#edit_user', as: 'edit_user'
+  patch 'system_admin/:id/update', to: 'system_admin#update_user'
 
   ### Letter_opener_web
   if Rails.env.development?
