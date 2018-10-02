@@ -37,6 +37,12 @@
           %label= "パスワード(確認)"
           = f.password_field :password_confirmation, autocomplete: "off",
                             class: "form-control"
+        - if @no_admin
+          .form-group
+            .form-check
+              = f.check_box :admin, {checked: false, class: "form-check-input" }, true, false
+              %label.form-check-label= "このユーザーをシステム管理者にする"
+
       .card-footer.border-light
         .actions
           = f.submit "作成する", class: "btn btn-primary"
