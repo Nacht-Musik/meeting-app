@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :groups
 
   ### Project Controller 関連
+  put '/projects/:id/restore', to: 'projects#restore', as: 'restore_project'
   resources :projects
 
   ### SystemAdmin Controller 関連

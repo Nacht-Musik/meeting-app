@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   include ProjectsHelper
 
   before_action :set_users, only: [:show, :new, :edit, :create, :update]
-  before_action :set_project, only: [:show, :edit, :destroy, :update]
+  before_action :set_project, only: [:show, :edit, :destroy, :update, :restore]
   before_action :set_authorities, only: [:show, :new, :edit, :create, :update]
   before_action :set_founder_project, only: [:show, :edit, :update]
 
@@ -66,6 +66,13 @@ class ProjectsController < ApplicationController
     @project.destroy
     redirect_to my_page_path, notice: notice_msg
   end
+
+  def restore
+    @project.restore
+    notice_msg = "[#{@project.name}] プロジェクトの状態を「進行中」に変更しました。"
+    redirect_to system_admin_projects_path, notice: notice_msg
+  end
+
 
   private
   def set_project

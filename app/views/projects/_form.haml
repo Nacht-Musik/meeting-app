@@ -13,7 +13,11 @@
 
       .card-header.border-dark.bg-dark.text-white
         .form-group
-          = f.label 'プロジェクト名'
+          - if project.deleted?
+            = f.label '（完了済み）プロジェクト', class: "btn btn-danger"
+          - else
+            = f.label 'プロジェクト名'
+
           - if mode == 'show'
             = f.text_field :name, class: 'form-control bg-white', readonly: "true"
           - else
@@ -145,15 +149,21 @@
             .card-header.border-dark.bg-dark.text-white
               %label その他
             .card-body.bg-light
-              %button.btn.btn-danger{data: {target: "#project-del-modal", toggle: "modal"}, type: "button"}
-                = "このプロジェクトを終了する"
+              - if project.deleted?
+                = link_to 'このプロジェクトを復元する', restore_project_path, method: :put,
+                    data: { confirm: 'このプロジェクトを復元しますか？'},
+                    class: "btn btn-success"
+              - else
+                %button.btn.btn-danger{data: {target: "#project-del-modal", toggle: "modal"}, type: "button"}
+                  = "このプロジェクトを終了する"
+
             #other-modal
               = render partial: 'projects/project_delete_modal', locals: {project_name: f.object.name}
 
         - if mode == 'new'
-          = f.submit '新規プロジェクト作成', class: 'btn btn-primary', id: 'meeting-submit-btn'
+          = f.submit 'このプロジェクトを作成する', class: 'btn btn-primary', id: 'meeting-submit-btn'
         - if mode == 'edit'
-          = f.submit '更新', class: 'btn btn-primary', id: 'meeting-submit-btn'
+          = f.submit '更新する', class: 'btn btn-primary', id: 'meeting-submit-btn'
 
   = link_to '戻る', my_page_path, class: "btn btn-secondary"
 
