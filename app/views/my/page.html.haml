@@ -146,8 +146,7 @@
           .card-body
             = link_to '既存ユーザーのメンテナンス', system_admin_users_path,
                       class: "btn btn-btn-light text-danger border-dark"
-            %a.btn.btn-light.text-primary.border-dark 新しいユーザーを作成する
-            -#= link_to '新しいユーザーを作成する', new_user_registration_path, class: "btn btn-primary"
+            = link_to '新しいユーザーを作成する', new_user_registration_path, class: "btn btn-primary"
           .card-footer
       .card-footer.bg-dark
 
@@ -165,5 +164,3 @@
             = link_to '受信メール確認', letter_opener_web_path
       .card-footer.bg-dark
 
-  - else
-    = "システム管理者じゃない！"
