@@ -1,33 +1,51 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :name
-    %br/
-    = f.text_field :name, autofocus: true, autocomplete: "user"
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    = f.label :last_name
-    %br/
-    = f.text_field :last_name, autofocus: true, autocomplete: "last_name"
-  .field
-    = f.label :first_name
-    %br/
-    = f.text_field :first_name, autofocus: true, autocomplete: "first_name"
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+#user-page
+  .text-danger
+    = devise_error_messages!
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    .card.sign-up-card.border-dark
+      .card-header.bg-dark.text-white
+        新しいアカウントの作成
+      .card-body.bg-light
+        .row.user-name
+          .col-6
+            .form-group.last-name
+              %label= "姓"
+              = f.text_field :last_name, autofocus: true, autocomplete: "last_name",
+                              class: "form-control"
+
+          .col-6
+            .form-group.first-name
+              %label= "名"
+              = f.text_field :first_name, autofocus: true, autocomplete: "first_name",
+                               class: "form-control"
+        .form-group
+          %label= "ログインID"
+          = f.text_field :name, autofocus: true, autocomplete: "user",
+                           class: "form-control"
+        .form-group
+          %label= "メールアドレス"
+          = f.email_field :email, autofocus: true, autocomplete: "email",
+                           class: "form-control"
+        .form-group
+          %label= "パスワード"
+          - if @minimum_password_length
+            %em
+              (#{@minimum_password_length}  文字以上)
+          = f.password_field :password, autocomplete: "off",
+                             class: "form-control"
+        .form-group
+          %label= "パスワード(確認)"
+          = f.password_field :password_confirmation, autocomplete: "off",
+                            class: "form-control"
+        - if @no_admin
+          .form-group
+            .form-check
+              = f.check_box :admin, {checked: false, class: "form-check-input" }, true, false
+              %label.form-check-label= "このユーザーをシステム管理者にする"
+
+      .card-footer.border-light
+        .actions
+          = f.submit "作成する", class: "btn btn-primary"
+      .card-footer.bg-dark
+
+  = link_to "戻る", :back, class: "btn btn-secondary"

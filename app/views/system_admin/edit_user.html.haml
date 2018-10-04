@@ -1,0 +1,36 @@
+#system-admin-page
+  = form_for @user, url:{contoroller: :system_admin, action: :update_user} do |f|
+    .user-edit-card.card.border-danger
+      .card-header.bg-danger.text-white
+        アカウント情報編集
+      .card-body.bg-light
+        .row.user-name
+          .col-6
+            .form-group
+              %label= "姓"
+              = f.text_field :last_name, autofocus: true, autocomplete: "last_name",
+                              class: "form-control"
+          .col-6
+            .form-group
+              %label= "名"
+              = f.text_field :first_name, autofocus: true, autocomplete: "first_name",
+                               class: "form-control"
+
+        .form-group
+          %label= "ログインID"
+          = f.text_field :name, autofocus: true, autocomplete: "user",
+                           class: "form-control"
+        .form-group
+          %label= "メールアドレス"
+          = f.email_field :email, autofocus: true, autocomplete: "email",
+                           class: "form-control"
+
+        .form-group
+          = f.check_box :admin, {class: "" }, true, false
+          %label.form-check-label= "システム管理者"
+
+        .actions
+          = f.submit "更新", class: "btn btn-primary"
+      .card-footer.bg-danger
+
+    = link_to "戻る", :back, class: "btn btn-secondary"

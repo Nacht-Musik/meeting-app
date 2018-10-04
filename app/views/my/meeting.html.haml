@@ -1,7 +1,7 @@
 .card
   .card-header
-    %h3
-      マイ会議
+    %h4
+      担当会議
     %ul.nav.nav-tabs.card-header-tabs
       %li.nav-item
         %a.active.nav-link{href: '#tab-all', 'data-toggle': 'tab'}
@@ -13,14 +13,17 @@
         %a.nav-link{href: '#tab-making', 'data-toggle': 'tab'}
           作成中
       %li.nav-item
-        %a.nav-link{href: '#tab-inspecting', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-pending-to-inspect', 'data-toggle': 'tab'}
           審査待ち
       %li.nav-item
-        %a.nav-link{href: '#tab-approving', 'data-toggle': 'tab'}
+        %a.nav-link{href: '#tab-pending-to-approve', 'data-toggle': 'tab'}
           承認待ち
       %li.nav-item
+        %a.nav-link{href: '#tab-pending-to-publish', 'data-toggle': 'tab'}
+          公開待ち
+      %li.nav-item
         %a.nav-link{href: '#tab-published', 'data-toggle': 'tab'}
-          配布済み
+          公開中
 
   .card-body
     .tab-content
@@ -30,12 +33,14 @@
         「開催予定」の本体部分
       .tab-pane#tab-making
         「作成中」の本体部分
-      .tab-pane#tab-inspecting
+      .tab-pane#tab-pending-to-inspect
         「審査待ち」の本体部分
-      .tab-pane#tab-approving
+      .tab-pane#tab-pending-to-approve
         「承認待ち」の本体部分
+      .tab-pane#tab-pending-to-publish
+        「公開街」の本体部分
       .tab-pane#tab-published
-        「配布済み」の本体部分
+        「公開中」の本体部分
 %br
 = link_to 'マイページに戻る', my_page_path
 %br

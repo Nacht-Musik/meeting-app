@@ -3,16 +3,47 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  prepend_before_action :require_no_authentication, only: [:cancel]
+  prepend_before_action :authenticate_scope!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    # System Adminが一人以上登録されているか判定
+    @no_admin = User.where('admin = ?', true).empty?
+    super
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    ### Original Code
+    # super
+    # Welcome Messageをメールで送付する
+
+    build_resource(sign_up_params)
+
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message! :notice, :signed_up
+
+        original_user = current_user
+        sign_up(resource_name, resource)
+        Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+        sign_in(resource_name, original_user)
+
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -42,12 +73,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :last_name, :first_name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name,
+                                                       :email,
+                                                       :last_name,
+                                                       :first_name,
+                                                       :admin])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :last_name, :first_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name,
+                                                              :email,
+                                                              :last_name,
+                                                              :first_name,
+                                                              :admin])
   end
 
   # The path used after sign up.

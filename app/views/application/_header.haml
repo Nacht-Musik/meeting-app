@@ -1,8 +1,13 @@
 %header#app--header.sticky-top
-  %nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     .container
       .navbar-brand
-        = link_to '会議支援アプリ（仮）', '/', class: "text-light"
+        - if user_signed_in?
+          = link_to 'Meeting-App.tokyo', my_page_path,
+                    class: "app-logo btn btn-lg btn-dark"
+        - else
+          = link_to 'Meeting-App.tokyo', '/',
+                    class: "app-logo btn btn-lg btn-dark"
       %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse',
                               'data-target':   '#navbarNavAltMarkup',
                               'aria-controls': 'navbarNavAltMarkup',
@@ -14,14 +19,14 @@
           - if user_signed_in?
             %li.nav-item
               = link_to "#{current_user.last_name} #{current_user.first_name}", my_page_path,
-                class: "btn btn-secondary nav-link"
+                class: "btn btn-dark nav-link"
             %li.nav-item
               = link_to icon('fas', 'sign-out-alt'), destroy_user_session_path,
-                class: "btn btn-secondary nav-link"
+                class: "btn btn-dark nav-link"
           - else
             %li.nav-iteme
               = link_to '新規ユーザ登録', new_user_registration_path,
-                class: "btn btn-secondary nav-link"
+                class: "btn btn-dark nav-link"
             %li.nav-iteme
               = link_to icon('fas', 'sign-in-alt'), new_user_session_path,
-                class: "btn btn-secondary nav-link"
+                class: "btn btn-dark nav-link"

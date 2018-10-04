@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
 
   private
     def set_group
-      @group = Group.find(params[:id])
+      @group = Group.with_deleted.find(params[:id])
     end
 
     def set_users

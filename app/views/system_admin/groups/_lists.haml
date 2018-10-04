@@ -1,0 +1,18 @@
+%table#group-table.table.table-sm.table-hover.table-bordered
+  %thead.thead-light
+    %tr
+      %th.text-center{scope: "col"} グループ名
+      %th.text-center{scope: "col"} 作成日
+      %th.text-center{scope: "col"} 詳細
+      %th.text-center{scope: "col"} 編集
+  %tbody#member-list-area
+    - groups.each do |group|
+      %tr
+        %td.text-center
+          = "#{group.name}"
+        %td.text-center
+          = "#{group.created_at}"
+        %td.text-center
+          = link_to icon('fas', 'users'), group_path(group), class: 'btn btn-outline-info'
+        %td.text-center
+          = link_to icon('fas', 'edit'), edit_group_path(group), class: 'btn btn-outline-success'

@@ -1,23 +1,27 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  -# .field
-  -#   = f.label :email
-  -#   %br/
-  -#   = f.email_field :email, autofocus: true, autocomplete: "email"
+#user-page
+  .login-card.card.border-dark
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .card-header.bg-dark.text-white
+        ログイン
+      .card-body.bg-light
+        .form-group
+          %label= 'ログインID または メールアドレス'
+          = f.text_field :login, autofocus: true, class: "form-control"
 
-  .field
-    = f.label 'login (User name or E-mail)'
-    %br/
-    = f.text_field :login, autofocus: true
+        .form-group
+          %label= 'パスワード'
+          = f.password_field :password, autocomplete: "off", class: "form-control"
+        - if devise_mapping.rememberable?
+          .form-group
+            = f.check_box :remember_me
+            = f.label 'ログインを維持', class: "form-check-label"
 
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "devise/shared/links"
+      .card-footer.border-light
+        .row
+          .col-6
+            = f.submit "ログイン", class: "btn btn-primary"
+          .col-6
+            = link_to "パスワードの再発行", new_user_password_path,
+              class: "btn btn-danger"
+      .card-footer.border-dark.bg-dark
+  = link_to "戻る", :back, class: "btn btn-secondary"

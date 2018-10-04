@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root to: 'top_pages#index'
 
   ### Meeting Controller 関連
@@ -28,7 +29,16 @@ Rails.application.routes.draw do
   resources :groups
 
   ### Project Controller 関連
+  put '/projects/:id/restore', to: 'projects#restore', as: 'restore_project'
   resources :projects
+
+  ### SystemAdmin Controller 関連
+  get 'system_admin/groups'
+  get 'system_admin/projects'
+  get 'system_admin/users'
+  get 'system_admin/meetings'
+  get 'system_admin/:id/edit', to: 'system_admin#edit_user', as: 'edit_user'
+  patch 'system_admin/:id/update', to: 'system_admin#update_user'
 
   ### Letter_opener_web
   if Rails.env.development?

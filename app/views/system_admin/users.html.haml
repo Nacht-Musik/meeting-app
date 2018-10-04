@@ -1,0 +1,7 @@
+#system-admin-page.card.border-danger
+  .card-header.bg-danger.text-white
+    ユーザーリスト （SystemAdminユーザー専用）
+
+  .card-body
+    = render partial: "system_admin/users/lists", locals:{ users: @users}
+= link_to "戻る", :back, class: "btn btn-secondary"

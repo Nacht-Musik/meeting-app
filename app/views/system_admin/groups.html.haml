@@ -1,0 +1,8 @@
+#system-admin-page.card.border-danger
+  .card-header.bg-danger.text-white
+    グループリスト （SystemAdminユーザー専用）
+
+  .card-body
+    = render partial: 'system_admin/groups/lists',
+              locals:{ groups: @groups }
+= link_to "戻る", :back, class: "btn btn-secondary"

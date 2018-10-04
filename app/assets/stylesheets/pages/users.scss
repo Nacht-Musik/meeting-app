@@ -1,3 +1,32 @@
-// Place all the styles related to the Microposts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#user-page{
+  .form-check-input{
+    transform: scale(1.2);
+  }
+  .card{
+    max-width: 600px;
+    margin: 1em auto;
+
+    .password-card{
+      .card-header{
+        opacity: 0.7;
+        &:hover {
+          opacity: 1.0;
+        }
+      }
+      .card-body{
+        display: none;
+      }
+      .card-footer{
+        display: none;
+        opacity: 0.8;
+      }
+    }
+    .sign-up-card{
+      max-width: 500px;
+    }
+
+    .login-card{
+      max-width: 500px;
+    }
+  }
+}

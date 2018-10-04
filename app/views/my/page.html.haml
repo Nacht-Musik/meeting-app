@@ -1,58 +1,166 @@
 #my-page
-  %h3 マイページ
-  #meeting-menu.card
-    .card-header
-      会議メニュー
+  -# 会議関連のメニュー
+  #meeting-menu.card.main-card.border-dark
+    .card-header.card-toggle-btn.bg-dark.text-white
+      = icon('fas', 'toggle-off')
+      = "会議メニュー"
     .card-body
-      %ul
-        %li
-          = link_to 'マイ会議', my_meeting_path
-        %li
-          = link_to '新しい会議を作成する', new_meeting_path, class: "btn btn-primary"
+      .card.sub-card.border-secondary
+        .card-header.card-toggle-btn
+          = icon('fas', 'toggle-off')
+          = "担当会議"
+        .card-body
+          = link_to '開催予定', my_meeting_path, class: "btn btn-info"
+          = link_to '議事録作成中', my_meeting_path, class: "btn btn-info"
+          = link_to '審査待ち', my_meeting_path, class: "btn btn-info"
+          = link_to '承認待ち', my_meeting_path, class: "btn btn-info"
+          = link_to '公開待ち', my_meeting_path, class: "btn btn-info"
+        .card-footer
 
-  #user-menu.card
-    .card-header
-      ユーザーメニュー
-    .card-body
-      %ul
-        %li
-          = link_to 'ユーザ情報 確認／編集', edit_user_registration_path
+      .card.sub-card.border-secondary
+        .card-header.card-toggle-btn
+          = icon('fas', 'toggle-off')
+          = "参加予定の会議"
+        .card-body
+        .card-footer
 
-  #group-menu.card
-    .card-header
-      グループメニュー
-    .card-body
-      - if current_user.groups.blank?
-        %p 所属しているグループはありません。
-      - else
-        %label.control-label 所属グループ
-        = render partial: 'my/groups', locals: { groups: current_user.groups}
+      .space-1em
+      = link_to '新しい会議を作成する', new_meeting_path, class: "btn btn-primary"
+      = link_to '公開中の会議録を探す', my_meeting_path, class: "btn btn-info"
+    .card-footer.bg-dark
 
-      -#= link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
 
-  #project-menu.card
-    .card-header
-      プロジェクトメニュー
+  -# プロジェクト関連機能のメニュー
+  #project-menu.card.main-card.border-dark
+    .card-header.card-toggle-btn.bg-dark.text-white
+      = icon('fas', 'toggle-off')
+      = "プロジェクトメニュー"
     .card-body
       - if current_user.projects.blank?
-        %p 参加しているプロジェクトはありません。
+        %p 現在参加しているプロジェクトはありません。
       - else
-        %label.control-label 参加プロジェクト
-        = render partial: 'my/projects', locals: { projects: current_user.projects}
+        .join-project.card.sub-card.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "参加プロジェクト"
+          .card-body
+            = render partial: 'my/projects', locals: { projects: current_user.projects}
+          .card-footer
 
+      - if @finished_projects.present?
+        .finished-project.card.sub-card.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "過去の参加プロジェクト"
+          .card-body
+            %ul
+              - @finished_projects.each do |project|
+                %li
+                  = project.name
+          .card-footer
+
+      .space-1em
       = link_to '新しいプロジェクトを作成する', new_project_path, class: "btn btn-primary"
+    .card-footer.bg-dark
 
-    -#%label 終了済みの参加プロジェクト
-    -#%ul
-      - @finished_projects.each do |project|
-        %li= project.name
 
-  #debug-menu.card
-    .card-header
-      デバッグ関連
+  -# ユーザー関連機能のメニュー
+  #user-menu.card.main-card.border-dark
+    .card-header.card-toggle-btn.bg-dark.text-white
+      = icon('fas', 'toggle-off')
+      = "ユーザー情報"
     .card-body
-      %ul
-        %li
-          = link_to 'メール送信テスト', my_mail_path
-        %li
-          = link_to '受信メール確認', letter_opener_web_path
+      .card.sub-card.border-secondary
+        .card-header.card-toggle-btn
+          = icon('fas', 'toggle-off')
+          = "アカウント情報"
+        .card-body
+          .row
+            .col-12.col-sm-9.col-md-6
+              .form-group
+                %label= "名 前"
+                .form-control= "#{current_user.last_name} #{current_user.first_name}"
+          .row
+            .col-12.col-sm-9.col-md-6
+              .form-group
+                %label= "メールアドレス"
+                .form-control= "#{current_user.email}"
+          = link_to '変更する', edit_user_registration_path,
+                    class: "btn btn-success"
+        .card-footer
+
+      .card.sub-card.border-secondary
+        .card-header.card-toggle-btn
+          = icon('fas', 'toggle-off')
+          = "所属グループ"
+        .card-body
+          - if current_user.groups.blank?
+            %p 現在所属しているグループはありません。
+          - else
+            = render partial: 'my/groups', locals: { groups: current_user.groups}
+        .card-footer
+    .card-footer.bg-dark
+
+
+  - if current_user.admin?
+    #system-admin-menu.card.main-card.border-dark
+      .card-header.card-toggle-btn.bg-dark.text-white
+        = icon('fas', 'toggle-off')
+        = "システム管理者メニュー"
+      .card-body
+        .card.sub-card.meeting-maintenance.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "会議機能メンテナンス"
+          .card-body
+            %a.btn.btn-light.text-danger.border-dark
+              = "トピックステータスの編集"
+            %a.btn.btn-light.text-danger.border-dark
+              = "コメントステータスの編集"
+          .card-footer
+
+        .card.sub-card.group-maintenance.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "グループメンテナンス"
+          .card-body
+            = link_to '既存グループのメンテナンス', system_admin_groups_path,
+                      class: "btn btn-btn-light text-danger border-dark"
+            = link_to '新しいグループを作成する', new_group_path, class: "btn btn-primary"
+          .card-footer
+
+        .card.sub-card.project-maintenance.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "プロジェクトメンテナンス"
+          .card-body
+            = link_to '既存プロジェクトのメンテナンス', system_admin_projects_path,
+                      class: "btn btn-btn-light text-danger border-dark"
+            = link_to '新しいプロジェクトを作成する', new_project_path, class: "btn btn-primary"
+          .card-footer
+
+        .card.sub-card.user-maintenance.border-secondary
+          .card-header.card-toggle-btn
+            = icon('fas', 'toggle-off')
+            = "ユーザーメンテナンス"
+          .card-body
+            = link_to '既存ユーザーのメンテナンス', system_admin_users_path,
+                      class: "btn btn-btn-light text-danger border-dark"
+            = link_to '新しいユーザーを作成する', new_user_registration_path, class: "btn btn-primary"
+          .card-footer
+      .card-footer.bg-dark
+
+
+
+    #debug-menu.card-toggle-btn.card.main-card.border-dark
+      .card-header.bg-dark.text-white
+        = icon('fas', 'toggle-off')
+        デバッグ関連
+      .card-body
+        %ul
+          %li
+            = link_to 'メール送信テスト', my_mail_path
+          %li
+            = link_to '受信メール確認', letter_opener_web_path
+      .card-footer.bg-dark
+
