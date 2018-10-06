@@ -76,6 +76,16 @@ group :development do
   # ActiveRecord Console表示整形
   gem 'hirb'
   gem 'hirb-unicode'
+
+  # cron management
+  gem 'whenever', require: false
+
+  # Deploy
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'capistrano3-puma', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
