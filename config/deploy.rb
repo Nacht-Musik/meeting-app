@@ -1,7 +1,6 @@
 lock "~> 3.11.0"
 
 set :repo_url,        'git@github.com:Nacht-Musik/meeting-app.git'
-# set :repo_url,        'https://github.com/Nacht-Musik/meeting-app.git'
 set :application,     'meeting-app'
 set :user,            'ec2-user'
 set :puma_threads,    [4, 16]
