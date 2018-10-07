@@ -52,7 +52,7 @@
             -# 表示のみの場合は以下不要
             - if mode == "edit" || mode == "new"
               %button.btn.btn-info{data: {target: "#member-add-modal", toggle: "modal"}, type: "button"}
-                = icon('fas' ,'user-plus')
+                -#= icon('fas' ,'user-plus')
                 = "メンバーを追加する"
 
               #member-modals
@@ -104,7 +104,7 @@
             .card-footer.border-light
               - if mode == "edit"
                 %button.btn.btn-info{data: {target: "#child-project-add-modal", toggle: "modal"}, type: "button"}
-                  = icon('fas' ,'plus-square')
+                  -#= icon('fas' ,'plus-square')
                   = "サブプロジェクトを登録する"
 
 

@@ -21,12 +21,14 @@
               = link_to "#{current_user.last_name} #{current_user.first_name}", my_page_path,
                 class: "btn btn-dark nav-link"
             %li.nav-item
-              = link_to icon('fas', 'sign-out-alt'), destroy_user_session_path,
+              -#= link_to icon('fas', 'sign-out-alt'), destroy_user_session_path,
+              = link_to 'Sign-out', destroy_user_session_path,
                 class: "btn btn-dark nav-link"
           - else
             %li.nav-iteme
               = link_to '新規ユーザ登録', new_user_registration_path,
                 class: "btn btn-dark nav-link"
             %li.nav-iteme
-              = link_to icon('fas', 'sign-in-alt'), new_user_session_path,
+              -#= link_to icon('fas', 'sign-in-alt'), new_user_session_path,
+              = link_to 'Sign-in',new_user_session_path,
                 class: "btn btn-dark nav-link"

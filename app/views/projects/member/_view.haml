@@ -8,7 +8,8 @@
     = "#{f.object.authority.name}"
   - if f.object.admin
     %td.user-admin.text-center{"data-admin-flag": "1"}
-      = icon('fas' ,'check')
+      -#= icon('fas' ,'check')
+      = "チェック"
   - else
     %td.user-admin.text-center{"data-admin-flag": "0"}
       %i= "-"
@@ -18,10 +19,12 @@
       %button.call-member-edit-modal.btn.btn-outline-success{ type: "button",
               data:{target: "#member-edit-modal", toggle: "modal",
               "user-id": f.object.user_id}}
-        = icon('fas' ,'user-edit')
+        -#= icon('fas' ,'user-edit')
+        = "編集"
     %td.member-delete.text-center
       - if current_user.id != f.object.user_id
         %button.call-member-del-modal.btn.btn-danger{ type: "button",
                 data:{target: "#member-del-modal", toggle: "modal",
                 "user-id": f.object.user_id}}
-          = icon('fas' ,'user-minus')
+          -#= icon('fas' ,'user-minus')
+        = "削除"
