@@ -50,6 +50,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 # Font Awesome
+gem 'sassc', '~> 2.0.0'
 gem 'font-awesome-sass', '~> 5.2.0'
 
 # Figaro (環境変数設定用)
