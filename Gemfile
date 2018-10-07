@@ -22,7 +22,6 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-
 # haml系
 gem 'haml-rails'
 gem 'erb2haml'
@@ -78,7 +77,7 @@ group :development do
   gem 'hirb-unicode'
 
   # cron management
-  gem 'whenever', require: false
+  # gem 'whenever', require: false
 
   # Deploy
   gem 'capistrano', require: false
@@ -90,3 +89,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# cron management
+gem 'whenever', require: false
+
+gem 'rake', '~> 12.3.1'
