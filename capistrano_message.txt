@@ -1,0 +1,103 @@
+00:00 git:wrapper
+      01 mkdir -p /tmp
+    ✔ 01 ec2-user@13.231.29.16 0.093s
+      Uploading /tmp/git-ssh-meeting-app-production-tomotaka.sh 100.0%
+      02 chmod 700 /tmp/git-ssh-meeting-app-production-tomotaka.sh
+    ✔ 02 ec2-user@13.231.29.16 0.128s
+00:00 git:check
+      01 git ls-remote git@github.com:Nacht-Musik/meeting-app.git HEAD
+      01 3b3f23d2b51ebbb32d305f7bee82d18bb873d0c0	HEAD
+    ✔ 01 ec2-user@13.231.29.16 1.534s
+00:01 deploy:check:directories
+      01 mkdir -p /var/www/meeting-app/shared /var/www/meeting-app/releases
+    ✔ 01 ec2-user@13.231.29.16 0.088s
+00:02 deploy:check:linked_dirs
+      01 mkdir -p /var/www/meeting-app/shared/log /var/www/meeting-app/shared/tmp/pids /var/www/meeting-app/shared/tmp/cache /var/www/meeting-app/shared/tmp/sockets /var/www/meeting-app/shared/vendor/bundle /var/www/meeting-app/shared/public/system /var/www/meeting-app/shared/public/uploads /var/www/meeting-app/shared/public/assets
+    ✔ 01 ec2-user@13.231.29.16 0.120s
+00:02 deploy:check:make_linked_dirs
+      01 mkdir -p /var/www/meeting-app/shared/config
+    ✔ 01 ec2-user@13.231.29.16 0.114s
+00:02 git:clone
+      The repository mirror is at /var/www/meeting-app/repo
+00:03 git:update
+      01 git remote set-url origin git@github.com:Nacht-Musik/meeting-app.git
+    ✔ 01 ec2-user@13.231.29.16 0.177s
+      02 git remote update --prune
+      02 Fetching origin
+    ✔ 02 ec2-user@13.231.29.16 1.514s
+00:04 git:create_release
+      01 mkdir -p /var/www/meeting-app/releases/20181007113810
+    ✔ 01 ec2-user@13.231.29.16 0.113s
+      02 git archive master | /usr/bin/env tar -x -f - -C /var/www/meeting-app/releases/20181007113810
+    ✔ 02 ec2-user@13.231.29.16 0.146s
+00:05 deploy:set_current_revision
+      01 echo "3b3f23d2b51ebbb32d305f7bee82d18bb873d0c0" > REVISION
+    ✔ 01 ec2-user@13.231.29.16 0.109s
+00:05 deploy:symlink:linked_files
+      01 mkdir -p /var/www/meeting-app/releases/20181007113810/config
+    ✔ 01 ec2-user@13.231.29.16 0.107s
+      02 rm /var/www/meeting-app/releases/20181007113810/config/database.yml
+    ✔ 02 ec2-user@13.231.29.16 0.114s
+      03 ln -s /var/www/meeting-app/shared/config/database.yml /var/www/meeting-app/releases/20181007113810/config/database.yml
+    ✔ 03 ec2-user@13.231.29.16 0.066s
+      04 rm /var/www/meeting-app/releases/20181007113810/config/secrets.yml
+    ✔ 04 ec2-user@13.231.29.16 0.109s
+      05 ln -s /var/www/meeting-app/shared/config/secrets.yml /var/www/meeting-app/releases/20181007113810/config/secrets.yml
+    ✔ 05 ec2-user@13.231.29.16 0.115s
+00:06 deploy:symlink:linked_dirs
+      01 mkdir -p /var/www/meeting-app/releases/20181007113810 /var/www/meeting-app/releases/20181007113810/tmp /var/www/meeting-app/releases/20181007113810/vendor /var/www/meeting-app/releases/20181007113810/public
+    ✔ 01 ec2-user@13.231.29.16 0.108s
+      02 ln -s /var/www/meeting-app/shared/log /var/www/meeting-app/releases/20181007113810/log
+    ✔ 02 ec2-user@13.231.29.16 0.146s
+      03 ln -s /var/www/meeting-app/shared/tmp/pids /var/www/meeting-app/releases/20181007113810/tmp/pids
+    ✔ 03 ec2-user@13.231.29.16 0.109s
+      04 ln -s /var/www/meeting-app/shared/tmp/cache /var/www/meeting-app/releases/20181007113810/tmp/cache
+    ✔ 04 ec2-user@13.231.29.16 0.111s
+      05 ln -s /var/www/meeting-app/shared/tmp/sockets /var/www/meeting-app/releases/20181007113810/tmp/sockets
+    ✔ 05 ec2-user@13.231.29.16 0.118s
+      06 ln -s /var/www/meeting-app/shared/vendor/bundle /var/www/meeting-app/releases/20181007113810/vendor/bundle
+    ✔ 06 ec2-user@13.231.29.16 0.118s
+      07 ln -s /var/www/meeting-app/shared/public/system /var/www/meeting-app/releases/20181007113810/public/system
+    ✔ 07 ec2-user@13.231.29.16 0.256s
+      08 ln -s /var/www/meeting-app/shared/public/uploads /var/www/meeting-app/releases/20181007113810/public/uploads
+    ✔ 08 ec2-user@13.231.29.16 0.108s
+      09 ln -s /var/www/meeting-app/shared/public/assets /var/www/meeting-app/releases/20181007113810/public/assets
+    ✔ 09 ec2-user@13.231.29.16 0.113s
+00:10 bundler:install
+      01 RBENV_ROOT=/opt/rbenv RBENV_VERSION=2.5.1 /opt/rbenv/bin/rbenv exec bundle install --path /var/www/meeting-app/shared/bundle --without development test --deployment --quiet
+    ✔ 01 ec2-user@13.231.29.16 0.596s
+00:11 deploy:assets:precompile
+      01 RBENV_ROOT=/opt/rbenv RBENV_VERSION=2.5.1 /opt/rbenv/bin/rbenv exec bundle exec rake assets:precompile
+      01 Yarn executable was not detected in the system.
+      01 Download Yarn at https://yarnpkg.com/en/docs/install
+    ✔ 01 ec2-user@13.231.29.16 2.185s
+00:13 deploy:assets:backup_manifest
+      01 mkdir -p /var/www/meeting-app/releases/20181007113810/assets_manifest_backup
+    ✔ 01 ec2-user@13.231.29.16 0.116s
+      02 cp /var/www/meeting-app/releases/20181007113810/public/assets/.sprockets-manifest-92b56e750d111bdf3f0dae8171de2e75.json /var/www/meeting-app/releases/20181007113810/assets_manifest_backup
+    ✔ 02 ec2-user@13.231.29.16 0.130s
+00:14 deploy:migrate
+      [deploy:migrate] Run `rake db:migrate`
+00:14 deploy:migrating
+      01 RBENV_ROOT=/opt/rbenv RBENV_VERSION=2.5.1 /opt/rbenv/bin/rbenv exec bundle exec rake db:migrate
+    ✔ 01 ec2-user@13.231.29.16 1.930s
+00:16 whenever:update_crontab
+      01 RBENV_ROOT=/opt/rbenv RBENV_VERSION=2.5.1 /opt/rbenv/bin/rbenv exec bundle exec whenever --update-crontab meeting-app_production --set environment=production --roles=web,app,db 
+      01 [write] crontab file updated
+    ✔ 01 ec2-user@13.231.29.16 0.492s
+00:16 deploy:symlink:release
+      01 ln -s /var/www/meeting-app/releases/20181007113810 /var/www/meeting-app/releases/current
+    ✔ 01 ec2-user@13.231.29.16 0.063s
+      02 mv /var/www/meeting-app/releases/current /var/www/meeting-app
+    ✔ 02 ec2-user@13.231.29.16 0.120s
+00:17 deploy:cleanup
+      Keeping 5 of 6 deployed releases on 13.231.29.16
+      01 rm -rf /var/www/meeting-app/releases/20181007112016
+    ✔ 01 ec2-user@13.231.29.16 0.153s
+00:17 deploy:log_revision
+      01 echo "Branch master (at 3b3f23d2b51ebbb32d305f7bee82d18bb873d0c0) deployed as release 20181007113810 by tomotaka" >> /var/www/meeting-app/revisions.log
+    ✔ 01 ec2-user@13.231.29.16 0.111s
+00:17 puma:restart
+      01 bundle exec pumactl -S /var/www/meeting-app/shared/tmp/pids/puma.state -F /var/www/meeting-app/shared/puma.rb restart
+      01 Command restart sent success
+    ✔ 01 ec2-user@13.231.29.16 0.452s

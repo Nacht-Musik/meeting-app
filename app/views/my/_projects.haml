@@ -10,11 +10,13 @@
         %td.text-center
           = "#{project.name}"
         %td.text-center
-          = link_to icon('fas', 'users'), project_path(project),
+          -#= link_to icon('fas', 'users'), project_path(project),
+          = link_to '閲覧', project_path(project),
                     class: 'btn btn-outline-info'
         - if project_admin? current_user, project
           %td.text-center
-            = link_to icon('fas', 'edit'), edit_project_path(project),
+            -#= link_to icon('fas', 'edit'), edit_project_path(project),
+            = link_to '編集', edit_project_path(project),
                       class: 'btn btn-outline-success'
         - else
           %td.text-center
