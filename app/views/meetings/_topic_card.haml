@@ -12,12 +12,12 @@
                               "date-placeholder": "Status",
                               class: "form-control"}
         %a.topic-del-btn.btn.btn-danger{tabindex: "-1"}
-          = icon('fas' ,'times')
+          = fa_icon('times')
         %a.card-toggle-btn.btn
-          = icon('fas', 'toggle-on')
+          = fa_icon('toggle-on')
 
   .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment}
 
-    = link_to_add_fields icon('fas' ,'plus'), f, :comments, "cmt-add-btn btn btn-primary"
+    = link_to_add_fields fa_icon('plus'), f, :comments, "cmt-add-btn btn btn-primary"

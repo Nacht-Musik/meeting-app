@@ -1,7 +1,7 @@
 .card-header
   = "参加者"
   .card-toggle-btn.btn.float-right
-    -#= icon('fas', 'toggle-on')
+    = fa_icon('toggle-on')
 .card-body
   .row
     .col-12.col-sm-8.col-md-6.col-lg-4
@@ -12,8 +12,7 @@
               = "#{user.last_name} #{user.first_name}"
         .input-group-append
           #attendee-add-btn.btn.btn-info
-            -#= icon('fas' ,'plus')
-            = "+"
+            = fa_icon('plus')
 
   %br
   #attendees-view-area

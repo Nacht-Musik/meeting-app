@@ -2,12 +2,12 @@
   -# 会議関連のメニュー
   #meeting-menu.card.main-card.border-dark
     .card-header.card-toggle-btn.bg-dark.text-white
-      -#= icon('fas', 'toggle-off')
+      = fa_icon "toggle-off"
       = "会議メニュー"
     .card-body
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
-          -#= icon('fas', 'toggle-off')
+          = fa_icon "toggle-off"
           = "担当会議"
         .card-body
           = link_to '開催予定', my_meeting_path, class: "btn btn-info"
@@ -19,7 +19,7 @@
 
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
-          -#= icon('fas', 'toggle-off')
+          = fa_icon "toggle-off"
           = "参加予定の会議"
         .card-body
         .card-footer
@@ -33,7 +33,7 @@
   -# プロジェクト関連機能のメニュー
   #project-menu.card.main-card.border-dark
     .card-header.card-toggle-btn.bg-dark.text-white
-      -#= icon('fas', 'toggle-off')
+      = fa_icon "toggle-off"
       = "プロジェクトメニュー"
     .card-body
       - if current_user.projects.blank?
@@ -41,7 +41,7 @@
       - else
         .join-project.card.sub-card.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
+            = fa_icon "toggle-off"
             = "参加プロジェクト"
           .card-body
             = render partial: 'my/projects', locals: { projects: current_user.projects}
@@ -50,7 +50,7 @@
       - if @finished_projects.present?
         .finished-project.card.sub-card.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
+            = fa_icon "toggle-off"
             = "過去の参加プロジェクト"
           .card-body
             %ul
@@ -67,12 +67,12 @@
   -# ユーザー関連機能のメニュー
   #user-menu.card.main-card.border-dark
     .card-header.card-toggle-btn.bg-dark.text-white
-      -#= icon('fas', 'toggle-off')
+      = fa_icon "toggle-off"
       = "ユーザー情報"
     .card-body
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
-          -#= icon('fas', 'toggle-off')
+          = fa_icon "toggle-off"
           = "アカウント情報"
         .card-body
           .row
@@ -91,7 +91,7 @@
 
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
-          -#= icon('fas', 'toggle-off')
+          = fa_icon "toggle-off"
           = "所属グループ"
         .card-body
           - if current_user.groups.blank?
@@ -105,12 +105,12 @@
   - if current_user.admin?
     #system-admin-menu.card.main-card.border-dark
       .card-header.card-toggle-btn.bg-dark.text-white
-        -#= icon('fas', 'toggle-off')
+        = fa_icon "toggle-off"
         = "システム管理者メニュー"
       .card-body
         .card.sub-card.meeting-maintenance.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
+            = fa_icon "toggle-off"
             = "会議機能メンテナンス"
           .card-body
             %a.btn.btn-light.text-danger.border-dark
@@ -121,7 +121,7 @@
 
         .card.sub-card.group-maintenance.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
+            = fa_icon "toggle-off"
             = "グループメンテナンス"
           .card-body
             = link_to '既存グループのメンテナンス', system_admin_groups_path,
@@ -131,7 +131,7 @@
 
         .card.sub-card.project-maintenance.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
+            = fa_icon "toggle-off"
             = "プロジェクトメンテナンス"
           .card-body
             = link_to '既存プロジェクトのメンテナンス', system_admin_projects_path,
@@ -141,7 +141,6 @@
 
         .card.sub-card.user-maintenance.border-secondary
           .card-header.card-toggle-btn
-            -#= icon('fas', 'toggle-off')
             = fa_icon "toggle-off"
             = "ユーザーメンテナンス"
           .card-body
@@ -155,7 +154,7 @@
 
     #debug-menu.card-toggle-btn.card.main-card.border-dark
       .card-header.bg-dark.text-white
-        -#= icon('fas', 'toggle-off')
+        = fa_icon "toggle-off"
         デバッグ関連
       .card-body
         %ul

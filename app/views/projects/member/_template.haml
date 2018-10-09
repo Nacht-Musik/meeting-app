@@ -14,11 +14,9 @@
         %button.call-member-edit-modal.btn.btn-outline-success{ type: "button",
                 data:{target: "#member-edit-modal", toggle: "modal",
                 "user-id": ""}}
-          -#= icon('fas' ,'user-edit')
-          = "編集"
+          = fa_icon('user-md')
       %td.member-delete.text-center
         %button.call-member-del-modal.btn.btn-danger{ type: "button",
                       data:{target: "#member-del-modal", toggle: "modal",
                       "user-id": ""}}
-          -#= icon('fas' ,'user-minus')
-          = "削除"
+          = fa_icon('user-times')
