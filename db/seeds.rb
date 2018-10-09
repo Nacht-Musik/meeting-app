@@ -51,8 +51,8 @@ end
 
 ###
 # User作成
-CSV.foreach('db/seeds_data/users.csv') do |data|
-  next if data[0] == "0"
-  User.create(name: data[1], email: data[2], password: data[3],
-              last_name: data[4], first_name: data[5], authority_id: data[6])
-end
+# CSV.foreach('db/seeds_data/users.csv') do |data|
+#   next if data[0] == "0"
+#   User.create(name: data[1], email: data[2], password: data[3],
+#               last_name: data[4], first_name: data[5], authority_id: data[6])
+# end

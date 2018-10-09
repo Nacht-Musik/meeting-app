@@ -85,7 +85,7 @@ namespace :deploy do
     end
   end
 
-  # after  :migrate,      :seed
+  after  :migrate,      :seed
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
