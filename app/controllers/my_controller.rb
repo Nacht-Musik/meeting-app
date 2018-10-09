@@ -2,9 +2,13 @@ class MyController < ApplicationController
   before_action :set_meetings, only: [:meeting]
   before_action :set_projects, only: [:meeting]
   before_action :set_users, only: [:meeting]
-  before_action :set_finished_projects, only: [:page]
 
   def page
+    if user_signed_in?
+      set_finished_projects
+    else
+      redirect_to root_path
+    end
   end
 
   def meeting
