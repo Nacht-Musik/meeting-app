@@ -9,7 +9,7 @@
         .card-header
           = "一般項目"
           %a.card-toggle-btn.btn.float-right
-            = icon('fas', 'toggle-on')
+            = fa_icon('toggle-on')
 
         .card-body
           #date-time-area
@@ -36,18 +36,18 @@
         .card-header
           = "議題"
           %a.card-toggle-btn.btn.float-right
-            = icon('fas', 'toggle-on')
+            = fa_icon('toggle-on')
         #topic-area.card-body
           = f.fields_for :topics do |topic|
             = render partial: 'meetings/topic_card', locals: {f: topic}
-          = link_to_add_fields "Topic追加", f, :topics, "topic-add-btn btn btn-outline-secondary"
+          = link_to_add_fields "議題追加", f, :topics, "topic-add-btn btn btn-outline-info"
 
       #other-area.section-card
         .card
           .card-header
             = f.label '備考'
             %a.card-toggle-btn.btn.float-right
-              = icon('fas', 'toggle-on')
+              = fa_icon('toggle-on')
           .card-body
             = f.text_area :note, class: 'form-control'
 

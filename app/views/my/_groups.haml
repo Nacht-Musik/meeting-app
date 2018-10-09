@@ -10,12 +10,9 @@
         %td.text-center
           = "#{group.name}"
         %td.text-center
-          -#= link_to icon('fas', 'users'), group_path(group), class: 'btn btn-outline-info'
-          = link_to '■', group_path(group), class: 'btn btn-outline-info'
+          = link_to fa_icon('users'), group_path(group), class: 'btn btn-outline-info'
         - if group_admin? current_user, group
           %td.text-center
-            -#= link_to icon('fas', 'edit'), edit_group_path(group), class: 'btn btn-outline-success'
-            = link_to '■', edit_group_path(group), class: 'btn btn-outline-success'
+            = link_to fa_icon('edit'), edit_group_path(group), class: 'btn btn-outline-success'
         - else
-          %td.text-center
           %td.text-center

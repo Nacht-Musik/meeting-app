@@ -7,7 +7,7 @@
                           "data-target": "#date-picker", "data-type": "date"
       .input-group-append{"data-target": "#date-picker", "data-toggle": "datetimepicker"}
         .input-group-text
-          %i.far.fa-calendar-alt
+          = fa_icon("calendar")
 
   .col-auto
     -#= f.time_field :start_time, class: 'form-control'
@@ -17,7 +17,7 @@
                           step: 300
       .input-group-append{"data-target": "#start-time-picker", "data-toggle": "datetimepicker"}
         .input-group-text
-          %i.far.fa-clock
+          = fa_icon("clock")
 
   = f.label '〜', class: 'col-form-label'
   .col-auto
@@ -28,4 +28,4 @@
                           step: 300
       .input-group-append{"data-target": "#finish-time-picker", "data-toggle": "datetimepicker"}
         .input-group-text
-          %i.fas.fa-clock
+          = fa_icon("clock")

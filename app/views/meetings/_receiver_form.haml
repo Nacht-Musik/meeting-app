@@ -1,7 +1,7 @@
 .card-header
   = "配信先"
   .card-toggle-btn.btn.float-right
-    = icon('fas', 'toggle-on')
+    = fa_icon('toggle-on')
 .card-body
   .row
     .col-12.col-sm-9.col-md-7.col-lg-5
@@ -16,7 +16,7 @@
               %option{value: "#{type.id}"}
                 = "#{type.name}"
           #receiver-add-btn.btn.btn-info
-            = icon('fas' ,'plus')
+            = fa_icon('plus')
 
   %br
   #receiver-view-area

@@ -9,23 +9,19 @@
       .col-7
         -# 左移動ボタン
         %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
-          -#= icon('fas' ,'arrow-left')
-          = "<-"
+          = fa_icon('arrow-left')
 
         -# 右移動ボタン
         %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
-          -#= icon('fas' ,'arrow-right')
-          = "->"
+          = fa_icon('arrow-right')
 
         -# 子コメント追加ボタン
         %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm
-          -#= icon('fas' ,'plus')
-          = "+"
+          = fa_icon('plus')
 
         -# コメント削除ボタン
         %a.cmt-del-btn.btn.btn-outline-danger.btn-sm
-          -#= icon('fas' ,'times')
-          = "-"
+          = fa_icon('times')
 
       .col-3
         = f.collection_select :user_id, @users, :id, :last_name,
