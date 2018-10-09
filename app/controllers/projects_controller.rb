@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params)
 
     if @project.save
-      flash = {success: "#{@project.name} プロジェクトを作成しました"}
+    flash = {success: "#{@project.name} プロジェクトを作成しました"}
       redirect_to my_page_path, flash: flash
     else
       render 'new'

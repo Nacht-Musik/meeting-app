@@ -4,35 +4,42 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   prepend_before_action :require_no_authentication, only: [:cancel]
-  prepend_before_action :authenticate_scope!, only: [:new, :create, :edit, :update, :destroy]
+  # prepend_before_action :authenticate_scope!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /resource/sign_up
   def new
-    # System Adminが一人以上登録されているか判定
-    @no_admin = User.where('admin = ?', true).empty?
-    super
+    if user_signed_in? && !current_user.admin?
+      #  一般ユーザーがアクセスしたら、ルートページに転送 #不正アクセス対策
+      redirect_to root_path
+    else
+      # System Adminが一人以上登録されているか判定
+      @no_admin = User.where('admin = ?', true).empty?
+      super
+    end
   end
 
   # POST /resource
   def create
-    ### Original Code
-    # super
-    # Welcome Messageをメールで送付する
-
     build_resource(sign_up_params)
 
     resource.save
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message! :notice, :signed_up
+        if user_signed_in?
+          # System Admin用の処理
+          set_flash_message! :notice, :signed_up
+          sign_up(resource_name, current_user)
 
-        original_user = current_user
-        sign_up(resource_name, resource)
-        Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-        sign_in(resource_name, original_user)
-
-        respond_with resource, location: after_sign_up_path_for(resource)
+          flash = {success: "新しいアカウント【#{resource.name}】を作成しました。"}
+          redirect_to my_page_path, flash: flash
+        else
+          # Guest User用の処理
+          set_flash_message! :notice, :signed_up
+          sign_up(resource_name, resource)
+          # Welcome Messageをメールで送付する（予定）
+          respond_with resource, location: after_sign_up_path_for(resource)
+        end
       else
         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!

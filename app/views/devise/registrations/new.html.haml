@@ -37,7 +37,7 @@
           %label= "パスワード(確認)"
           = f.password_field :password_confirmation, autocomplete: "off",
                             class: "form-control"
-        - if @no_admin
+        - if @no_admin || user_signed_in?
           .form-group
             .form-check
               = f.check_box :admin, {checked: false, class: "form-check-input" }, true, false
