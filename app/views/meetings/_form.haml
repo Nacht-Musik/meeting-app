@@ -1,64 +1,86 @@
-#meeting-page.card
-  = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
-    .card-header
-      .form-group
-        %h5= f.label '会議名', class: 'col-form-label'
-        = f.text_field :title, class: 'form-control'
-    .card-body
-      #general-area.card.section-card
-        .card-header
-          = "一般項目"
-          %a.card-toggle-btn.btn.float-right
-            = fa_icon('toggle-on')
-
-        .card-body
-          #date-time-area
-            = render partial: 'meetings/date_form', locals: {f: f}
-
-          .form-group
-            = f.label '場所'
-            = f.text_field :place, class: 'form-control'
-          .form-group
-            = f.label 'プロジェクト'
-            = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
-              {class: 'custom-select'}
-
-          #users-area
-            = render partial: 'meetings/users_form', locals: {f: f, users: users}
-
-      #attendees-area.card.section-card
-        = render partial: 'meetings/attendees_form', locals: {f: f, users: users}
-
-      #receiver-area.card.section-card
-        = render partial: 'meetings/receiver_form', locals: {f: f, users: users}
-
-      #main-area.card.section-card
-        .card-header
-          = "議題"
-          %a.card-toggle-btn.btn.float-right
-            = fa_icon('toggle-on')
-        #topic-area.card-body
-          = f.fields_for :topics do |topic|
-            = render partial: 'meetings/topic_card', locals: {f: topic}
-          = link_to_add_fields "議題追加", f, :topics, "topic-add-btn btn btn-outline-info"
-
-      #other-area.section-card
-        .card
-          .card-header
-            = f.label '備考'
-            %a.card-toggle-btn.btn.float-right
-              = fa_icon('toggle-on')
-          .card-body
-            = f.text_area :note, class: 'form-control'
-
-      = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
-
-  #user-block-template.user-block
-    %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "false", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
-    %input{type: "hidden", id: "meeting_item_name_number_user_id", value: "", name: "meeting[item_name][number][user_id]", class: "user-block-user_id"}
-    .card.user-card.float-left
+#meeting-page
+  .card.main-card.border-dark
+    = form_for meeting, remote: true, html: {"data-persist" => "garlic", class: "garlic-auto-save"} do |f|
+      .card-header.bg-dark.text-white
+        .form-group
+          %h5= f.label '会議名', class: 'col-form-label'
+          = f.text_field :title, class: 'form-control', placeholder: "会議名を入力してください（必須）"
       .card-body
-        = render partial: 'meetings/user_card', locals: {user_name: "template_name"}
+
+        -# 一般項目
+        #general-area
+          .card.sub-card
+            .card-header.card-toggle-btn
+              = fa_icon('toggle-on')
+              = "日時・場所"
+
+            .card-body
+              #date-time-area
+                = render partial: 'meetings/date_form', locals: {f: f}
+              .form-group
+                = f.label '場所'
+                = f.text_field :place, class: 'form-control',
+                                placeholder: "会議をする場所を入力してください（任意）"
+
+            .card-footer
+
+        -# 担当者／グループ／グループ
+        #owner-area
+          .card.sub-card
+            .card-header.card-toggle-btn
+              = fa_icon('toggle-on')
+              = "担当"
+            .card-body
+              #users-area
+                = render partial: 'meetings/users_form', locals: {f: f, users: users}
+
+              #project-area
+                .form-group
+                  = f.label 'プロジェクト'
+                  = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
+                    {class: 'custom-select'}
+
+            .card-footer
+
+        -# 参加者
+        #attendees-area
+          = render partial: 'meetings/attendees_form', locals: {f: f, users: users}
+
+        -# 配布先
+        #receiver-area
+          = render partial: 'meetings/receiver_form', locals: {f: f, users: users}
+
+        -# 議題
+        #main-area
+          .card.sub-card
+            .card-header.card-toggle-btn
+              = fa_icon('toggle-on')
+              = "議題"
+            #topic-area.card-body
+              = f.fields_for :topics do |topic|
+                = render partial: 'meetings/topic_card', locals: {f: topic}
+              = link_to_add_fields fa_icon('plus-square', text: "議題 追加"), f, :topics,
+                                    "topic-add-btn btn btn-info"
+            .card-footer
+
+        -# 備考欄
+        #other-area
+          .card.sub-card
+            .card-header.card-toggle-btn
+              = fa_icon('toggle-on')
+              = f.label '備考'
+            .card-body
+              = f.text_area :note, class: 'form-control', rows: "5",
+                            placeholder: "備考欄（任意）"
+
+        = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
+
+    #user-block-template.user-block
+      %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "false", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
+      %input{type: "hidden", id: "meeting_item_name_number_user_id", value: "", name: "meeting[item_name][number][user_id]", class: "user-block-user_id"}
+      .card.user-card.float-left
+        .card-body
+          = render partial: 'meetings/user_card', locals: {user_name: "template_name"}
 
 :javascript
   changeStateAllCommentMoveBtn();

@@ -10,8 +10,25 @@
     float:   left;
   }
 
-  .section-card{
-    margin-bottom: 1.5em;
+  .main-card {
+    margin: 1em auto;
+    background-color: whitesmoke;
+
+    .sub-card {
+      margin-bottom: 1em;
+      border-color: #787878;
+
+      .card-header {
+        background-color: #343a40;
+        color: white;
+      }
+      .card-body {
+
+      }
+      .card-footer {
+        background-color: #343a40;
+      }
+    }
   }
 
   .card-btn-area {

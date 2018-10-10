@@ -1,43 +1,43 @@
-.card-header
-  = "配信先"
-  .card-toggle-btn.btn.float-right
+.card.sub-card
+  .card-header.card-toggle-btn
     = fa_icon('toggle-on')
-.card-body
-  .row
-    .col-12.col-sm-9.col-md-7.col-lg-5
-      .receiver-add-form.input-group
-        %select#receiver-selector.custom-select
-          - users.each do |user|
-            %option{value: "#{user.id}"}
-              = "#{user.last_name} #{user.first_name}"
-        .input-group-append
-          %select#receiver-type-selector.custom-select
-            - @receiver_type.each do |type|
-              %option{value: "#{type.id}"}
-                = "#{type.name}"
-          #receiver-add-btn.btn.btn-info
-            = fa_icon('plus')
-
-  %br
-  #receiver-view-area
-    #receiver-to-area.card
-      .card-header
-        = "To"
-      .card-body
-        = f.fields_for :receiveres do |receiver|
-          - if receiver.object.type_id == 1
-            =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
-    #receiver-cc-area.card
-      .card-header
-        = "Cc"
-      .card-body
-        = f.fields_for :receiveres do |receiver|
-          - if receiver.object.type_id == 2
-            =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
-    #receiver-bcc-area.card
-      .card-header
-        = "Bcc"
-      .card-body
-        = f.fields_for :receiveres do |receiver|
-          - if receiver.object.type_id == 3
-            =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
+    = "配信先"
+  .card-body
+    .row
+      .col-12.col-sm-9.col-md-7.col-lg-5
+        .receiver-add-form.input-group
+          %select#receiver-selector.custom-select
+            - users.each do |user|
+              %option{value: "#{user.id}"}
+                = "#{user.last_name} #{user.first_name}"
+          .input-group-append
+            %select#receiver-type-selector.custom-select
+              - @receiver_type.each do |type|
+                %option{value: "#{type.id}"}
+                  = "#{type.name}"
+            #receiver-add-btn.btn.btn-info
+              = fa_icon('plus')
+    %hr
+    #receiver-view-area
+      #receiver-to-area.card
+        .card-header
+          = "To"
+        .card-body
+          = f.fields_for :receiveres do |receiver|
+            - if receiver.object.type_id == 1
+              =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
+      #receiver-cc-area.card
+        .card-header
+          = "Cc"
+        .card-body
+          = f.fields_for :receiveres do |receiver|
+            - if receiver.object.type_id == 2
+              =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
+      #receiver-bcc-area.card
+        .card-header
+          = "Bcc"
+        .card-body
+          = f.fields_for :receiveres do |receiver|
+            - if receiver.object.type_id == 3
+              =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
+  .card-footer
