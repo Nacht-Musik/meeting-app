@@ -1,12 +1,18 @@
-%h3 トップページ
-%br
+.card.border-dark.mt-3
+  .card-header.bg-danger.text-white.border-dark
+    = "警告"
+  .card-body.border-dark.text-danger
+    本アプリは作成途中です。
+    %br
+    新規アカウント登録 及び 一部の機能を使用することは可能ですが、
+    %br
+    予告無しにデータの初期化、機能変更を行う可能性があります。
+    %br
+    ご了承頂ける方のみアカウントを作成し、ご試用願います。
+    %br
+  .card-footer.border-danger
+    = link_to '新規アカウントを作成する', new_user_registration_path, class: "btn btn-primary"
+    = link_to 'ログイン', new_user_session_path, class: "btn btn-info"
+  .card-footer.bg-danger.border-dark
 
-%ul
-  - if user_signed_in?
-    %li
-      = link_to 'マイページへ', my_page_path
-  - else
-    %li
-      = link_to '新規ユーザー登録', new_user_registration_path
-    %li
-      = link_to 'ログイン', new_user_session_path
+
