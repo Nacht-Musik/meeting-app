@@ -156,11 +156,17 @@ $(document).on('turbolinks:load', function() {
     let next_cmt_ele = makeNextCmtEle(cmt_block_ele);
 
     // 子孫コメントの最後のコメントを取得
-    let progency_comments = findProgenyComments(cmt_block_ele);
-    let last_progeny_comments = progency_comments.pop();
+    let progeny_comments = findProgenyComments(cmt_block_ele);
+    let last_progeny_comment;
+
+    if (progeny_comments.length > 0 ){
+      last_progeny_comment = progeny_comments.pop();
+    } else {
+      last_progeny_comment = cmt_block_ele;
+    }
 
     // 関連コメントの直下に次のコメントを追加する
-    last_progeny_comments.after(next_cmt_ele);
+    last_progeny_comment.after(next_cmt_ele);
 
     // コメント移動ボタンの状態を再設定
     changeStateAllCommentMoveBtn();
@@ -426,6 +432,15 @@ $(document).on('turbolinks:load', function() {
 // ドロップアンドドラッグ並び替え
 $(document).on('turbolinks:load', function() {
   // Topicカード D&D 並び替え
-  $('#topic-area').sortable();
+  $('#topic-area').sortable({
+    cancel: ":input,button",
+    items: ".card",
+    containment: "#topic-area",
+    tolerance: "pointer",
+    delay: 200,
+    distance: 15,
+    opacity: 0.5,
+    revert: 100,
+  });
 });
 
