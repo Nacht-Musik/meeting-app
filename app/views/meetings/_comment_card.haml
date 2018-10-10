@@ -4,36 +4,46 @@
   = f.hidden_field :indent, class: "cmt-form-indent"
 
   %li.indent-area{class: "#{add_indent_css f.object.indent}"}
-  %li.cmt-body
-    .row
-      .col-7
+  %li.cmt-body.bg-light.rounded.border
+    .btn-toolbar.rounded-0{role: "toolbar", "aria-label": ""}
+      .btn-group.mr-4{role: "group"}
         -# 左移動ボタン
-        %a.cmt-indent-left-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+        %button.cmt-indent-left-btn.btn.btn-secondary.btn-sm{"aria-disabled" => "true",
+                                                          type: "button", tabindex: "-1"}
           = fa_icon('arrow-left')
-
         -# 右移動ボタン
-        %a.cmt-indent-right-btn.btn.btn-info.btn-sm{"aria-disabled" => "true"}
+        %button.cmt-indent-right-btn.btn.btn-secondary.btn-sm{"aria-disabled" => "true",
+                                                          type: "button", tabindex: "-1"}
           = fa_icon('arrow-right')
 
-        -# 子コメント追加ボタン
-        %a.child-cmt-add-btn.btn.btn-outline-primary.btn-sm
-          = fa_icon('plus')
+      .btn-group{role: "group"}
+        -# 直下コメント追加ボタン
+        %button.next-cmt-add-btn.btn.btn-outline-dark.btn-sm{tabindex: "-1"}
+          = fa_icon('plus', text: "")
 
+        -# 子コメント追加ボタン
+        %button.child-cmt-add-btn.btn.btn-outline-dark.btn-sm{tabindex: "-1"}
+          = fa_icon('plus-square', text: "")
+          = " & "
+          = fa_icon('arrow-circle-right')
+
+
+    .input-group
+      .input-group-prepend
+        = f.collection_select :status_id, @comment_statuses, :id, :name,
+                              {prompt: "---"},
+                              html_options = { tabindex: "-1",
+                              class: "form-control"}
+
+      = f.text_field :name, class: 'cmt-form-name form-control',
+                      placeholder: "コメントを入力して下さい"
+
+      .input-group-append
+        = f.collection_select :user_id, @users, :id, :last_name,
+                              {prompt: "(担当者)"},
+                              html_options = { tabindex: "-1",
+                              class: "form-control"}
         -# コメント削除ボタン
-        %a.cmt-del-btn.btn.btn-outline-danger.btn-sm
+        %button.cmt-del-btn.btn.btn-danger{tabindex: "-1"}
           = fa_icon('times')
 
-      .col-3
-        = f.collection_select :user_id, @users, :id, :last_name,
-                              {include_blank: true},
-                              html_options = { tabindex: "-1",
-                              class: "form-control form-control-sm"}
-      .col-2
-        -# コメントステータス
-        = f.collection_select :status_id, @comment_statuses, :id, :name,
-                              {include_blank: true},
-                              html_options = { tabindex: "-1",
-                              class: "form-control form-control-sm"}
-
-
-    = f.text_field :name, class: 'cmt-form-name form-control'

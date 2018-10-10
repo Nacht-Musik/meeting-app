@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
+    # site name
+    config.title = "Meeting-App"
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 

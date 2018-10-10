@@ -2,22 +2,27 @@
 .card.topic-card
   = f.hidden_field :sort_num, class: 'topic-sort-num'
   .card-header
-    .input-group
-      = f.text_field :name, class: 'form-control topic-title',
-                      placeholder: "Please input topic title..."
-      .input-group-append
+    .input-group.rounded-left
+      %a.card-toggle-btn.btn
+        = fa_icon('toggle-on')
+      .input-group-prepend
         = f.collection_select :status_id, @topic_statuses, :id, :name,
-                              {include_blank: true},
+                              {prompt: "---"},
                               html_options = { tabindex: "-1",
-                              "date-placeholder": "Status",
-                              class: "form-control"}
-        %a.topic-del-btn.btn.btn-danger{tabindex: "-1"}
+                              class: ""}
+
+      = f.text_field :name, class: 'form-control topic-title',
+                      placeholder: " 議題を入力して下さい"
+
+      .input-group-append
+        %button.topic-del-btn.btn.btn-danger{tabindex: "-1"}
           = fa_icon('times')
-        %a.card-toggle-btn.btn
-          = fa_icon('toggle-on')
+
 
   .card-body.comment-area
     = f.fields_for :comments do |comment|
       = render partial: 'meetings/comment_card', locals: {f: comment}
 
-    = link_to_add_fields fa_icon('plus'), f, :comments, "cmt-add-btn btn btn-primary"
+    = link_to_add_fields fa_icon('plus-square', text: "コメント追加"), f,
+                          :comments, "cmt-add-btn btn btn-info"
+  .card-footer
