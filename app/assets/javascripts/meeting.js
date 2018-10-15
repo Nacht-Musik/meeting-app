@@ -138,11 +138,15 @@ $(document).on('turbolinks:load', function() {
 
     // 追加するDOMを設定
     let dom = $(this).data('fields').replace(regexp, time);
+
     // 要素をボタンの直前に追加
     $(this).before(dom);
 
     // コメント移動ボタンの状態を再設定
     changeStateAllCommentMoveBtn();
+
+    // setSelect2('.cmt-user-selector');
+    // setSelect2('.cmt-status-selector');
 
     return event.preventDefault();
   });
@@ -171,6 +175,10 @@ $(document).on('turbolinks:load', function() {
     // コメント移動ボタンの状態を再設定
     changeStateAllCommentMoveBtn();
 
+    // select2をセレクターに適用
+    // setSelect2('.cmt-user-selector');
+    // setSelect2('.cmt-status-selector');
+
     return event.preventDefault();
   });
 
@@ -188,6 +196,9 @@ $(document).on('turbolinks:load', function() {
     // コメント移動ボタンの状態を再設定
     changeStateAllCommentMoveBtn();
 
+    // select2をセレクターに適用
+    // setSelect2('.cmt-user-selector');
+    // setSelect2('.cmt-status-selector');
 
     return event.preventDefault();
   });
@@ -282,6 +293,11 @@ $(document).on('turbolinks:load', function() {
     // 参加者セレクターから追加したユーザーを削除
     $('#attendee-selector option:selected').remove();
 
+    // 参加者無しメッセージを非表示にする
+    if($('#attendee-empty-msg').not('d-none')){
+      $('#attendee-empty-msg').addClass('d-none');
+    }
+
     // セレクターの中身が空になったら、追加ボタンを無効にする
     let option_num = $('#attendee-selector').children('option').length;
     if(option_num <= 0){
@@ -310,6 +326,12 @@ $(document).on('turbolinks:load', function() {
     // 削除対象ユーザーの表示要素を削除
     let user_card_ele = $(this).closest('.user-card');
     user_card_ele.remove();
+
+    // 参加者がゼロになったら、空メッセージを表示
+    if (isEmptyAttendees()){
+      $('#attendee-empty-msg').removeClass('d-none');
+
+    }
 
     // 追加ボタンが無効になっていたら有効にする。
     if ($('#attendee-add-btn').hasClass('disabled')){
@@ -444,3 +466,11 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
+
+///////////////////////////////////////////////////////////////////
+// select2 設定（セレクターに検索機能付加）
+$(document).on('turbolinks:load', function() {
+  setSelect2('.select2-selector');
+  // setSelect2('.cmt-user-selector');
+  // setSelect2('.cmt-status-selector');
+});

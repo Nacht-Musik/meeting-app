@@ -46,4 +46,10 @@ class User < ApplicationRecord
       where(conditions).first
     end
   end
+
+  # フルネーム表示用function (last-name + first-name)
+  def full_name
+    self.last_name + " " + self.first_name
+  end
+
 end
