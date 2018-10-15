@@ -5,44 +5,48 @@
 
   %li.indent-area{class: "#{add_indent_css f.object.indent}"}
   %li.cmt-body.bg-light.rounded.border
-    .btn-toolbar.rounded-0{role: "toolbar", "aria-label": ""}
-      .btn-group.mr-4{role: "group"}
+    .btn-toolbar.justify-content-between{role: "toolbar", "aria-label": ""}
+      .btn-group.btn-group-sm.mr-4{role: "group"}
         -# 左移動ボタン
-        %button.cmt-indent-left-btn.btn.btn-secondary.btn-sm{"aria-disabled" => "true",
+        %button.cmt-indent-left-btn.btn.btn-dark.btn-sm{"aria-disabled" => "true",
                                                           type: "button", tabindex: "-1"}
           = fa_icon('arrow-left')
         -# 右移動ボタン
-        %button.cmt-indent-right-btn.btn.btn-secondary.btn-sm{"aria-disabled" => "true",
+        %button.cmt-indent-right-btn.btn.btn-dark.btn-sm{"aria-disabled" => "true",
                                                           type: "button", tabindex: "-1"}
           = fa_icon('arrow-right')
 
-      .btn-group{role: "group"}
+        -#.btn-group{role: "group"}
         -# 直下コメント追加ボタン
         %button.next-cmt-add-btn.btn.btn-outline-dark.btn-sm{tabindex: "-1"}
-          = fa_icon('plus', text: "")
+          = fa_icon('plus-square')
+          = " & "
+          = fa_icon('arrow-circle-down')
 
         -# 子コメント追加ボタン
         %button.child-cmt-add-btn.btn.btn-outline-dark.btn-sm{tabindex: "-1"}
-          = fa_icon('plus-square', text: "")
+          = fa_icon('plus-square')
           = " & "
           = fa_icon('arrow-circle-right')
-
+      .input-group.align-middle
+        .input-group-prepend
+          .d-inline-block= "担当者："
+        = f.collection_select :user_id, @users, :id, :full_name,
+                              {include_blank: "----", size: "60"},
+                              html_options = { tabindex: "-1",
+                              class: "form-control form-control-sm cmt-user-selector"}
 
     .input-group
       .input-group-prepend
         = f.collection_select :status_id, @comment_statuses, :id, :name,
-                              {prompt: "---"},
+                              {include_blank: "---"},
                               html_options = { tabindex: "-1",
-                              class: "form-control"}
+                              class: "form-control cmt-status-selector"}
 
       = f.text_field :name, class: 'cmt-form-name form-control',
                       placeholder: "コメントを入力して下さい"
 
       .input-group-append
-        = f.collection_select :user_id, @users, :id, :last_name,
-                              {prompt: "(担当者)"},
-                              html_options = { tabindex: "-1",
-                              class: "form-control"}
         -# コメント削除ボタン
         %button.cmt-del-btn.btn.btn-danger{tabindex: "-1"}
           = fa_icon('times')

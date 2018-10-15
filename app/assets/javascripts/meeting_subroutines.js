@@ -407,3 +407,22 @@ function initializationUserSelector(){
     $('#receiver-add-btn').addClass("disabled");
   }
 }
+
+// 参加者の空判定
+function isEmptyAttendees(){
+  let attendees_num = $('#attendees-view-area').find('.user-card').size();
+  if (attendees_num > 0){
+    return false;
+  }
+  return true
+}
+
+// select2をセットする関数
+function setSelect2(selector){
+ $(selector).select2({
+   theme: 'bootstrap4',
+   // width: '100%',
+   // class: 'form-control form-control-sm',
+   // allowClear: true
+ });
+}

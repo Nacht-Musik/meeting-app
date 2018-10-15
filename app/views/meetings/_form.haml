@@ -37,8 +37,10 @@
               #project-area
                 .form-group
                   = f.label 'プロジェクト'
-                  = f.collection_select :project_id, projects, :id, :name, {prompt: ""},
-                    {class: 'custom-select'}
+                  -#= f.collection_select :project_id, f.object.user.projects, :id, :name,
+                  = f.collection_select :project_id, projects, :id, :name,
+                    {include_blank: "---"},
+                    {class: 'custom-select select2-selector'}
 
             .card-footer
 
@@ -51,7 +53,7 @@
           = render partial: 'meetings/receiver_form', locals: {f: f, users: users}
 
         -# 議題
-        #main-area
+        #topics-area
           .card.sub-card
             .card-header.card-toggle-btn
               = fa_icon('toggle-on')
