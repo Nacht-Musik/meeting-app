@@ -23,6 +23,17 @@ class MeetingsController < ApplicationController
     # Topic枠を一つ作成
     @meeting.topics.build
 
+    # 会議作成ユーザーを担当者に設定
+    @meeting.user_id = current_user.id
+
+    # 会議作成ユーザーを参加者に登録
+    attendee = @meeting.attendees.build
+    attendee.user_id = current_user.id
+
+    # 会議作成ユーザーを配信先(To)に登録
+    receiver = @meeting.receiveres.build
+    receiver.user_id = current_user.id
+    receiver.type_id = 1
   end
 
   def create

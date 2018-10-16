@@ -15,7 +15,7 @@
               = fa_icon('plus')
     %hr
     #attendees-view-area
-      #attendee-empty-msg= "参加者無し"
+      #attendee-empty-msg.d-none= "参加者無し"
       = f.fields_for :attendees do |attendee|
         =render partial: "meetings/attendee_card", locals:{f: attendee, users: users}
 
