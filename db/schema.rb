@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016075256) do
+ActiveRecord::Schema.define(version: 20181016082207) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20181016075256) do
     t.bigint "inspector_id"
     t.bigint "approver_id"
     t.bigint "status_id"
+    t.bigint "group_id"
     t.bigint "project_id"
     t.date "date"
     t.time "start_time"
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(version: 20181016075256) do
     t.datetime "deleted_at"
     t.index ["approver_id"], name: "index_meetings_on_approver_id"
     t.index ["deleted_at"], name: "index_meetings_on_deleted_at"
+    t.index ["group_id"], name: "index_meetings_on_group_id"
     t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
     t.index ["project_id"], name: "index_meetings_on_project_id"
     t.index ["status_id"], name: "index_meetings_on_status_id"
@@ -235,6 +237,7 @@ ActiveRecord::Schema.define(version: 20181016075256) do
   add_foreign_key "group_members", "groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "groups", "groups", column: "parent_id"
+  add_foreign_key "meetings", "groups"
   add_foreign_key "meetings", "meeting_statuses", column: "status_id"
   add_foreign_key "meetings", "meeting_types", column: "type_id"
   add_foreign_key "meetings", "projects"
