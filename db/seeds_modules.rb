@@ -47,6 +47,15 @@ def setAuthority
 end
 
 ###
+# MeetingType のデータを生成
+def setMeetingType
+  CSV.foreach('db/seeds_data/meeting_types.csv') do |data|
+    next if data[0] == "0"
+    MeetingType.create(name: data[1])
+  end
+end
+
+###
 # サンプル用ユーザーデータを生成
 def setSampleUsers
   CSV.foreach('db/seeds_data/users.csv') do |data|
