@@ -1,7 +1,6 @@
 = f.label '開催日', class: 'col-form-label'
 .event-date.form-group.row
   .col-12.col-md-auto
-    -#= f.date_field :date, class: 'form-control'
     #date-picker.input-group.date{"data-target-input": "nearest"}
       = f.date_field :date, class: 'datetimepicker-input form-control',
                           "data-target": "#date-picker", "data-type": "date"
@@ -10,7 +9,6 @@
           = fa_icon("calendar")
 
   .col-auto
-    -#= f.time_field :start_time, class: 'form-control'
     #start-time-picker.input-group.date{"data-target-input": "nearest"}
       = f.time_field :start_time, class: "datetimepicker-input form-control",
                           "data-target": "#start-time-picker", "data-type": "text",
@@ -21,11 +19,10 @@
 
   = f.label '〜', class: 'col-form-label'
   .col-auto
-    -#= f.time_field :finish_time, class: 'form-control', step: "300"
     #finish-time-picker.input-group.date{"data-target-input": "nearest"}
       = f.time_field :finish_time, class: "datetimepicker-input form-control",
                           "data-target": "#finish-time-picker", "data-type": "text",
                           step: 300
       .input-group-append{"data-target": "#finish-time-picker", "data-toggle": "datetimepicker"}
-        .input-group-text
+        .input-group-text.bg-secondary.text-light
           = fa_icon("clock-o")

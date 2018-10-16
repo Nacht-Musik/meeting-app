@@ -1,3 +1,51 @@
+// 会議録フォームの初期化関数
+function initializationMeetingForm(){
+  // コメント移動ボタンの状態を初期化
+  changeStateAllCommentMoveBtn();
+
+  // ユーザーセレクタを初期化
+  initializationUserSelector();
+
+  // データピッカーの初期化
+  initializationDataPicker();
+
+  // 日付の初期値を設定
+  setInitialDataTime();
+
+  // 参加者表示領域の初期化
+  initializationAttendeesField();
+}
+
+// 参加者表示領域を初期化
+function initializationAttendeesField(){
+  // 参加者無しならその旨のメッセージを表示
+  if(isEmptyAttendees()){
+    $('#attendee-empty-msg').removeClass('d-none');
+  }
+}
+
+function initializationDataPicker(){
+  $('#date-picker').datetimepicker({
+    format: 'YYYY-MM-DD',
+  });
+}
+
+function setInitialDataTime(){
+  $(function () {
+    $('#start-time-picker').datetimepicker({
+      format: 'HH:mm',
+      stepping: 5,
+      defaultDate: moment('10:00', 'HH:mm'),
+    });
+    $('#finish-time-picker').datetimepicker({
+      format: 'HH:mm',
+      stepping: 5,
+      defaultDate: moment('11:00', 'HH:mm'),
+    });
+  });
+}
+
+
 // コメントの右移動可否を確認
 function isCommentMoveRight(cmt_block_ele) {
   /* 移動不可能条件

@@ -19,22 +19,22 @@
               = fa_icon('plus')
     %hr
     #receiver-view-area
-      #receiver-to-area.card
-        .card-header
+      #receiver-to-area.card.border-secondary
+        .card-header.bg-secondary
           = "To"
         .card-body
           = f.fields_for :receiveres do |receiver|
             - if receiver.object.type_id == 1
               =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
-      #receiver-cc-area.card
-        .card-header
+      #receiver-cc-area.card.border-secondary
+        .card-header.bg-secondary
           = "Cc"
         .card-body
           = f.fields_for :receiveres do |receiver|
             - if receiver.object.type_id == 2
               =render partial: "meetings/receiver_card", locals:{f: receiver, users: users}
-      #receiver-bcc-area.card
-        .card-header
+      #receiver-bcc-area.card.border-secondary
+        .card-header.bg-secondary
           = "Bcc"
         .card-body
           = f.fields_for :receiveres do |receiver|

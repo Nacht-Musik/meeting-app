@@ -3,10 +3,10 @@
   = f.hidden_field :user_id, class: "receiver-user-id"
   = f.hidden_field :type_id, class: "receiver-type-id"
 
-  .card.user-card.float-left
+  .card.user-card.float-left.border-dark
     .card-body
       .input-group
         %a.user-name= "#{f.object.user.last_name} #{f.object.user.first_name}"
         .input-group-append
-          %a.receiver-del-btn.btn.btn-outline-danger{tabindex: "-1"}
-            = fa_icon('minus')
+          %a.receiver-del-btn.btn.btn-danger{tabindex: "-1"}
+            = fa_icon('times')

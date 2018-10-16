@@ -20,11 +20,11 @@
               .form-group
                 = f.label '場所'
                 = f.text_field :place, class: 'form-control',
-                                placeholder: "会議をする場所を入力してください（任意）"
+                                placeholder: "場所を入力してください（任意）"
 
             .card-footer
 
-        -# 担当者／グループ／グループ
+        -# 担当者／担当グループ／プロジェクト
         #owner-area
           .card.sub-card
             .card-header.card-toggle-btn
@@ -37,7 +37,6 @@
               #project-area
                 .form-group
                   = f.label 'プロジェクト'
-                  -#= f.collection_select :project_id, f.object.user.projects, :id, :name,
                   = f.collection_select :project_id, projects, :id, :name,
                     {include_blank: "---"},
                     {class: 'custom-select select2-selector'}
@@ -80,26 +79,11 @@
     #user-block-template.user-block
       %input{type: "hidden", id: "meeting_item_name_number__destroy", value: "false", name: "meeting[item_name][number][_destroy]", class: "user-block-_destroy"}
       %input{type: "hidden", id: "meeting_item_name_number_user_id", value: "", name: "meeting[item_name][number][user_id]", class: "user-block-user_id"}
-      .card.user-card.float-left
+      .card.user-card.float-left.border-dark
         .card-body
           = render partial: 'meetings/user_card', locals: {user_name: "template_name"}
 
 :javascript
-  changeStateAllCommentMoveBtn();
-  initializationUserSelector();
-  $(function () {
-    $('#date-picker').datetimepicker({
-      format: 'YYYY-MM-DD',
-    });
-
-    $('#start-time-picker').datetimepicker({
-      format: 'HH:mm',
-      stepping: 5,
-      defaultDate: moment('10:00', 'HH:mm'),
-    });
-    $('#finish-time-picker').datetimepicker({
-      format: 'HH:mm',
-      stepping: 5,
-      defaultDate: moment('11:00', 'HH:mm'),
-    });
-  });
+  initializationMeetingForm();
+  // changeStateAllCommentMoveBtn();
+  // initializationUserSelector();
