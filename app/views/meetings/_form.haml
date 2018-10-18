@@ -40,6 +40,12 @@
                   = f.collection_select :project_id, projects, :id, :name,
                     {include_blank: "---"},
                     {class: 'custom-select select2-selector'}
+              #group-area
+                .form-group
+                  = f.label 'グループ'
+                  = f.collection_select :group_id, groups, :id, :name,
+                    {include_blank: "---"},
+                    {class: 'custom-select select2-selector'}
 
             .card-footer
 

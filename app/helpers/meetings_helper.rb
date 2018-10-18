@@ -1,4 +1,102 @@
 module MeetingsHelper
+  include ApplicationHelper
+  include ProjectsHelper
+  include GroupsHelper
+
+  ###########################################
+  # 状況に合わせた会議参加ユーザー(users)を設定
+  def set_optimal_users(type_id, group_id, project_id, scope_id)
+    if type_id == PROJECT_MEETING_TYPE_ID
+      if scope_id == PROGENY_PROJECT_ID
+        users = progeny_project_users(project_id)
+      elsif scope_id == RELATION_PROJECT_ID
+        users = relation_project_users(project_id)
+      else
+        users = project_users(project_id)
+      end
+    elsif type_id == GROUP_MEETING_TYPE_ID
+      if scope_id == PROGENY_GROUP_ID
+        users = progeny_group_users(group_id)
+      elsif scope_id == RELATION_GROUP_ID
+        users = relation_group_users(group_id)
+      else
+        users = group_users(group_id)
+      end
+    else
+      # Free Meeting users
+      users = User.all
+    end
+    return users
+  end
+
+  # 指定グループのすべてのユーザーをセット
+  def group_users(group_id)
+    users = Group.find(group_id).users
+    return users
+  end
+
+  # 指定グループの子孫グループに所属するすべてのユーザーをセット
+  def progeny_group_users(group_id)
+    users = Group.find(group_id).users
+
+    progeny_group_ids = find_progeny_group_ids(group_id)
+    progeny_group_ids.each do |id|
+      users = users + Group.find(id).users if id != group_id
+    end
+    users.each do |user|
+      p user.id
+    end
+    users = users.uniq
+    return users
+  end
+
+  # 指定グループの関連グループに所属するすべてのユーザーをセット
+  def relation_group_users(group_id)
+    users = Group.find(group_id).users
+    founder_group = find_founder_group(group_id)
+    users = users + founder_group.users
+
+    relation_group_ids = find_progeny_group_ids(founder_group.id)
+    relation_group_ids.each do |id|
+      users = users + Group.find(id).users if id != group_id
+    end
+    users.each do |user|
+      p user.id
+    end
+    users = users.uniq
+    return users
+  end
+
+  def project_users(project_id)
+    users = Project.find(project_id).users
+    return users
+  end
+
+  def progeny_project_users(project_id)
+    users = Project.find(project_id).users
+
+    progeny_project_ids = find_progeny_project_ids(project_id)
+    progeny_project_ids.each do |id|
+      users = users + Project.find(id).users if id != project_id
+    end
+    users = users.uniq
+    return users
+  end
+
+  def relation_project_users(project_id)
+    users = Project.find(project_id).users
+    founder_project = find_founder_project(project_id)
+    users = users + founder_project.users
+
+    relation_project_ids = find_progeny_project_ids(founder_project.id)
+    relation_project_ids.each do |id|
+      users = users + Project.find(id).users if id != project_id
+    end
+    users = users.uniq
+    return users
+  end
+
+
   # commentをsort番号順に並び替え
   def sort_comments(comments)
     comments.sort do |a, b|
@@ -77,4 +175,5 @@ module MeetingsHelper
     link_to(name, '', class: "add_fields " + btn_class,
             data: {id: id, fields: fields.gsub("\n","")})
   end
+
 end

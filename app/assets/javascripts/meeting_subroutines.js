@@ -474,3 +474,15 @@ function setSelect2(selector){
    // allowClear: true
  });
 }
+
+// 会議タイプ情報をボタンにセット
+function setMeetingTypeInfo(btn_ele, type_id, project_id, group_id, scope_id){
+  let common = '/meetings/new?';
+  let scope = 'scope_id=' + scope_id;
+  let group = 'group_id=' + group_id;
+  let project = 'project_id=' + project_id;
+  let type = 'type_id=' + type_id;
+  let href = common + scope + "&" + project + "&" + group + "&" + type;
+  btn_ele.attr('href', href);
+}
+

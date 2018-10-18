@@ -466,6 +466,75 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
+///////////////////////////////////////////////////////////////////
+// 会議タイプセレクトページ関連
+$(document).on('turbolinks:load', function() {
+  // フリー会議：タブを押下
+  $('#meeting-type-select').on('click', '#free-type-btn', function () {
+    let type_id = FREE_MEETING_TYPE_ID;
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", "", "");
+  });
+
+  // プロジェクト会議：タブを押下
+  $('#meeting-type-select').on('click', '#project-type-btn', function () {
+    let type_id = PROJECT_MEETING_TYPE_ID;
+    let project_id = $('#project-selector option:selected').val();
+    let active_btn = $("#project-area-select").find(".active");
+    let scope = active_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+  });
+  // プロジェクト：対象プロジェクトを変更
+  $('#meeting-type-select').on('change', '#project-selector', function () {
+    let type_id = PROJECT_MEETING_TYPE_ID;
+    let project_id = $('#project-selector option:selected').val();
+    let active_btn = $("#project-area-select").find(".active");
+    let scope = active_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+  });
+  // プロジェクト：参加メンバー範囲を変更
+  $('#meeting-type-select').on('change', '#project-area-select input[type=radio]', function () {
+    let type_id = PROJECT_MEETING_TYPE_ID;
+    let project_id = $('#project-selector option:selected').val();
+    let scope = this.value;
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+  });
+
+  // グループタブを押下
+  $('#meeting-type-select').on('click', '#group-type-btn', function () {
+    let type_id = GROUP_MEETING_TYPE_ID;
+    let group_id = $('#group-selector option:selected').val();
+    let active_btn = $("#group-area-select").find(".active");
+    let scope = active_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+  });
+  // グループ：対象グループを変更
+  $('#meeting-type-select').on('change', '#group-selector', function () {
+    let type_id = GROUP_MEETING_TYPE_ID;
+    let group_id = $('#group-selector option:selected').val();
+    let active_btn = $("#group-area-select").find(".active");
+    let scope = active_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+  });
+  // グループ：参加メンバー範囲を変更
+  $('#meeting-type-select').on('change', '#group-area-select input[type=radio]', function () {
+    let type_id = GROUP_MEETING_TYPE_ID;
+    let group_id = $('#group-selector option:selected').val();
+    let scope = this.value;
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+  });
+
+  // セレクターにselect2を適用
+  $('#group-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    cache: true
+  });
+  $('#project-selector').select2({
+    theme: 'bootstrap4',
+    width: '100%'
+  });
+
+});
 
 ///////////////////////////////////////////////////////////////////
 // select2 設定（セレクターに検索機能付加）
@@ -474,3 +543,10 @@ $(document).on('turbolinks:load', function() {
   // setSelect2('.cmt-user-selector');
   // setSelect2('.cmt-status-selector');
 });
+
+// Select2 のキャッシュクリア（戻るボタンでselect2要素が複製される問題の対策）
+$(document).on('turbolinks:before-cache', function() {
+  $('.select2-selector').select2('destroy');
+  $('#group-selector').select2('destroy');
+  $('#project-selector').select2('destroy');
+} );
