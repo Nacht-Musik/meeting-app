@@ -45,9 +45,11 @@ class MeetingsController < ApplicationController
     type_id = params[:type_id].to_i
     project_id = params[:project_id].to_i
     group_id = params[:group_id].to_i
+    @meeting.scope_id = scope_id
     @meeting.type_id = type_id
     @meeting.project_id = project_id if type_id == PROJECT_MEETING_TYPE_ID
     @meeting.group_id = group_id if type_id == GROUP_MEETING_TYPE_ID
+    @meeting.approval_flow_flag = params[:approval_flow_flag].to_i
 
     @users = set_optimal_users(type_id, group_id, project_id, scope_id)
     @groups = Group.all
@@ -129,17 +131,19 @@ class MeetingsController < ApplicationController
       params.require(:meeting).permit(:id,
                                       :title,
                                       :type_id,
+                                      :scope_id,
+                                      :user_id,
+                                      :inspector_id,
+                                      :approver_id,
+                                      :status_id,
+                                      :approval_flow_flag,
                                       :date,
                                       :start_time,
                                       :finish_time,
                                       :place,
                                       :project_id,
                                       :group_id,
-                                      :user_id,
-                                      :inspector_id,
-                                      :approver_id,
                                       :note,
-                                      :scope_id,
                                       attendees_attributes: [
                                         :id,
                                         :meeting_id,

@@ -56,6 +56,15 @@ def setMeetingType
 end
 
 ###
+# MeetingScopes のデータを生成
+def setMeetingScope
+  CSV.foreach('db/seeds_data/meeting_scopes.csv') do |data|
+    next if data[0] == "0"
+    MeetingScope.create(name: data[1])
+  end
+end
+
+###
 # サンプル用ユーザーデータを生成
 def setSampleUsers
   CSV.foreach('db/seeds_data/users.csv') do |data|

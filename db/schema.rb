@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016082207) do
+ActiveRecord::Schema.define(version: 20181019013335) do
 
   create_table "attachement_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -81,6 +81,12 @@ ActiveRecord::Schema.define(version: 20181016082207) do
     t.index ["parent_id"], name: "index_groups_on_parent_id"
   end
 
+  create_table "meeting_scopes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "meeting_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
@@ -96,10 +102,12 @@ ActiveRecord::Schema.define(version: 20181016082207) do
   create_table "meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title", null: false
     t.bigint "type_id"
+    t.bigint "scope_id"
     t.bigint "user_id"
     t.bigint "inspector_id"
     t.bigint "approver_id"
     t.bigint "status_id"
+    t.boolean "approval_flow_flag"
     t.bigint "group_id"
     t.bigint "project_id"
     t.date "date"
@@ -116,6 +124,7 @@ ActiveRecord::Schema.define(version: 20181016082207) do
     t.index ["group_id"], name: "index_meetings_on_group_id"
     t.index ["inspector_id"], name: "index_meetings_on_inspector_id"
     t.index ["project_id"], name: "index_meetings_on_project_id"
+    t.index ["scope_id"], name: "index_meetings_on_scope_id"
     t.index ["status_id"], name: "index_meetings_on_status_id"
     t.index ["type_id"], name: "index_meetings_on_type_id"
     t.index ["user_id"], name: "index_meetings_on_user_id"
@@ -238,6 +247,7 @@ ActiveRecord::Schema.define(version: 20181016082207) do
   add_foreign_key "group_members", "users"
   add_foreign_key "groups", "groups", column: "parent_id"
   add_foreign_key "meetings", "groups"
+  add_foreign_key "meetings", "meeting_scopes", column: "scope_id"
   add_foreign_key "meetings", "meeting_statuses", column: "status_id"
   add_foreign_key "meetings", "meeting_types", column: "type_id"
   add_foreign_key "meetings", "projects"

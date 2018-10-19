@@ -9,6 +9,7 @@ class Meeting < ApplicationRecord
   belongs_to :project, optional: true
   belongs_to :group, optional: true
   belongs_to :type, class_name: 'MeetingType', optional: true
+  belongs_to :scope, class_name: 'MeetingScope', optional: true
 
   has_many :attendees, class_name: 'Attendee', dependent: :destroy
   accepts_nested_attributes_for :attendees, allow_destroy: true

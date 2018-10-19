@@ -14,5 +14,6 @@ setTopicStatus if TopicStatus.all.empty?
 setCommentStatus if CommentStatus.all.empty?
 setAuthority if Authority.all.empty?
 setMeetingType if MeetingType.all.empty?
+setMeetingScope if MeetingScope.all.empty?
 
 # setSampleUsers

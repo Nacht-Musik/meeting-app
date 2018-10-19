@@ -24,7 +24,7 @@
           %ul.list-group.list-group-flush
             %li.list-group-item
               .row
-                %label.form-label 参加範囲：
+                %label.form-label 参加メンバーの範囲：
               .row
                 .btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                   %label.btn.btn-outline-info.active{style:"width:33%"}
@@ -34,9 +34,9 @@
               .row
                 %label.form-label 承認フロー：
               .row
-                .btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                #free-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                   %label.btn.btn-outline-info.active{style:"width:33%"}
-                    %input{type: "radio", autocomplete: "off", value: "2", checked: true}
+                    %input{type: "radio", autocomplete: "off", value: "0", checked: true}
                       無し
 
         - if current_user.projects.present?
@@ -52,7 +52,7 @@
                         = "#{project.name}"
               %li.list-group-item
                 .row
-                  %label.form-label 参加範囲：
+                  %label.form-label 参加メンバーの範囲：
                 .row
                   #project-area-select.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                     %label.btn.btn-outline-info.active{style:"width:33%"}
@@ -68,10 +68,13 @@
                 .row
                   %label.form-label 承認フロー：
                 .row
-                  .btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                  #project-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                     %label.btn.btn-outline-info.active{style:"width:33%"}
                       %input{type: "radio", autocomplete: "off", value: "1", checked: true}
                         有り
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "0"}
+                        無し
 
         - if current_user.groups.present?
           #group-type-content.tab-pane.fade{role: "tabpanel"}
@@ -86,7 +89,7 @@
                         = "#{group.name}"
               %li.list-group-item
                 .row
-                  %label.form-label 参加範囲：
+                  %label.form-label 参加メンバーの範囲：
                 .row
                   #group-area-select.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                     %label.btn.btn-outline-info.active{style:"width:33%"}
@@ -99,13 +102,17 @@
                 .row
                   %label.form-label 承認フロー：
                 .row
-                  .btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                  #group-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
                     %label.btn.btn-outline-info.active{style:"width:33%"}
                       %input{type: "radio", autocomplete: "off", value: "1", checked: true}
                         有り
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "0"}
+                        無し
 
       .actions
-        = link_to "次へ", new_meeting_path(type_id: "1", group_id: "", project_id: "", scope_id: ""),
+        = link_to "次へ", new_meeting_path(type_id: "1", group_id: "", project_id: "",
+                                          scope_id: "4", approval_flow_flag: "0"),
                   id: "new-meeting-btn", class: "btn btn-primary"
 
     .card-footer.bg-dark

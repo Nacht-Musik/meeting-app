@@ -1,3 +1,4 @@
+/////////////////////////////////////////////////////
 // 会議録フォームの初期化関数
 function initializationMeetingForm(){
   // コメント移動ボタンの状態を初期化
@@ -45,7 +46,27 @@ function setInitialDataTime(){
   });
 }
 
+/////////////////////////////////////////////////////
+// 会議タイプ選択ページの初期化
+function initializationMeetingTypeSelect(){
 
+}
+
+
+// 会議タイプ情報をボタンにセット
+function setMeetingTypeInfo(btn_ele, type_id, project_id, group_id, scope_id, approval_flow_flag){
+  let common = '/meetings/new?';
+  let scope = 'scope_id=' + scope_id;
+  let group = 'group_id=' + group_id;
+  let project = 'project_id=' + project_id;
+  let type = 'type_id=' + type_id;
+  let approval = 'approval_flow_flag=' + approval_flow_flag;
+  let href = common + scope + "&" + project + "&" + group + "&" + type + "&" + approval;
+  btn_ele.attr('href', href);
+}
+
+
+/////////////////////////////////////////////////////
 // コメントの右移動可否を確認
 function isCommentMoveRight(cmt_block_ele) {
   /* 移動不可能条件
@@ -473,16 +494,5 @@ function setSelect2(selector){
    // class: 'form-control form-control-sm',
    // allowClear: true
  });
-}
-
-// 会議タイプ情報をボタンにセット
-function setMeetingTypeInfo(btn_ele, type_id, project_id, group_id, scope_id){
-  let common = '/meetings/new?';
-  let scope = 'scope_id=' + scope_id;
-  let group = 'group_id=' + group_id;
-  let project = 'project_id=' + project_id;
-  let type = 'type_id=' + type_id;
-  let href = common + scope + "&" + project + "&" + group + "&" + type;
-  btn_ele.attr('href', href);
 }
 

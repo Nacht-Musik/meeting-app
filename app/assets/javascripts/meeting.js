@@ -472,68 +472,101 @@ $(document).on('turbolinks:load', function() {
   // フリー会議：タブを押下
   $('#meeting-type-select').on('click', '#free-type-btn', function () {
     let type_id = FREE_MEETING_TYPE_ID;
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", "", "");
+    let scope_id = ALL_SCOPE_ID;
+    let project_id = "";
+    let group_id = "";
+    let approval_btn = $("#free-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, group_id, scope_id, approval_flag);
   });
 
   // プロジェクト会議：タブを押下
   $('#meeting-type-select').on('click', '#project-type-btn', function () {
     let type_id = PROJECT_MEETING_TYPE_ID;
     let project_id = $('#project-selector option:selected').val();
-    let active_btn = $("#project-area-select").find(".active");
-    let scope = active_btn.children("input").val();
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+    let scope_btn = $("#project-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_btn = $("#project-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope_id, approval_flag);
   });
   // プロジェクト：対象プロジェクトを変更
   $('#meeting-type-select').on('change', '#project-selector', function () {
     let type_id = PROJECT_MEETING_TYPE_ID;
     let project_id = $('#project-selector option:selected').val();
-    let active_btn = $("#project-area-select").find(".active");
-    let scope = active_btn.children("input").val();
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+    let scope_btn = $("#project-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_btn = $("#project-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope_id, approval_flag);
   });
   // プロジェクト：参加メンバー範囲を変更
   $('#meeting-type-select').on('change', '#project-area-select input[type=radio]', function () {
     let type_id = PROJECT_MEETING_TYPE_ID;
     let project_id = $('#project-selector option:selected').val();
-    let scope = this.value;
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope);
+    let scope_id = this.value;
+    let approval_btn = $("#group-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope_id, approval_flag);
+  });
+  // プロジェクト：承認フローを変更
+  $('#meeting-type-select').on('change', '#project-approval-flow-flag input[type=radio]', function () {
+    let type_id = PROJECT_MEETING_TYPE_ID;
+    let project_id = $('#project-selector option:selected').val();
+    let scope_btn = $("#project-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_flag = this.value;
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, project_id, "", scope_id, approval_flag);
   });
 
   // グループタブを押下
   $('#meeting-type-select').on('click', '#group-type-btn', function () {
     let type_id = GROUP_MEETING_TYPE_ID;
     let group_id = $('#group-selector option:selected').val();
-    let active_btn = $("#group-area-select").find(".active");
-    let scope = active_btn.children("input").val();
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+    let scope_btn = $("#group-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_btn = $("#group-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope_id, approval_flag);
   });
   // グループ：対象グループを変更
   $('#meeting-type-select').on('change', '#group-selector', function () {
     let type_id = GROUP_MEETING_TYPE_ID;
     let group_id = $('#group-selector option:selected').val();
-    let active_btn = $("#group-area-select").find(".active");
-    let scope = active_btn.children("input").val();
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+    let scope_btn = $("#group-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_btn = $("#group-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope_id, approval_flag);
   });
   // グループ：参加メンバー範囲を変更
   $('#meeting-type-select').on('change', '#group-area-select input[type=radio]', function () {
     let type_id = GROUP_MEETING_TYPE_ID;
     let group_id = $('#group-selector option:selected').val();
-    let scope = this.value;
-    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope);
+    let scope_id = this.value;
+    let approval_btn = $("#group-approval-flow-flag").find(".active");
+    let approval_flag = approval_btn.children("input").val();
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope_id, approval_flag);
+  });
+  // グループ：承認フローを変更
+  $('#meeting-type-select').on('change', '#group-approval-flow-flag input[type=radio]', function () {
+    let type_id = GROUP_MEETING_TYPE_ID;
+    let group_id = $('#group-selector option:selected').val();
+    let scope_btn = $("#group-area-select").find(".active");
+    let scope_id = scope_btn.children("input").val();
+    let approval_flag = this.value;
+    setMeetingTypeInfo($('#new-meeting-btn'), type_id, "", group_id, scope_id, approval_flag);
   });
 
   // セレクターにselect2を適用
   $('#group-selector').select2({
     theme: 'bootstrap4',
     width: '100%',
-    cache: true
   });
   $('#project-selector').select2({
     theme: 'bootstrap4',
     width: '100%'
   });
-
 });
 
 ///////////////////////////////////////////////////////////////////
