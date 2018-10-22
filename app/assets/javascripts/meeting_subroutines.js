@@ -487,12 +487,10 @@ function isEmptyAttendees(){
 }
 
 // select2をセットする関数
-function setSelect2(selector){
- $(selector).select2({
-   theme: 'bootstrap4',
-   // width: '100%',
-   // class: 'form-control form-control-sm',
-   // allowClear: true
- });
+function setSelect2w100p(selector){
+  $(selector).select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    class: 'form-control form-control-sm',
+  });
 }
-

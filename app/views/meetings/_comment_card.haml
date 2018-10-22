@@ -41,7 +41,7 @@
         = f.collection_select :status_id, @comment_statuses, :id, :name,
                               {include_blank: "---"},
                               html_options = { tabindex: "-1",
-                              class: "form-control cmt-status-selector"}
+                              class: "custom-select cmt-status-selector"}
 
       = f.text_field :name, class: 'cmt-form-name form-control',
                       placeholder: "コメントを入力して下さい"

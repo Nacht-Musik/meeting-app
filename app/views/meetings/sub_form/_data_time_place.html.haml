@@ -1,0 +1,42 @@
+.card.sub-card
+  .card-header.card-toggle-btn
+    = fa_icon('toggle-on')
+    = "日時・場所"
+
+  .card-body
+    #date-area.row
+      .event-date.form-group.col-sm-12.col-md-12.col-lg-6
+        = f.label '開催日', class: 'form-label'
+        #date-picker.input-group.date{"data-target-input": "nearest"}
+          = f.date_field :date, class: 'datetimepicker-input form-control',
+                              "data-target": "#date-picker", "data-type": "date"
+          .input-group-append{"data-target": "#date-picker", "data-toggle": "datetimepicker"}
+            .input-group-text
+              = fa_icon("calendar")
+
+      .event-date.form-group.col-sm-12.col-md-6.col-lg-3
+        = f.label '開始時刻', class: 'form-label'
+        #start-time-picker.input-group.date{"data-target-input": "nearest"}
+          = f.time_field :start_time, class: "datetimepicker-input form-control",
+                              "data-target": "#start-time-picker", "data-type": "text",
+                              step: 300
+          .input-group-append{"data-target": "#start-time-picker", "data-toggle": "datetimepicker"}
+            .input-group-text
+              = fa_icon("clock-o")
+
+      .event-date.form-group.col-sm-12.col-md-6.col-lg-3
+        = f.label '終了時刻', class: 'form-label'
+        #finish-time-picker.input-group.date{"data-target-input": "nearest"}
+          = f.time_field :finish_time, class: "datetimepicker-input form-control",
+                              "data-target": "#finish-time-picker", "data-type": "text",
+                              step: 300
+          .input-group-append{"data-target": "#finish-time-picker", "data-toggle": "datetimepicker"}
+            .input-group-text.bg-secondary.text-light
+              = fa_icon("clock-o")
+    #place-area.row
+      .form-group.col-sm-12.col-md-12.col-lg-6
+        = f.label '場所'
+        = f.text_field :place, class: 'form-control',
+                                placeholder: "（任意）"
+
+  .card-footer

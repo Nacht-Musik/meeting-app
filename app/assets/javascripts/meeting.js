@@ -572,14 +572,32 @@ $(document).on('turbolinks:load', function() {
 ///////////////////////////////////////////////////////////////////
 // select2 設定（セレクターに検索機能付加）
 $(document).on('turbolinks:load', function() {
-  setSelect2('.select2-selector');
-  // setSelect2('.cmt-user-selector');
-  // setSelect2('.cmt-status-selector');
+  $('.select2-selector').select2({
+    theme: 'bootstrap4',
+  });
+
+  $('.select2-w100p').select2({
+    theme: 'bootstrap4',
+    width: '100%',
+    class: 'form-control form-control-sm',
+  });
+
+  $('.select2-w80p').select2({
+    theme: 'bootstrap4',
+    width: '80%',
+    class: 'form-control form-control-sm',
+  });
+  $('.select2-w60p').select2({
+    theme: 'bootstrap4',
+    width: '60%',
+    class: 'form-control form-control-sm',
+  });
 });
 
 // Select2 のキャッシュクリア（戻るボタンでselect2要素が複製される問題の対策）
 $(document).on('turbolinks:before-cache', function() {
   $('.select2-selector').select2('destroy');
+  $('.select2-w100p').select2('destroy');
   $('#group-selector').select2('destroy');
   $('#project-selector').select2('destroy');
 } );

@@ -6,7 +6,7 @@
     .row
       .col-12.col-sm-8.col-md-6.col-lg-4
         .attendee-add-form.input-group
-          %select#attendee-selector.custom-select.select2-selector
+          %select#attendee-selector.select2-w80p
             - users.each do |user|
               %option{value: "#{user.id}"}
                 = "#{user.full_name}"

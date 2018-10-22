@@ -1,0 +1,7 @@
+.card.sub-card
+  .card-header.card-toggle-btn
+    = fa_icon('toggle-on')
+    = f.label '備考'
+  .card-body
+    = f.text_area :note, class: 'form-control', rows: "5",
+                          placeholder: "備考欄（任意）"
