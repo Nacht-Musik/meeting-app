@@ -1,0 +1,46 @@
+.card.sub-card
+  .card-header.card-toggle-btn
+    = fa_icon('toggle-on')
+    = "担当"
+  .card-body
+    - if f.object.project_id.present?
+      -# プロジェクト名（プロジェクト会議の場合のみ表示）
+      #project-area.row
+        = f.hidden_field :project_id
+        .form-group.col-sm-12.col-md-8
+          = f.label 'プロジェクト'
+          %label.form-control= f.object.project.name
+      %hr
+
+    - elsif f.object.group_id.present?
+      -# グループ名（グループ会議の場合のみ表示）
+      #group-area.row
+        = f.hidden_field :group_id
+        .form-group.col-sm-12.col-md-8
+          = f.label 'グループ'
+          %label.form-control
+            = f.object.group.name
+      %hr
+
+    #users-area.row
+      .form-group.col-sm-12.col-md-4
+        =f.label '担当者', class: 'col-form-label'
+        =f.label f.object.user.full_name,
+                  class: 'form-control font-italic'
+        =f.hidden_field :user_id
+
+      -# 承認フロー無しの場合、審査者と承認者は表示しない
+      - if f.object.approval_flow_flag
+        .form-group.col-sm-12.col-md-4
+          =f.label '審査者', class: 'col-form-label'
+          = f.collection_select :inspector_id, users, :id, :full_name,
+                        {include_blank: "---"},
+                        class: 'custom-select select2-w100p'
+
+        .form-group.col-sm-12.col-md-4
+          =f.label '承認者', class: 'col-form-label'
+          = f.collection_select :approver_id, users, :id, :full_name,
+                        {include_blank: "---"},
+                        class: 'custom-select select2-w100p'
+
+  .card-footer

@@ -1,19 +1,24 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
-  before_action :set_users, only: [:new, :edit]
+  before_action :set_users, only: [:edit]
   before_action :set_projects, only: [:new, :edit]
   before_action :set_comment_statuses, only: [:new, :edit]
   before_action :set_topic_statuses, only: [:new, :edit]
   before_action :set_receiver_type, only: [:new, :edit]
 
   before_action :authenticate_user!, only: [:new, :edit]
+  before_action :set_meeting_type, only: [:type_select]
 
   def show
     # ソート番号順に並んだTopicsを取得
     @topics = sort_topics(@meeting.topics)
     # 始祖コメントを全て取得
     @founder_comments = set_founder_comments(@topics)
+  end
+
+  def type_select
+    @meeting = Meeting.new
   end
 
   def new
@@ -33,7 +38,21 @@ class MeetingsController < ApplicationController
     # 会議作成ユーザーを配信先(To)に登録
     receiver = @meeting.receiveres.build
     receiver.user_id = current_user.id
-    receiver.type_id = 1
+    receiver.type_id = TO_TYPE_ID
+
+    # type_select で選択した情報を設定
+    scope_id = params[:scope_id].to_i
+    type_id = params[:type_id].to_i
+    project_id = params[:project_id].to_i
+    group_id = params[:group_id].to_i
+    @meeting.scope_id = scope_id
+    @meeting.type_id = type_id
+    @meeting.project_id = project_id if type_id == PROJECT_MEETING_TYPE_ID
+    @meeting.group_id = group_id if type_id == GROUP_MEETING_TYPE_ID
+    @meeting.approval_flow_flag = params[:approval_flow_flag].to_i
+
+    @users = set_optimal_users(type_id, group_id, project_id, scope_id)
+    @groups = Group.all
   end
 
   def create
@@ -53,8 +72,8 @@ class MeetingsController < ApplicationController
   end
 
   def edit
-    # p '#--- editアクション実行 ---#'
     # ログイン中のユーザーが編集権限を持っているかを判別すること！
+    @groups = Group.all
   end
 
   def update
@@ -103,18 +122,27 @@ class MeetingsController < ApplicationController
       @receiver_type = ReceiverType.all
     end
 
+    def set_meeting_type
+      @meeting_type = MeetingType.all
+    end
+
     # Strong parameters
     def meeting_params
       params.require(:meeting).permit(:id,
                                       :title,
+                                      :type_id,
+                                      :scope_id,
+                                      :user_id,
+                                      :inspector_id,
+                                      :approver_id,
+                                      :status_id,
+                                      :approval_flow_flag,
                                       :date,
                                       :start_time,
                                       :finish_time,
                                       :place,
                                       :project_id,
-                                      :user_id,
-                                      :inspector_id,
-                                      :approver_id,
+                                      :group_id,
                                       :note,
                                       attendees_attributes: [
                                         :id,

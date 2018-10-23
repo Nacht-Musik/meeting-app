@@ -1,0 +1,118 @@
+#meeting-type-select.mt-3
+  .card.border-dark
+    .card-header.bg-dark.text-white
+      会議タイプの選択
+    .card-body
+      %ul#typeTab.nav.nav-tabs{role: 'tablist'}
+        %li.nav-item
+          %a#free-type-btn.nav-link.btn-outline-secondary.active{href: '#free-type-content',
+            data: {toggle: 'tab', type: 1} }
+            フリー会議
+        - if current_user.projects.present?
+          %li.nav-item
+            %a#project-type-btn.nav-link.btn-outline-secondary{href: '#project-type-content',
+              data: {toggle: 'tab', type: 2} }
+              プロジェクト会議
+        - if current_user.groups.present?
+          %li.nav-item
+            %a#group-type-btn.nav-link.btn-outline-secondary{href: '#group-type-content',
+              data: {toggle: 'tab', type: 3} }
+              グループ会議
+
+      #typeTabContent.tab-content
+        #free-type-content.tab-pane.fade.show.active{role: "tabpanel"}
+          %ul.list-group.list-group-flush
+            %li.list-group-item
+              .row
+                %label.form-label 参加メンバーの範囲：
+              .row
+                .btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                  %label.btn.btn-outline-info.active{style:"width:33%"}
+                    %input{type: "radio", autocomplete: "off", value: "1", checked: true}
+                      全てのユーザー
+            %li.list-group-item
+              .row
+                %label.form-label 承認フロー：
+              .row
+                #free-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                  %label.btn.btn-outline-info.active{style:"width:33%"}
+                    %input{type: "radio", autocomplete: "off", value: "0", checked: true}
+                      無し
+
+        - if current_user.projects.present?
+          #project-type-content.tab-pane.fade{role: "tabpanel"}
+            %ul.list-group.list-group-flush
+              %li.list-group-item
+                .row
+                  %label.form-label= "対象プロジェクト："
+                .row.project-select.ml-1.mr-1
+                  %select#project-selector.form-control
+                    - current_user.projects.each do |project|
+                      %option{value: "#{project.id}"}
+                        = "#{project.name}"
+              %li.list-group-item
+                .row
+                  %label.form-label 参加メンバーの範囲：
+                .row
+                  #project-area-select.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                    %label.btn.btn-outline-info.active{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "1", checked: true}
+                        選択プロジェクトのみ
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "2"}
+                        子孫プロジェクトを含む
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "3"}
+                        関連プロジェクトを含む
+              %li.list-group-item
+                .row
+                  %label.form-label 承認フロー：
+                .row
+                  #project-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                    %label.btn.btn-outline-info.active{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "1", checked: true}
+                        有り
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "0"}
+                        無し
+
+        - if current_user.groups.present?
+          #group-type-content.tab-pane.fade{role: "tabpanel"}
+            %ul.list-group.list-group-flush
+              %li.list-group-item
+                .row
+                  %label.form-label= "対象グループ："
+                .row.group-select.ml-1.mr-1
+                  %select#group-selector.form-control
+                    - current_user.groups.each do |group|
+                      %option{value: "#{group.id}"}
+                        = "#{group.name}"
+              %li.list-group-item
+                .row
+                  %label.form-label 参加メンバーの範囲：
+                .row
+                  #group-area-select.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                    %label.btn.btn-outline-info.active{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "1", checked: true} 選択グループのみ
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "2"} 子孫グループを含む
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "3"} 関連グループを含む
+              %li.list-group-item
+                .row
+                  %label.form-label 承認フロー：
+                .row
+                  #group-approval-flow-flag.btn-group.btn-group-toggle.col-12{"data-toggle": "buttons"}
+                    %label.btn.btn-outline-info.active{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "1", checked: true}
+                        有り
+                    %label.btn.btn-outline-info{style:"width:33%"}
+                      %input{type: "radio", autocomplete: "off", value: "0"}
+                        無し
+
+      .actions
+        = link_to "次へ", new_meeting_path(type_id: "1", group_id: "", project_id: "",
+                                          scope_id: "4", approval_flow_flag: "0"),
+                  id: "new-meeting-btn", class: "btn btn-primary"
+
+    .card-footer.bg-dark

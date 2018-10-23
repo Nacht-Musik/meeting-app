@@ -7,49 +7,38 @@
           = f.text_field :title, class: 'form-control', placeholder: "会議名を入力してください（必須）"
       .card-body
 
-        -# 一般項目
-        #general-area
+        -# 会議の一般情報
+        #meeting-general-info
           .card.sub-card
             .card-header.card-toggle-btn
               = fa_icon('toggle-on')
-              = "日時・場所"
-
+              = "会議情報"
             .card-body
-              #date-time-area
-                = render partial: 'meetings/date_form', locals: {f: f}
-              .form-group
-                = f.label '場所'
-                = f.text_field :place, class: 'form-control',
-                                placeholder: "場所を入力してください（任意）"
+              -# 隠しパラメータ
+              #hidden-params-area.d-none
+                = render partial: 'meetings/sub_form/hidden_params', locals: {f: f}
+
+              -# 会議の種類など
+              -##meeting-type-area
+                = render partial: 'meetings/sub_form/meeting_type', locals: {f: f}
+
+              -# 担当者／担当グループ／プロジェクト
+              #owner-area
+                = render partial: 'meetings/sub_form/owner', locals: {f: f, users: users}
+
+              -# 日時・場所
+              #data-time-place-area
+                = render partial: 'meetings/sub_form/data_time_place', locals: {f: f}
+
+              -# 参加者
+              #attendees-area
+                = render partial: 'meetings/sub_form/attendees_form', locals: {f: f, users: users}
+
+              -# 配布先
+              #receiver-area
+                = render partial: 'meetings/sub_form/receiver_form', locals: {f: f, users: users}
 
             .card-footer
-
-        -# 担当者／担当グループ／プロジェクト
-        #owner-area
-          .card.sub-card
-            .card-header.card-toggle-btn
-              = fa_icon('toggle-on')
-              = "担当"
-            .card-body
-              #users-area
-                = render partial: 'meetings/users_form', locals: {f: f, users: users}
-
-              #project-area
-                .form-group
-                  = f.label 'プロジェクト'
-                  = f.collection_select :project_id, projects, :id, :name,
-                    {include_blank: "---"},
-                    {class: 'custom-select select2-selector'}
-
-            .card-footer
-
-        -# 参加者
-        #attendees-area
-          = render partial: 'meetings/attendees_form', locals: {f: f, users: users}
-
-        -# 配布先
-        #receiver-area
-          = render partial: 'meetings/receiver_form', locals: {f: f, users: users}
 
         -# 議題
         #topics-area
@@ -65,14 +54,8 @@
             .card-footer
 
         -# 備考欄
-        #other-area
-          .card.sub-card
-            .card-header.card-toggle-btn
-              = fa_icon('toggle-on')
-              = f.label '備考'
-            .card-body
-              = f.text_area :note, class: 'form-control', rows: "5",
-                            placeholder: "備考欄（任意）"
+        #notes-area
+          = render partial: 'meetings/sub_form/meeting_note', locals: { f: f }
 
         = f.submit class: 'btn btn-primary', id: 'meeting-submit-btn'
 

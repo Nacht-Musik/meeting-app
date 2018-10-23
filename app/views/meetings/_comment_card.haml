@@ -1,3 +1,4 @@
+-# DBに保存が必要な要素には'cmt-form-*' classをつけること。"*"は任意の文字列で可.
 = f.hidden_field :_destroy, class: 'cmt-destroy-flag'
 %ul.cmt-block
   = f.hidden_field :sort_num, class: "cmt-form-sort-num"
@@ -16,7 +17,6 @@
                                                           type: "button", tabindex: "-1"}
           = fa_icon('arrow-right')
 
-        -#.btn-group{role: "group"}
         -# 直下コメント追加ボタン
         %button.next-cmt-add-btn.btn.btn-outline-dark.btn-sm{tabindex: "-1"}
           = fa_icon('plus-square')
@@ -34,14 +34,14 @@
         = f.collection_select :user_id, @users, :id, :full_name,
                               {include_blank: "----", size: "60"},
                               html_options = { tabindex: "-1",
-                              class: "form-control form-control-sm cmt-user-selector"}
+                              class: "cmt-form-user form-control form-control-sm"}
 
     .input-group
       .input-group-prepend
         = f.collection_select :status_id, @comment_statuses, :id, :name,
                               {include_blank: "---"},
                               html_options = { tabindex: "-1",
-                              class: "form-control cmt-status-selector"}
+                              class: "cmt-form-status custom-select"}
 
       = f.text_field :name, class: 'cmt-form-name form-control',
                       placeholder: "コメントを入力して下さい"

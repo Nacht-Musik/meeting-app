@@ -1,0 +1,26 @@
+.card.sub-card
+  .card-header.card-toggle-btn
+    = fa_icon('toggle-on')
+    = "会議タイプ"
+    - if f.object.project_id.present?
+      = "：プロジェクト会議"
+    - elsif f.object.group_id.present?
+      = "：グループ会議"
+    - else
+      = "：フリー会議"
+  .card-body
+    - if f.object.project_id.present?
+      #project-area
+        .form-group
+          = f.label 'プロジェクト'
+          %label.form-control= f.object.project.name
+
+    - if f.object.group_id.present?
+      #group-area
+        .form-group
+          = f.label 'グループ'
+          %label.form-control= f.object.group.name
+
+    %label= "参加メンバー範囲"
+
+  .card-footer

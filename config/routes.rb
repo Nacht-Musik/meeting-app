@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   ### Meeting Controller 関連
   # resources :meetings, only: [:create, :show, :destroy, :new, :edit, :update]
+  get 'meetings/type_select', to: 'meetings#type_select', as: 'meeting_type_select'
   resources :meetings
 
   ### devise (User) 関連
