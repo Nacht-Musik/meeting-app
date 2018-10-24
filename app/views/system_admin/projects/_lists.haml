@@ -9,20 +9,20 @@
   %tbody#member-list-area
     - projects.each do |project|
       %tr
-        %td.text-center
+        %td.text-center.align-middle
           = "#{project.name}"
-        %td.text-center
+        %td.text-center.align-middle
           - if project.deleted_at.nil?
             .text-success.btn
               = "進行中"
           - else
             .text-danger.btn
               = "完了済み"
-        %td.text-center
+        %td.text-center.align-middle
           = project.created_at
-        %td.text-center
+        %td.text-center.align-middle
           = link_to fa_icon('users'), project_path(project),
                     class: 'btn btn-outline-info'
-        %td.text-center
+        %td.text-center.align-middle
           = link_to fa_icon('edit'), edit_project_path(project),
                     class: 'btn btn-outline-success'

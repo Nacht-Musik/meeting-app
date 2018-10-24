@@ -8,11 +8,11 @@
   %tbody#member-list-area
     - groups.each do |group|
       %tr
-        %td.text-center
+        %td.text-center.align-middle
           = "#{group.name}"
-        %td.text-center
+        %td.text-center.align-middle
           = "#{group.created_at}"
-        %td.text-center
+        %td.text-center.align-middle
           = link_to fa_icon('users'), group_path(group), class: 'btn btn-outline-info'
-        %td.text-center
+        %td.text-center.align-middle
           = link_to fa_icon('edit'), edit_group_path(group), class: 'btn btn-outline-success'

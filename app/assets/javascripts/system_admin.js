@@ -29,3 +29,10 @@ $(document).on('turbolinks:load', function() {
     language: datatables_japanese,
   });
 });
+
+// DataTables のキャッシュクリア（戻るボタンでselect2要素が複製される問題の対策）
+$(document).on('turbolinks:before-cache', function() {
+  $("#project-table").DataTable().destroy();
+  $("#group-table").DataTable().destroy();
+  $("#user-table").DataTable().destroy();
+});
