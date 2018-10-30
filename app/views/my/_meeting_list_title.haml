@@ -1,4 +1,4 @@
-%table.table.table-bordered.table-hover.table-light
+%table#my-meeting-table.table.table-bordered.table-hover.table-light
   %thead.thead-light
     %tr
       %th{scope: "col"} タイトル
@@ -6,7 +6,8 @@
       %th{scope: "col"} 実施日
       %th{scope: "col"} 閲覧
       %th{scope: "col"} 更新
-      %th{scope: "col"} 削除
+      - if current_user.admin?
+        %th{scope: "col"} 削除
 
   %tbody
     = render "meeting_list_body", meetings: meetings, users: users, projects: projects

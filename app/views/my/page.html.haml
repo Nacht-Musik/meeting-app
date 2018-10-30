@@ -53,10 +53,7 @@
             = fa_icon "toggle-off"
             = "過去の参加プロジェクト"
           .card-body
-            %ul
-              - @finished_projects.each do |project|
-                %li
-                  = project.name
+            = render partial: 'my/projects', locals: { projects: @finished_projects}
           .card-footer
 
       .space-1em

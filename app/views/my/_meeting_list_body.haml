@@ -1,16 +1,24 @@
 - meetings.each do |meeting|
   %tr
-    %td= meeting.title
-    %td= users.find(meeting.user_id).last_name + ' ' + users.find(meeting.user_id).first_name
-    -#%td= projects.find(meeting.project_id).name
-    %td= meeting.date
-    %td
+    -# 会議録タイトル
+    %td.align-middle
+      = meeting.title
+    -# 担当者
+    %td.align-middle.text-center
+      = users.find(meeting.user_id).last_name + ' ' + users.find(meeting.user_id).first_name
+    -# 会議実施日
+    %td.align-middle.text-center
+      = meeting.date
+    -# 参照ボタン
+    %td.align-middle.text-center
       = link_to fa_icon("file-text"), meeting_path(meeting), class: 'btn btn-outline-info'
-    %td
+    -# 更新ボタン
+    %td.align-middle.text-center
       - if meeting.user_id == current_user.id
         = link_to fa_icon("edit"), edit_meeting_path(meeting), class: 'btn btn-outline-success'
-    %td
-      - if meeting.user_id == current_user.id
+    -# 削除ボタン
+    - if current_user.admin?
+      %td.align-middle.text-center
         = link_to fa_icon("trash"), meeting_path(meeting), method: :delete,
           data: { confirm: "「#{meeting.title}」を削除しますか？"},
           class: 'btn btn-outline-danger'
