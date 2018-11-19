@@ -1,0 +1,25 @@
+- meetings.each do |meeting|
+  %tr
+    -# 会議録タイトル
+    %td.align-middle
+      = meeting.title
+    -# 種別
+    %td.align-middle.text-center
+      -#= meeting.type_id
+      -#- if meeting.type_id == PROJECT_MEETING_TYPE_ID
+      -#  = "プロジェクト会議：" + meeting.project.name
+      -#- elsif meeting.type_id == GROUP_MEETING_TYPE_ID
+      -#  = "グループ会議：" + meeting.group.name
+      -#- else
+      -#  = "フリー会議"
+
+
+    -# 担当者
+    %td.align-middle.text-center
+      = users.find(meeting.user_id).full_name
+    -# 会議実施日
+    %td.align-middle.text-center
+      = meeting.date
+    -# 参照ボタン
+    %td.align-middle.text-center
+      = link_to fa_icon("file-text"), meeting_path(meeting), class: 'btn btn-outline-info'

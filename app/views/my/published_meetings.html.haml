@@ -1,0 +1,10 @@
+#my-meeting-page
+  .card
+    .card-header
+      %h4
+        発行済の会議録（仮タイトル）
+    .card-body
+      = render "my/published_meetings/list_title", meetings: @published_meetings, users: @users, projects: @projects
+  %br
+  = link_to '戻る', my_page_path, class: "btn btn-secondary"
+  %br

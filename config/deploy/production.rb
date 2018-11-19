@@ -1,7 +1,8 @@
 set :branch, 'master'
 set :rails_env, 'production'
 
-server '13.231.29.16', user: 'ec2-user', roles: %w[web app db]
+# server '13.231.29.16', user: 'ec2-user', roles: %w[web app db]
+server '52.198.187.45', user: 'ec2-user', roles: %w[web app db]
 
 set :ssh_options, {
     keys: [File.expand_path('~/.ssh/aws-gen.pem')],

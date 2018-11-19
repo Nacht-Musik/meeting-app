@@ -8,25 +8,15 @@
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
           = fa_icon "toggle-off"
-          = "担当会議"
-        .card-body
-          = link_to '開催予定', my_meeting_path, class: "btn btn-info"
-          = link_to '議事録作成中', my_meeting_path, class: "btn btn-info"
-          = link_to '審査待ち', my_meeting_path, class: "btn btn-info"
-          = link_to '承認待ち', my_meeting_path, class: "btn btn-info"
-          = link_to '公開待ち', my_meeting_path, class: "btn btn-info"
-        .card-footer
-
-      .card.sub-card.border-secondary
-        .card-header.card-toggle-btn
-          = fa_icon "toggle-off"
           = "参加予定の会議"
         .card-body
+          = "参加予定の会議リスト（表）を表示する予定"
         .card-footer
 
       .space-1em
       = link_to '新しい会議を作成する', meeting_type_select_path, class: "btn btn-primary"
-      = link_to '公開中の会議録を探す', my_meeting_path, class: "btn btn-info"
+      = link_to '担当会議を探す', my_meetings_path, class: "btn btn-info"
+      = link_to '公開中の会議録を探す', published_meetings_path, class: "btn btn-info"
     .card-footer.bg-dark
 
 

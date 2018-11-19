@@ -19,7 +19,8 @@ Rails.application.routes.draw do
 
   ### My Controller 関連
   get 'my/page'
-  get 'my/meeting'
+  get 'my/meetings', to: 'my#meetings', as: 'my_meetings'
+  get 'my/published-meetings', to: 'my#published_meetings', as: 'published_meetings'
   get 'my/group'
   get 'my/project'
 
