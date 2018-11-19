@@ -38,24 +38,29 @@ class MyController < ApplicationController
       @meetings = Meeting.all
     end
 
+    def set_planning_meetings
+      # 定義を良く考える事！
+      @planning_meetings = Meeting.all
+    end
+
     def set_editing_meetings
-      @editing_meetings = Meeting.all.where(status_id: MEETING_STATUS_EDITING_ID )
+      @editing_meetings = Meeting.all.where(status_id: Settings.meeting.status.editing )
     end
 
     def set_inspecting_meetings
-      @inspecting_meetings = Meeting.all.where(status_id: MEETING_STATUS_INSPECTING_ID )
+      @inspecting_meetings = Meeting.all.where(status_id: Settings.meeting.status.inspecting )
     end
 
     def set_approving_meetings
-      @approving_meetings = Meeting.all.where(status_id: MEETING_STATUS_APPROVING_ID )
+      @approving_meetings = Meeting.all.where(status_id: Settings.meeting.status.approving )
     end
 
     def set_approved_meetings
-      @approved_meetings = Meeting.all.where(status_id: MEETING_STATUS_APPROVED_ID )
+      @approved_meetings = Meeting.all.where(status_id: Settings.meeting.status.approved )
     end
 
     def set_published_meetings
-      @published_meetings = Meeting.all.where(status_id: MEETING_STATUS_PUBLISHED_ID )
+      @published_meetings = Meeting.all.where(status_id: Settings.meeting.status.published )
     end
 
     def set_users

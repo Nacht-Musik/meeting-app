@@ -75,3 +75,7 @@ config/secrets.yml.key
 # Ignore commands cheet sheets
 cs_*.md
 
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
