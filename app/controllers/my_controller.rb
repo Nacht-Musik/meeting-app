@@ -1,8 +1,6 @@
 class MyController < ApplicationController
   include ApplicationHelper
   before_action :set_meetings, only: [:meetings]
-  before_action :set_users, only: [:meetings, :published_meetings]
-  before_action :set_projects, only: [:meetings, :published_meetings]
   before_action :set_published_meetings, only: [:published_meetings]
 
   def page
@@ -14,9 +12,12 @@ class MyController < ApplicationController
   end
 
   def meetings
-    if user_signed_in?
-      # @meeting = Meeting.new
-    end
+    set_meetings
+    set_planning_meetings
+    set_editing_meetings
+    set_inspecting_meetings
+    set_approved_meetings
+    set_approving_meetings
   end
 
   def published_meetings
@@ -34,33 +35,44 @@ class MyController < ApplicationController
   end
 
   private
+    # 担当会議を全て取得
     def set_meetings
-      @meetings = Meeting.all
+      @meetings = Meeting.all.where(user_id: current_user.id)
     end
 
+    # 開催予定の担当会議を全て取得
     def set_planning_meetings
-      # 定義を良く考える事！
-      @planning_meetings = Meeting.all
+      @planning_meetings = Meeting.where(status_id: Settings.meeting.status.planning)
+                                  .where(user_id: current_user.id)
     end
 
+    # 編集中の担当会議を全て取得
     def set_editing_meetings
-      @editing_meetings = Meeting.all.where(status_id: Settings.meeting.status.editing )
+      @editing_meetings = Meeting.where(status_id: Settings.meeting.status.editing)
+                                 .where(user_id: current_user.id)
     end
 
+    # 審査中の担当会議を全て取得
     def set_inspecting_meetings
-      @inspecting_meetings = Meeting.all.where(status_id: Settings.meeting.status.inspecting )
+      @inspecting_meetings = Meeting.where(status_id: Settings.meeting.status.inspecting)
+                                    .where("(user_id = ?) OR (inspector_id = ?)", current_user.id, current_user.id)
     end
 
+    # 承認中の担当会議を全て取得
     def set_approving_meetings
-      @approving_meetings = Meeting.all.where(status_id: Settings.meeting.status.approving )
+      @approving_meetings = Meeting.where(status_id: Settings.meeting.status.approving)
+                                   .where("(user_id = ?) OR (approver_id = ?)", current_user.id, current_user.id)
     end
 
+    # 承認済み(公開前)の担当会議を全て取得
     def set_approved_meetings
-      @approved_meetings = Meeting.all.where(status_id: Settings.meeting.status.approved )
+      @approved_meetings = Meeting.where(status_id: Settings.meeting.status.approved)
+                                  .where(user_id: current_user.id)
     end
 
+    # 航海済みの会議を全て取得
     def set_published_meetings
-      @published_meetings = Meeting.all.where(status_id: Settings.meeting.status.published )
+      @published_meetings = Meeting.where(status_id: Settings.meeting.status.published)
     end
 
     def set_users

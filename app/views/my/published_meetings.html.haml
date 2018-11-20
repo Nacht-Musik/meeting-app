@@ -1,10 +1,11 @@
-#my-meeting-page
-  .card
-    .card-header
-      %h4
-        発行済の会議録（仮タイトル）
+#my-meeting-page.mt-3
+  .card.border-dark
+    .card-header.bg-dark.text-white
+      %h5
+        会議録リスト
     .card-body
-      = render "my/published_meetings/list_title", meetings: @published_meetings, users: @users, projects: @projects
+      = render "my/published_meetings/list_title", meetings: @published_meetings
+    .card-footer.bg-dark.text-white
   %br
   = link_to '戻る', my_page_path, class: "btn btn-secondary"
   %br

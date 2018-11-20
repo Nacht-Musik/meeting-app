@@ -14,10 +14,13 @@
 
     -# 担当者
     %td.align-middle.text-center
-      = users.find(meeting.user_id).full_name
+      = meeting.user.full_name
     -# 会議実施日
     %td.align-middle.text-center
       = meeting.date
+    -# 公開日
+    %td.align-middle.text-center
+      = meeting.publish_date
     -# 参照ボタン
     %td.align-middle.text-center
-      = link_to fa_icon("file-text"), meeting_path(meeting), class: 'btn btn-outline-info'
+      = link_to fa_icon("file-text"), meeting_path(meeting), class: 'btn btn-outline-info btn-sm'

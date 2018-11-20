@@ -1,11 +1,12 @@
-%table#my-meeting-table.table.table-bordered.table-hover.table-light
+%table.meetings-table.table.table-bordered.table-hover.table-light
   %thead.thead-light
     %tr
       %th{scope: "col"} タイトル
       %th{scope: "col"} タイプ
-      %th{scope: "col"} 担当者
-      %th{scope: "col"} 実施日
-      %th{scope: "col"} 詳細
+      %th.text-center{scope: "col"} 担当者
+      %th.text-center{scope: "col"} 実施日
+      %th.text-center{scope: "col"} 公開日
+      %th.text-center{scope: "col"} 詳細
 
   %tbody
-    = render "my/published_meetings/list_body", meetings: meetings, users: users, projects: projects
+    = render "my/published_meetings/list_body", meetings: meetings

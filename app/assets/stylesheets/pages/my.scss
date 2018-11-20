@@ -41,3 +41,14 @@
   }
 
 }
+
+#my-meeting-page{
+  // 会議録ステータス切り替えタブのカラー変更
+
+  .nav-link.active{
+    color: black;
+  }
+  .nav-link {
+    color: white;
+  }
+}
