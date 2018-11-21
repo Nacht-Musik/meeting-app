@@ -104,10 +104,12 @@
             = fa_icon "toggle-off"
             = "会議機能メンテナンス"
           .card-body
-            %a.btn.btn-light.text-danger.border-dark
-              = "トピックステータスの編集"
-            %a.btn.btn-light.text-danger.border-dark
-              = "コメントステータスの編集"
+            = link_to '会議録のメンテナンス', system_admin_meetings_path,
+                      class: "btn btn-btn-light text-danger border-dark"
+            -#%a.btn.btn-light.text-danger.border-dark
+            -#  = "トピックステータスの編集"
+            -#%a.btn.btn-light.text-danger.border-dark
+            -#  = "コメントステータスの編集"
           .card-footer
 
         .card.sub-card.group-maintenance.border-secondary

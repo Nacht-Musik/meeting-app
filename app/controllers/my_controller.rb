@@ -81,9 +81,6 @@ class MyController < ApplicationController
       planning_meeting_ids = Meeting.where(status_id: Settings.meeting.status.planning).where('date >= ?', Date.today).select(:id)
       join_meeting_ids = Attendee.where(meeting_id: planning_meeting_ids).where(user_id: current_user.id).select(:meeting_id)
       @join_meetings = Meeting.where(id: join_meeting_ids)
-      p "---- debug ----"
-      p @join_meetings
-      p "---- debug ----"
     end
 
     def set_users
