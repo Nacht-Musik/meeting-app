@@ -10,7 +10,11 @@
           = fa_icon "toggle-off"
           = "参加予定の会議"
         .card-body
-          = "参加予定の会議リスト（表）を表示する予定"
+          -#= "参加予定の会議リスト（表）を表示する予定"
+          - if @join_meetings.blank?
+            = "参加予定の会議はありません。"
+          - else
+            = render partial: 'my/join_meetings', locals: {meetings: @join_meetings}
         .card-footer
 
       .space-1em
@@ -66,7 +70,7 @@
             .col-12.col-sm-9.col-md-6
               .form-group
                 %label= "名 前"
-                .form-control= "#{current_user.last_name} #{current_user.first_name}"
+                .form-control= "#{current_user.full_name}"
           .row
             .col-12.col-sm-9.col-md-6
               .form-group

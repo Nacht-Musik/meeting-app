@@ -1,0 +1,27 @@
+%table#join-meeting-table.table.table-sm.table-hover.table-bordered
+  %thead.thead-light
+    %tr
+      %th.text-center{scope: "col"} 会議名
+      %th.text-center{scope: "col"} 開催日
+      %th.text-center{scope: "col"} 開始
+      %th.text-center{scope: "col"} 終了
+      %th.text-center{scope: "col"} 場所
+      %th.text-center{scope: "col"} 詳細
+  %tbody#member-list-area
+    - meetings.each do |meeting|
+      %tr
+        %td.text-center.align-middle
+          = "#{meeting.title}"
+        %td.text-center.align-middle
+          = "#{meeting.date}"
+        %td.text-center.align-middle
+          = "#{meeting.start_time.to_s(:time)}"
+        %td.text-center.align-middle
+          = "#{meeting.finish_time.to_s(:time)}"
+        -#%td.text-center.align-middle
+          = "開始：#{meeting.start_time.to_s(:time)} 終了：#{meeting.finish_time.to_s(:time)}"
+        %td.text-center.align-middle
+          = "#{meeting.place}"
+        %td.text-center.align-middle
+          = link_to fa_icon('file-text'), meeting_path(meeting),
+                    class: 'btn btn-outline-info btn-sm'

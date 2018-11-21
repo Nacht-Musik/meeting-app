@@ -6,6 +6,7 @@ class MyController < ApplicationController
   def page
     if user_signed_in?
       set_finished_projects
+      set_join_meetings
     else
       redirect_to root_path
     end
@@ -73,6 +74,16 @@ class MyController < ApplicationController
     # 航海済みの会議を全て取得
     def set_published_meetings
       @published_meetings = Meeting.where(status_id: Settings.meeting.status.published)
+    end
+
+    # 参加予定の会議を全て取得
+    def set_join_meetings
+      planning_meeting_ids = Meeting.where(status_id: Settings.meeting.status.planning).where('date >= ?', Date.today).select(:id)
+      join_meeting_ids = Attendee.where(meeting_id: planning_meeting_ids).where(user_id: current_user.id).select(:meeting_id)
+      @join_meetings = Meeting.where(id: join_meeting_ids)
+      p "---- debug ----"
+      p @join_meetings
+      p "---- debug ----"
     end
 
     def set_users
