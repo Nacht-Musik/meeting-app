@@ -7,14 +7,14 @@
   %tbody#member-list-area
     - projects.each do |project|
       %tr
-        %td.text-center
+        %td.text-center.align-middle
           = "#{project.name}"
-        %td.text-center
+        %td.text-center.align-middle
           = link_to fa_icon('users'), project_path(project),
-                    class: 'btn btn-outline-info'
+                    class: 'btn btn-outline-info btn-sm'
         - if project_admin? current_user, project
-          %td.text-center
+          %td.text-center.align-middle
             = link_to fa_icon('edit'), edit_project_path(project),
-                      class: 'btn btn-outline-success'
+                      class: 'btn btn-outline-success btn-sm'
         - else
-          %td.text-center
+          %td.text-center.align-middle

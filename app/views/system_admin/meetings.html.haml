@@ -1,2 +1,8 @@
-%h1 SystemAdmin#meetings
-%p Find me in app/views/system_admin/meetings.html.haml
+#system-admin-page.card.border-danger.mt-3
+  .card-header.bg-danger.text-white
+    会議録リスト （SystemAdminユーザー専用）
+
+  .card-body
+    = render partial: 'system_admin/meetings/lists',
+      locals:{ meetings: @meetings}
+= link_to "戻る", :back, class: "btn btn-secondary"

@@ -8,25 +8,19 @@
       .card.sub-card.border-secondary
         .card-header.card-toggle-btn
           = fa_icon "toggle-off"
-          = "担当会議"
-        .card-body
-          = link_to '開催予定', my_meeting_path, class: "btn btn-info"
-          = link_to '議事録作成中', my_meeting_path, class: "btn btn-info"
-          = link_to '審査待ち', my_meeting_path, class: "btn btn-info"
-          = link_to '承認待ち', my_meeting_path, class: "btn btn-info"
-          = link_to '公開待ち', my_meeting_path, class: "btn btn-info"
-        .card-footer
-
-      .card.sub-card.border-secondary
-        .card-header.card-toggle-btn
-          = fa_icon "toggle-off"
           = "参加予定の会議"
         .card-body
+          -#= "参加予定の会議リスト（表）を表示する予定"
+          - if @join_meetings.blank?
+            = "参加予定の会議はありません。"
+          - else
+            = render partial: 'my/join_meetings', locals: {meetings: @join_meetings}
         .card-footer
 
       .space-1em
       = link_to '新しい会議を作成する', meeting_type_select_path, class: "btn btn-primary"
-      = link_to '公開中の会議録を探す', my_meeting_path, class: "btn btn-info"
+      = link_to '担当会議を探す', my_meetings_path, class: "btn btn-info"
+      = link_to '公開中の会議録を探す', published_meetings_path, class: "btn btn-info"
     .card-footer.bg-dark
 
 
@@ -53,10 +47,7 @@
             = fa_icon "toggle-off"
             = "過去の参加プロジェクト"
           .card-body
-            %ul
-              - @finished_projects.each do |project|
-                %li
-                  = project.name
+            = render partial: 'my/projects', locals: { projects: @finished_projects}
           .card-footer
 
       .space-1em
@@ -79,7 +70,7 @@
             .col-12.col-sm-9.col-md-6
               .form-group
                 %label= "名 前"
-                .form-control= "#{current_user.last_name} #{current_user.first_name}"
+                .form-control= "#{current_user.full_name}"
           .row
             .col-12.col-sm-9.col-md-6
               .form-group
@@ -113,10 +104,12 @@
             = fa_icon "toggle-off"
             = "会議機能メンテナンス"
           .card-body
-            %a.btn.btn-light.text-danger.border-dark
-              = "トピックステータスの編集"
-            %a.btn.btn-light.text-danger.border-dark
-              = "コメントステータスの編集"
+            = link_to '会議録のメンテナンス', system_admin_meetings_path,
+                      class: "btn btn-btn-light text-danger border-dark"
+            -#%a.btn.btn-light.text-danger.border-dark
+            -#  = "トピックステータスの編集"
+            -#%a.btn.btn-light.text-danger.border-dark
+            -#  = "コメントステータスの編集"
           .card-footer
 
         .card.sub-card.group-maintenance.border-secondary

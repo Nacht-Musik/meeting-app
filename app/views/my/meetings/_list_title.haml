@@ -1,0 +1,16 @@
+- if meetings.blank?
+  = "対象の会議はありません。"
+- else
+  %table.meetings-table.table.table-bordered.table-hover.table-light
+    %thead.thead-light
+      %tr
+        %th{scope: "col"} タイトル
+        %th{scope: "col"} タイプ
+        %th.text-center{scope: "col"} 担当者
+        %th.text-center{scope: "col"} 実施日
+        %th.text-center{scope: "col"} 詳細
+        %th.text-center{scope: "col"} 編集
+        %th.text-center{scope: "col"} 削除
+
+    %tbody
+      = render "my/meetings/list_body", meetings: meetings

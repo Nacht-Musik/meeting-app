@@ -1,0 +1,12 @@
+%table.meetings-table.table.table-bordered.table-hover.table-light
+  %thead.thead-light
+    %tr
+      %th{scope: "col"} タイトル
+      %th{scope: "col"} タイプ
+      %th.text-center{scope: "col"} 担当者
+      %th.text-center{scope: "col"} 実施日
+      %th.text-center{scope: "col"} 公開日
+      %th.text-center{scope: "col"} 詳細
+
+  %tbody
+    = render "my/published_meetings/list_body", meetings: meetings

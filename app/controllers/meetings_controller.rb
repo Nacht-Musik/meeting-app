@@ -65,7 +65,7 @@ class MeetingsController < ApplicationController
     if meeting.save
       # Meeting Save成功時の処理
       flash = {success: '会議録を保存しました。'}
-      redirect_to my_meeting_path, flash: flash
+      redirect_to my_meetings_path, flash: flash
     else
       # Meeting Save失敗時の処理
     end
@@ -86,7 +86,7 @@ class MeetingsController < ApplicationController
     if @meeting.update(params)
       # Meeting Update成功時の処理
       flash = {success: '会議録を保存しました。'}
-      redirect_to my_meeting_path, flash: flash
+      redirect_to my_meetings_path, flash: flash
     else
       # Meeting Update失敗時の処理
     end
@@ -94,7 +94,7 @@ class MeetingsController < ApplicationController
 
   def destroy
     @meeting.destroy
-    redirect_to my_meeting_path, notice: '会議録を削除しました'
+    redirect_to my_meetings_path, notice: '会議録を削除しました'
   end
 
   private

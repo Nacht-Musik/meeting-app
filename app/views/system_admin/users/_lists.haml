@@ -11,15 +11,15 @@
   %tbody#user-list-area
     - users.each do |user|
       %tr
-        %td.text-center
+        %td.text-center.align-middle
           = "#{user.name}"
-        %td.text-center
+        %td.text-center.align-middle
           = "#{user.email}"
-        %td.text-center
+        %td.text-center.align-middle
           = "#{user.last_name}"
-        %td.text-center
+        %td.text-center.align-middle
           = "#{user.first_name}"
-        %td.text-center
+        %td.text-center.align-middle
           = "#{user.created_at}"
-        %td.text-center
-          = link_to fa_icon('edit'), edit_user_path(user.id), class: 'btn btn-outline-success'
+        %td.text-center.align-middle
+          = link_to fa_icon('edit'), edit_user_path(user.id), class: 'btn btn-outline-success btn-sm'

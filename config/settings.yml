@@ -1,0 +1,28 @@
+# 会議録 関連の定数
+meeting:
+  type:
+    free: 1
+    project: 2
+    group: 3
+
+  status:
+    planning: 1
+    editing: 2
+    inspecting: 3
+    approving: 4
+    approved: 5
+    published: 6
+
+  area:
+    single: 1
+    progeny: 2
+    relations: 3
+    public: 4
+
+
+# メール関連の定数
+mail:
+  type:
+    to: 1
+    cc: 2
+    bcc: 3

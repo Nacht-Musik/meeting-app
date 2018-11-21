@@ -1,21 +1,35 @@
-.card
-  .card-header
+.card.border-dark.mt-3
+  .card-header.bg-dark.text-white
     %h4= "#{@meeting.title}"
-  %ul.list-group.list-group-flush
-    %li.list-group-item
-      %a= "開催日：#{@meeting.date} | #{@meeting.start_time.to_s(:time)} 〜 #{@meeting.finish_time.to_s(:time)} |"
-    %li.list-group-item
-      %a= "場所：#{@meeting.place} | プロジェクト：#{Project.find(@meeting.project_id).name}"
-    %li.list-group-item
-      %a= "担当者：#{User.find(@meeting.user_id).last_name},  審査者：#{User.find(@meeting.inspector_id).last_name},  承認者：#{User.find(@meeting.approver_id).last_name}"
-    %li.list-group-item
-      %a= "発行日：#{@meeting.publish_date}"
+  .card-body
+    %ul.list-group.list-group-flush
+      %li.list-group-item
+        %a= "開催日：#{@meeting.date} | #{@meeting.start_time.to_s(:time)} 〜 #{@meeting.finish_time.to_s(:time)} |"
+      %li.list-group-item
+        %a= "場所：#{@meeting.place}"
+      - if @meeting.project.present?
+        %li.list-group-item
+          = "プロジェクト：#{@meeting.project.name}"
+      - if @meeting.group.present?
+        %li.list-group-item
+          = "グループ：#{@meeting.group.name}"
+      %li.list-group-item
+        %a= "担当者：#{@meeting.user.full_name}"
+      - if @meeting.inspector.present?
+        %li.list-group-item
+          %a= "審査者：#{@meeting.inspector.full_name}"
+      - if @meeting.approver.present?
+        %li.list-group-item
+          %a= "承認者：#{@meeting.approver.full_name}"
+      %li.list-group-item
+        %a= "発行日：#{@meeting.publish_date}"
 
-    = render 'show_topic', topics: @topics, founder_comments: @founder_comments
+      = render 'show_topic', topics: @topics, founder_comments: @founder_comments
+      %li.list-group-item
+        .card
+          .card-header
+            備考
+          .card-body
+            = @meeting.note
+  .card-footer.bg-dark.text-white
 
-    %li.list-group-item
-      .card
-        .card-header
-          備考
-        .card-body
-          = @meeting.note

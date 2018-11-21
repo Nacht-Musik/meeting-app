@@ -1,0 +1,35 @@
+- meetings.each do |meeting|
+  %tr
+    -# 会議録タイトル
+    %td.align-middle
+      = meeting.title
+    -# 種別
+    %td.align-middle.text-left
+      - if meeting.type_id == Settings.meeting.type.project
+        = "プロジェクト会議：" + meeting.project.name
+      - elsif meeting.type_id == Settings.meeting.type.group
+        = "グループ会議：" + meeting.group.name
+      - else
+        = "フリー会議"
+
+    -# 担当者
+    %td.align-middle.text-center
+      = meeting.user.full_name
+    -# 会議実施日
+    %td.align-middle.text-center
+      = meeting.date
+    -# 参照ボタン
+    %td.align-middle.text-center
+      = link_to fa_icon("file-text"), meeting_path(meeting), class: 'btn btn-outline-info btn-sm'
+    -# 更新ボタン
+    %td.align-middle.text-center
+      - if meeting.user_id == current_user.id
+        = link_to fa_icon("edit"), edit_meeting_path(meeting), class: 'btn btn-outline-success btn-sm'
+    -# 削除ボタン
+    - if meeting.status_id == Settings.meeting.status.planning
+      %td.align-middle.text-center
+        = link_to fa_icon("trash"), meeting_path(meeting), method: :delete,
+          data: { confirm: "「#{meeting.title}」を削除しますか？"},
+          class: 'btn btn-outline-danger btn-sm'
+    - else
+      %td.align-middle.text-center

@@ -1,0 +1,47 @@
+#my-meeting-page.mt-3
+  .card.border-dark
+    .card-header.bg-dark.text-white
+      %h5
+        担当会議
+      %ul.nav.nav-tabs.card-header-tabs
+        %li.nav-item.align-middle
+          %a.active.nav-link{href: '#tab-all', 'data-toggle': 'tab'}
+            全て
+        %li.nav-item.align-middle
+          %a.nav-link{href: '#tab-future', 'data-toggle': 'tab'}
+            開催予定
+        %li.nav-item.align-middle
+          %a.nav-link{href: '#tab-making', 'data-toggle': 'tab'}
+            作成中
+        %li.nav-item.align-middle
+          %a.nav-link{href: '#tab-pending-to-inspect', 'data-toggle': 'tab'}
+            審査待ち
+        %li.nav-item.align-middle
+          %a.nav-link{href: '#tab-pending-to-approve', 'data-toggle': 'tab'}
+            承認待ち
+        %li.nav-item.align-middle
+          %a.nav-link{href: '#tab-pending-to-publish', 'data-toggle': 'tab'}
+            公開待ち
+
+    .card-body
+      .tab-content
+        .tab-pane.fade.active.show#tab-all.active
+          = render "my/meetings/list_title", meetings: @meetings
+        .tab-pane.fade#tab-future
+          -#「開催予定」の本体部分
+          = render "my/meetings/list_title", meetings: @planning_meetings
+        .tab-pane.fade#tab-making
+          = render "my/meetings/list_title", meetings: @editing_meetings
+        .tab-pane.fade#tab-pending-to-inspect
+          -#「審査待ち」の本体部分
+          = render "my/meetings/list_title", meetings: @inspecting_meetings
+        .tab-pane.fade#tab-pending-to-approve
+          -#「承認待ち」の本体部分
+          = render "my/meetings/list_title", meetings: @approving_meetings
+        .tab-pane.fade#tab-pending-to-publish
+          -#「公開待ち」の本体部分
+          = render "my/meetings/list_title", meetings: @approved_meetings
+    .card-footer.bg-dark
+  %br
+  = link_to '戻る', my_page_path, class: "btn btn-secondary"
+  %br
